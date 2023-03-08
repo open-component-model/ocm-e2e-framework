@@ -1,0 +1,19 @@
+apiVersion: delivery.ocm.software/v1alpha1
+kind: ComponentVersion
+metadata:
+  name: podinfo
+  namespace: ocm-system
+spec:
+  interval: 1m
+  component: github.com/acme/podinfo
+  version:
+    semver: "v6.0.0"
+  repository:
+    url: ghcr.io/Skarlso
+    secretRef:
+      name: creds
+  verify:
+  - name: alice
+    publicKey:
+      secretRef:
+        name: alice-publickey
