@@ -42,14 +42,17 @@ type Component struct {
 	Sign    *Sign
 }
 
-func AddComponentVersionToRepository(component Component, resources ...Resource) error {
-	baseUrl := "http://127.0.0.1:5000"
+// AddComponentVersionToRepository takes a component description and optional resources. Then pushes that component
+// into the locally forwarded registry.
+func AddComponentVersionToRepository(component Component, repository string, resources ...Resource) error {
+	baseUrl := "http://127.0.0.1:5000/" + repository
 	octx := ocm.ForContext(context.Background())
 	target, err := octx.RepositoryForSpec(ocmreg.NewRepositorySpec(baseUrl, nil))
 
 	if err != nil {
 		return fmt.Errorf("failed to create repository for spec: %w", err)
 	}
+
 	defer target.Close()
 
 	comp, err := target.LookupComponent(component.Name)
@@ -61,6 +64,7 @@ func AddComponentVersionToRepository(component Component, resources ...Resource)
 	if err != nil {
 		return fmt.Errorf("failed to create new Version '%s': %w", component.Version, err)
 	}
+
 	defer compvers.Close()
 
 	for _, resource := range resources {

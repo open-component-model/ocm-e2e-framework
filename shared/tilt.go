@@ -38,6 +38,7 @@ func RunTiltForControllers(controllers ...string) env.Func {
 	return func(ctx context.Context, c *envconf.Config) (context.Context, error) {
 		tiltFile := ""
 		tctx, cancel := context.WithTimeout(ctx, defaultTimeoutSeconds*time.Second)
+
 		defer cancel()
 
 		_, dir, _, _ := runtime.Caller(0)
@@ -68,6 +69,7 @@ func RunTiltForControllers(controllers ...string) env.Func {
 		output, err := cmd.CombinedOutput()
 		if err != nil {
 			fmt.Println("output from tilt: ", string(output))
+
 			return ctx, err
 		}
 
