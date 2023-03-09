@@ -8,6 +8,7 @@ import (
 
 	"github.com/fluxcd/pkg/apis/meta"
 	fconditions "github.com/fluxcd/pkg/runtime/conditions"
+	"github.com/open-component-model/ocm-e2e-framework/shared"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"sigs.k8s.io/e2e-framework/klient/decoder"
 	"sigs.k8s.io/e2e-framework/klient/k8s"
@@ -25,14 +26,25 @@ func TestComponentVersionApply(t *testing.T) {
 	feature := features.New("Custom ComponentVersion").
 		Setup(func(ctx context.Context, t *testing.T, c *envconf.Config) context.Context {
 			t.Log("in setup phase")
+
 			r, err := resources.New(c.Client().RESTConfig())
 			if err != nil {
 				t.Fail()
 			}
+
 			if err := v1alpha1.AddToScheme(r.GetScheme()); err != nil {
 				t.Fail()
 			}
+
+			if err := shared.AddComponentVersionToRepository(shared.Component{
+				Name:    "github.com/acme/podinfo",
+				Version: "v6.0.0",
+			}); err != nil {
+				t.Fatal(err)
+			}
+
 			r.WithNamespace(namespace)
+
 			if err := decoder.DecodeEachFile(
 				ctx, os.DirFS("./testdata"), "*",
 				decoder.CreateHandler(r),
@@ -40,6 +52,7 @@ func TestComponentVersionApply(t *testing.T) {
 			); err != nil {
 				t.Fail()
 			}
+
 			t.Log("set up is done, component version should have been applied")
 
 			return ctx

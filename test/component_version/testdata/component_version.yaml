@@ -9,6 +9,6 @@ spec:
   version:
     semver: "v6.0.0"
   repository:
-    url: ghcr.io/Skarlso
+    url: http://registry.ocm-system.svc.cluster.local:5000
     secretRef:
       name: creds

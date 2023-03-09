@@ -4,10 +4,11 @@ import (
 	"os"
 	"testing"
 
-	"github.com/open-component-model/ocm-e2e-framework/shared"
 	"sigs.k8s.io/e2e-framework/pkg/env"
 	"sigs.k8s.io/e2e-framework/pkg/envconf"
 	"sigs.k8s.io/e2e-framework/pkg/envfuncs"
+
+	"github.com/open-component-model/ocm-e2e-framework/shared"
 )
 
 var (
@@ -19,16 +20,18 @@ var (
 func TestMain(m *testing.M) {
 	cfg, _ := envconf.NewFromFlags()
 	testEnv = env.NewWithConfig(cfg)
-	kindClusterName = envconf.RandomName("component-version-", 32)
+	kindClusterName = envconf.RandomName("component-version", 32)
 	namespace = "ocm-system"
 
 	testEnv.Setup(
 		envfuncs.CreateKindCluster(kindClusterName),
 		envfuncs.CreateNamespace(namespace),
 		shared.RunTiltForControllers("ocm-controller", "replication-controller"),
+		shared.ForwardRegistry(),
 	)
 
 	testEnv.Finish(
+		shared.ShutdownPortForward(),
 		envfuncs.DeleteNamespace(namespace),
 		envfuncs.DestroyKindCluster(kindClusterName),
 	)
