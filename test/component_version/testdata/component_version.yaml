@@ -12,8 +12,3 @@ spec:
     url: ghcr.io/Skarlso
     secretRef:
       name: creds
-  verify:
-  - name: alice
-    publicKey:
-      secretRef:
-        name: alice-publickey

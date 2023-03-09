@@ -2,13 +2,16 @@ module github.com/open-component-model/ocm-e2e-framework
 
 go 1.20
 
-require sigs.k8s.io/e2e-framework v0.1.0
+require (
+	github.com/fluxcd/pkg/apis/meta v0.19.0
+	github.com/fluxcd/pkg/runtime v0.27.0
+	sigs.k8s.io/e2e-framework v0.1.0
+)
 
 require (
 	github.com/docker/cli v20.10.21+incompatible // indirect
 	github.com/docker/docker v20.10.21+incompatible // indirect
 	github.com/docker/docker-credential-helpers v0.7.0 // indirect
-	github.com/fluxcd/pkg/apis/meta v0.19.0 // indirect
 	github.com/ghodss/yaml v1.0.0 // indirect
 	github.com/inconshreveable/mousetrap v1.0.1 // indirect
 	github.com/klauspost/compress v1.15.11 // indirect
@@ -19,6 +22,7 @@ require (
 	github.com/mandelsoft/vfs v0.0.0-20220805210647-bf14a11bfe31 // indirect
 	github.com/marstr/guid v1.1.0 // indirect
 	github.com/mitchellh/hashstructure/v2 v2.0.2 // indirect
+	github.com/onsi/gomega v1.26.0 // indirect
 	github.com/open-component-model/ocm v0.2.0-rc.1 // indirect
 	github.com/opencontainers/go-digest v1.0.0 // indirect
 	github.com/sirupsen/logrus v1.9.0 // indirect
@@ -68,9 +72,9 @@ require (
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 	k8s.io/api v0.26.1 // indirect
-	k8s.io/apimachinery v0.26.1 // indirect
+	k8s.io/apimachinery v0.26.1
 	k8s.io/client-go v0.26.1 // indirect
-	k8s.io/klog/v2 v2.90.0
+	k8s.io/klog/v2 v2.90.0 // indirect
 	k8s.io/kube-openapi v0.0.0-20221110221610-a28e98eb7c70 // indirect
 	k8s.io/utils v0.0.0-20221128185143-99ec85e7a448 // indirect
 	sigs.k8s.io/controller-runtime v0.14.1 // indirect
