@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2022 SAP SE or an SAP affiliate company and Gardener contributors.
+//
+// SPDX-License-Identifier: Apache-2.0
+
 package shared
 
 import (
@@ -17,9 +21,12 @@ import (
 	"sigs.k8s.io/e2e-framework/pkg/envconf"
 )
 
-var (
-	stopChannel = make(chan struct{}, 1)
+const (
+	registryPort                    = 5000
+	defaultPortForwardReadyWaitTime = 10
 )
+
+var stopChannel = make(chan struct{}, 1)
 
 // ForwardRegistry forwards the in cluster oci registry to a local port.
 func ForwardRegistry() env.Func {
@@ -44,31 +51,32 @@ func ForwardRegistry() env.Func {
 				podName,
 			),
 		)
-
 		if err != nil {
 			return ctx, fmt.Errorf("could not build URL for portforward: %w", err)
 		}
 
 		dialer := spdy.NewDialer(upgrader, &http.Client{Transport: transport}, "POST", reqURL)
+
 		fw, err := portforward.NewOnAddresses(
 			dialer,
 			[]string{"127.0.0.1"},
-			[]string{fmt.Sprintf("%d:%d", 5000, 5000)},
+			[]string{fmt.Sprintf("%d:%d", registryPort, registryPort)},
 			stopChannel,
 			readyChannel,
 			os.Stdout,
 			os.Stderr,
 		)
-
 		if err != nil {
 			return ctx, fmt.Errorf("failed to create port forwarder: %w", err)
 		}
 
 		go func() {
-			fw.ForwardPorts()
+			if err := fw.ForwardPorts(); err != nil {
+				panic(err)
+			}
 		}()
 
-		tctx, cancel := context.WithTimeout(ctx, 10*time.Second)
+		tctx, cancel := context.WithTimeout(ctx, defaultPortForwardReadyWaitTime*time.Second)
 		defer cancel()
 
 		select {
@@ -103,7 +111,9 @@ func getPodNameForRegistry(ctx context.Context, config *envconf.Config) (string,
 	}
 
 	pods := &v1.PodList{}
-	if err := r.List(ctx, pods, resources.WithLabelSelector(labels.FormatLabels(map[string]string{"app": "registry"}))); err != nil {
+	if err := r.List(ctx, pods, resources.WithLabelSelector(
+		labels.FormatLabels(map[string]string{"app": "registry"})),
+	); err != nil {
 		return "", fmt.Errorf("failed to list pods: %w", err)
 	}
 
@@ -118,6 +128,7 @@ func getPodNameForRegistry(ctx context.Context, config *envconf.Config) (string,
 func ShutdownPortForward() env.Func {
 	return func(ctx context.Context, config *envconf.Config) (context.Context, error) {
 		stopChannel <- struct{}{}
+
 		return ctx, nil
 	}
 }

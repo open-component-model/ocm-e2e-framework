@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2022 SAP SE or an SAP affiliate company and Gardener contributors.
+//
+// SPDX-License-Identifier: Apache-2.0
+
 package shared
 
 import (
@@ -45,10 +49,10 @@ type Component struct {
 // AddComponentVersionToRepository takes a component description and optional resources. Then pushes that component
 // into the locally forwarded registry.
 func AddComponentVersionToRepository(component Component, repository string, resources ...Resource) error {
-	baseUrl := "http://127.0.0.1:5000/" + repository
+	baseURL := "http://127.0.0.1:5000/" + repository
 	octx := ocm.ForContext(context.Background())
-	target, err := octx.RepositoryForSpec(ocmreg.NewRepositorySpec(baseUrl, nil))
 
+	target, err := octx.RepositoryForSpec(ocmreg.NewRepositorySpec(baseURL, nil))
 	if err != nil {
 		return fmt.Errorf("failed to create repository for spec: %w", err)
 	}

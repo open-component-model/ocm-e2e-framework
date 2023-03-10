@@ -1,4 +1,8 @@
-package component_version //nolint:stylecheck
+// SPDX-FileCopyrightText: 2022 SAP SE or an SAP affiliate company and Gardener contributors.
+//
+// SPDX-License-Identifier: Apache-2.0
+
+package subscription
 
 import (
 	"context"
@@ -24,9 +28,12 @@ import (
 
 func TestComponentSubscribeApply(t *testing.T) {
 	t.Log("running component subscription apply")
+
 	feature := features.New("Custom ComponentSubscription").
 		Setup(func(ctx context.Context, t *testing.T, c *envconf.Config) context.Context {
+			t.Helper()
 			t.Log("in setup phase")
+
 			r, err := resources.New(c.Client().RESTConfig())
 			if err != nil {
 				t.Fail()
@@ -58,6 +65,7 @@ func TestComponentSubscribeApply(t *testing.T) {
 			return ctx
 		}).
 		Assess("Check if resource created", func(ctx context.Context, t *testing.T, c *envconf.Config) context.Context {
+			t.Helper()
 			t.Log("check if resources are created")
 
 			r, err := resources.New(c.Client().RESTConfig())
@@ -80,6 +88,7 @@ func TestComponentSubscribeApply(t *testing.T) {
 			return ctx
 		}).
 		Assess("wait for condition to be successful", func(ctx context.Context, t *testing.T, cfg *envconf.Config) context.Context {
+			t.Helper()
 			t.Log("waiting for condition ready on the component version")
 
 			client, err := cfg.NewClient()
@@ -93,7 +102,11 @@ func TestComponentSubscribeApply(t *testing.T) {
 
 			// wait for component version to be reconciled
 			err = wait.For(conditions.New(client.Resources()).ResourceMatch(cv, func(object k8s.Object) bool {
-				cvObj := object.(*v1alpha1.ComponentSubscription)
+				cvObj, ok := object.(*v1alpha1.ComponentSubscription)
+				if !ok {
+					return false
+				}
+
 				return fconditions.IsTrue(cvObj, meta.ReadyCondition)
 			}), wait.WithTimeout(time.Minute*2))
 
@@ -116,6 +129,7 @@ func TestComponentSubscribeApply(t *testing.T) {
 			return ctx
 		}).
 		Teardown(func(ctx context.Context, t *testing.T, cfg *envconf.Config) context.Context {
+			t.Helper()
 			t.Log("teardown")
 
 			// remove test resources before exiting

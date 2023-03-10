@@ -1,4 +1,8 @@
-package component_version //nolint:stylecheck
+// SPDX-FileCopyrightText: 2022 SAP SE or an SAP affiliate company and Gardener contributors.
+//
+// SPDX-License-Identifier: Apache-2.0
+
+package componentversion
 
 import (
 	"context"
@@ -8,7 +12,6 @@ import (
 
 	"github.com/fluxcd/pkg/apis/meta"
 	fconditions "github.com/fluxcd/pkg/runtime/conditions"
-	"github.com/open-component-model/ocm-e2e-framework/shared"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"sigs.k8s.io/e2e-framework/klient/decoder"
 	"sigs.k8s.io/e2e-framework/klient/k8s"
@@ -19,12 +22,16 @@ import (
 	"sigs.k8s.io/e2e-framework/pkg/features"
 
 	"github.com/open-component-model/ocm-controller/api/v1alpha1"
+
+	"github.com/open-component-model/ocm-e2e-framework/shared"
 )
 
 func TestComponentVersionApply(t *testing.T) {
 	t.Log("running component version apply")
+
 	feature := features.New("Custom ComponentVersion").
 		Setup(func(ctx context.Context, t *testing.T, c *envconf.Config) context.Context {
+			t.Helper()
 			t.Log("in setup phase")
 
 			r, err := resources.New(c.Client().RESTConfig())
@@ -57,7 +64,8 @@ func TestComponentVersionApply(t *testing.T) {
 
 			return ctx
 		}).
-		Assess("Check If Resource created", func(ctx context.Context, t *testing.T, c *envconf.Config) context.Context {
+		Assess("Check if resource created", func(ctx context.Context, t *testing.T, c *envconf.Config) context.Context {
+			t.Helper()
 			t.Log("check if resources are created")
 
 			r, err := resources.New(c.Client().RESTConfig())
@@ -80,8 +88,8 @@ func TestComponentVersionApply(t *testing.T) {
 			return ctx
 		}).
 		Assess("wait for condition to be successful", func(ctx context.Context, t *testing.T, cfg *envconf.Config) context.Context {
+			t.Helper()
 			t.Log("waiting for condition ready on the component version")
-
 			client, err := cfg.NewClient()
 			if err != nil {
 				t.Fail()
@@ -93,7 +101,11 @@ func TestComponentVersionApply(t *testing.T) {
 
 			// wait for component version to be reconciled
 			err = wait.For(conditions.New(client.Resources()).ResourceMatch(cv, func(object k8s.Object) bool {
-				cvObj := object.(*v1alpha1.ComponentVersion)
+				cvObj, ok := object.(*v1alpha1.ComponentVersion)
+				if !ok {
+					return false
+				}
+
 				return fconditions.IsTrue(cvObj, meta.ReadyCondition)
 			}), wait.WithTimeout(time.Minute*2))
 
@@ -116,6 +128,7 @@ func TestComponentVersionApply(t *testing.T) {
 			return ctx
 		}).
 		Teardown(func(ctx context.Context, t *testing.T, cfg *envconf.Config) context.Context {
+			t.Helper()
 			t.Log("teardown")
 
 			// remove test resources before exiting

@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2022 SAP SE or an SAP affiliate company and Gardener contributors.
+//
+// SPDX-License-Identifier: Apache-2.0
+
 package shared
 
 import (
@@ -26,6 +30,7 @@ func lookForController(name string, dir string) (string, error) {
 		if _, err := os.Stat(filepath.Join(dir, name)); err == nil {
 			return filepath.Join(dir, name), nil
 		}
+
 		separatorIndex = strings.LastIndex(dir, string(os.PathSeparator))
 		dir = dir[0:separatorIndex]
 	}
@@ -59,7 +64,8 @@ func RunTiltForControllers(controllers ...string) env.Func {
 
 		defer os.RemoveAll(temp)
 
-		if err := os.WriteFile(filepath.Join(temp, "Tiltfile"), []byte(tiltFile), 0o777); err != nil {
+		var tiltFilePermMod os.FileMode = 0o600
+		if err := os.WriteFile(filepath.Join(temp, "Tiltfile"), []byte(tiltFile), tiltFilePermMod); err != nil {
 			return ctx, fmt.Errorf("failed to create tilt file %w", err)
 		}
 
