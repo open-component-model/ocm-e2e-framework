@@ -24,69 +24,21 @@ import (
 	"github.com/open-component-model/ocm-controller/api/v1alpha1"
 
 	"github.com/open-component-model/ocm-e2e-framework/shared"
+	"github.com/open-component-model/ocm-e2e-framework/shared/steps/assess"
+	"github.com/open-component-model/ocm-e2e-framework/shared/steps/setup"
 )
 
 func TestComponentVersionApply(t *testing.T) {
 	t.Log("running component version apply")
 
 	feature := features.New("Custom ComponentVersion").
-		Setup(func(ctx context.Context, t *testing.T, c *envconf.Config) context.Context {
-			t.Helper()
-			t.Log("in setup phase")
-
-			r, err := resources.New(c.Client().RESTConfig())
-			if err != nil {
-				t.Fail()
-			}
-
-			if err := v1alpha1.AddToScheme(r.GetScheme()); err != nil {
-				t.Fail()
-			}
-
-			if err := shared.AddComponentVersionToRepository(shared.Component{
-				Name:    "github.com/acme/podinfo",
-				Version: "v6.0.0",
-			}, "ocm-podinfo"); err != nil {
-				t.Fatal(err)
-			}
-
-			r.WithNamespace(namespace)
-
-			if err := decoder.DecodeEachFile(
-				ctx, os.DirFS("./testdata"), "*",
-				decoder.CreateHandler(r),
-				decoder.MutateNamespace(namespace),
-			); err != nil {
-				t.Fail()
-			}
-
-			t.Log("set up is done, component version should have been applied")
-
-			return ctx
-		}).
-		Assess("Check if resource created", func(ctx context.Context, t *testing.T, c *envconf.Config) context.Context {
-			t.Helper()
-			t.Log("check if resources are created")
-
-			r, err := resources.New(c.Client().RESTConfig())
-			if err != nil {
-				t.Fail()
-			}
-
-			r.WithNamespace(namespace)
-			if err := v1alpha1.AddToScheme(r.GetScheme()); err != nil {
-				t.Fail()
-			}
-
-			ct := &v1alpha1.ComponentVersion{}
-			if err := r.Get(ctx, "podinfo", namespace, ct); err != nil {
-				t.Fail()
-			}
-
-			t.Log("resource successfully created")
-
-			return ctx
-		}).
+		Setup(setup.AddSchemeAndNamespace(v1alpha1.AddToScheme, namespace)).
+		Setup(setup.AddComponentVersion(shared.Component{
+			Name:    "github.com/acme/podinfo",
+			Version: "v6.0.0",
+		}, "ocm-podinfo")).
+		Setup(setup.ApplyTestData(v1alpha1.AddToScheme, namespace, "*")).
+		Assess("check if resource was created", assess.ResourceWasCreated("podinfo", namespace, &v1alpha1.ComponentVersion{})).
 		Assess("wait for condition to be successful", func(ctx context.Context, t *testing.T, cfg *envconf.Config) context.Context {
 			t.Helper()
 			t.Log("waiting for condition ready on the component version")
