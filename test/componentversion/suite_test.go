@@ -30,11 +30,13 @@ func TestMain(m *testing.M) {
 	testEnv.Setup(
 		envfuncs.CreateKindCluster(kindClusterName),
 		envfuncs.CreateNamespace(namespace),
+		shared.StartGitServer(namespace),
 		shared.RunTiltForControllers("ocm-controller", "replication-controller"),
 		shared.ForwardRegistry(),
 	)
 
 	testEnv.Finish(
+		shared.RemoveGitServer(namespace),
 		shared.ShutdownPortForward(),
 		envfuncs.DeleteNamespace(namespace),
 		envfuncs.DestroyKindCluster(kindClusterName),
