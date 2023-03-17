@@ -27,17 +27,17 @@ func TestMain(m *testing.M) {
 	kindClusterName = envconf.RandomName("component-version", 32)
 	namespace = "ocm-system"
 
+	stopChannel := make(chan struct{}, 1)
+
 	testEnv.Setup(
 		envfuncs.CreateKindCluster(kindClusterName),
 		envfuncs.CreateNamespace(namespace),
-		shared.StartGitServer(namespace),
 		shared.RunTiltForControllers("ocm-controller", "replication-controller"),
-		shared.ForwardRegistry(),
+		shared.ForwardPort("registry", 5000, stopChannel),
 	)
 
 	testEnv.Finish(
-		shared.RemoveGitServer(namespace),
-		shared.ShutdownPortForward(),
+		shared.ShutdownPortForward(stopChannel),
 		envfuncs.DeleteNamespace(namespace),
 		envfuncs.DestroyKindCluster(kindClusterName),
 	)

@@ -26,6 +26,7 @@ func AddSchemeAndNamespace(addSchemeFunc func(scheme *runtime.Scheme) error, nam
 		}
 
 		r.WithNamespace(namespace)
+
 		return ctx
 	}
 }

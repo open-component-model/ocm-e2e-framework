@@ -20,12 +20,17 @@ import (
 	"sigs.k8s.io/e2e-framework/pkg/envconf"
 )
 
+// internal values.
 var (
 	//go:embed private_git_key/id_25519
 	privateTestKey string
 	//go:embed gitea/gitea_deployment.yaml
 	giteaDeployment string
 	timeout         = time.Minute * 5
+
+	// TestUserToken is the token generated for API access on the created test user.
+	TestUserToken = "91efc1d52e9d6069729f373c2cad057da974f11e" //nolint:gosec // this is a test key
+	BaseURL       = "http://127.0.0.1:3000"
 )
 
 // StartGitServer installs a Gitea Git server into the cluster using the deployment configuration files provided
@@ -57,10 +62,10 @@ func StartGitServer(namespace string) env.Func {
 			return ctx, fmt.Errorf("failed to create new client: %w", err)
 		}
 
-		giteaDeployment := &appsv1.Deployment{ObjectMeta: metav1.ObjectMeta{Name: "gitea", Namespace: namespace}}
+		deployment := &appsv1.Deployment{ObjectMeta: metav1.ObjectMeta{Name: "gitea", Namespace: namespace}}
 
 		if err = wait.For(
-			conditions.New(client.Resources()).DeploymentConditionMatch(giteaDeployment, appsv1.DeploymentAvailable, corev1.ConditionTrue),
+			conditions.New(client.Resources()).DeploymentConditionMatch(deployment, appsv1.DeploymentAvailable, corev1.ConditionTrue),
 			wait.WithTimeout(timeout),
 		); err != nil {
 			return ctx, fmt.Errorf("gitea deployment didn't become ready: %w", err)

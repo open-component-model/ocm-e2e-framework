@@ -1,0 +1,14 @@
+apiVersion: delivery.ocm.software/v1alpha1
+kind: Resource
+metadata:
+  name: podinfo-deployment
+  namespace: ocm-system
+spec:
+  interval: 1m
+  componentVersionRef:
+    name: podinfo
+    namespace: ocm-system
+  resource:
+    name: deployment
+  snapshotTemplate:
+    name: podinfo-deployment

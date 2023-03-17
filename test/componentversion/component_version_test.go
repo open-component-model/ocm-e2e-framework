@@ -37,7 +37,7 @@ func TestComponentVersionApply(t *testing.T) {
 			Name:    "github.com/acme/podinfo",
 			Version: "v6.0.0",
 		}, "ocm-podinfo")).
-		Setup(setup.ApplyTestData(v1alpha1.AddToScheme, namespace, "*")).
+		Setup(setup.ApplyTestData(namespace, "*")).
 		Assess("check if resource was created", assess.ResourceWasCreated("podinfo", namespace, &v1alpha1.ComponentVersion{})).
 		Assess("wait for condition to be successful", func(ctx context.Context, t *testing.T, cfg *envconf.Config) context.Context {
 			t.Helper()
