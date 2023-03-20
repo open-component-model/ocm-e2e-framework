@@ -33,7 +33,7 @@ func TestMain(m *testing.M) {
 		envfuncs.CreateKindCluster(kindClusterName),
 		envfuncs.CreateNamespace(namespace),
 		shared.RunTiltForControllers("ocm-controller", "replication-controller"),
-		shared.ForwardPort("registry", 5000, stopChannel),
+		shared.ForwardPortForAppName("registry", 5000, stopChannel),
 	)
 
 	testEnv.Finish(

@@ -25,10 +25,10 @@ const (
 	defaultPortForwardReadyWaitTime = 10
 )
 
-// ForwardPort forwards the in cluster oci registry to a local port.
-func ForwardPort(name string, port int, stopChannel chan struct{}) env.Func {
+// ForwardPortForAppName forwards the given port for the given app name.
+func ForwardPortForAppName(name string, port int, stopChannel chan struct{}) env.Func {
 	return func(ctx context.Context, config *envconf.Config) (context.Context, error) {
-		podName, err := getPodNameForRegistry(ctx, config, name)
+		podName, err := getPodNameForApp(ctx, config, name)
 		if err != nil {
 			return ctx, fmt.Errorf("failed to get pod for the registry: %w", err)
 		}
@@ -96,8 +96,8 @@ func ForwardPort(name string, port int, stopChannel chan struct{}) env.Func {
 	}
 }
 
-// getPodNameForRegistry returns the name of the pod the registry is running in for port-forwarding requests to.
-func getPodNameForRegistry(ctx context.Context, config *envconf.Config, name string) (string, error) {
+// getPodNameForApp returns the name of the pod the registry is running in for port-forwarding requests to.
+func getPodNameForApp(ctx context.Context, config *envconf.Config, name string) (string, error) {
 	r, err := resources.New(config.Client().RESTConfig())
 	if err != nil {
 		return "", fmt.Errorf("failed to create resource client: %w", err)

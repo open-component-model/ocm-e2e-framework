@@ -23,6 +23,7 @@ func AddGitRepository(repoName string) features.Func {
 		}
 
 		repo, _, err := gclient.CreateRepo(gitea.CreateRepoOption{
+			AutoInit:      true,
 			Name:          repoName,
 			DefaultBranch: "main",
 		})

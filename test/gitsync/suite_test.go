@@ -29,13 +29,14 @@ func TestMain(m *testing.M) {
 
 	stopChannelRegistry := make(chan struct{}, 1)
 	stopChannelGitea := make(chan struct{}, 1)
+
 	testEnv.Setup(
 		envfuncs.CreateKindCluster(kindClusterName),
 		envfuncs.CreateNamespace(namespace),
 		shared.StartGitServer(namespace),
 		shared.RunTiltForControllers("ocm-controller", "git-sync-controller"),
-		shared.ForwardPort("registry", 5000, stopChannelRegistry),
-		shared.ForwardPort("gitea", 3000, stopChannelGitea),
+		shared.ForwardPortForAppName("registry", 5000, stopChannelRegistry),
+		shared.ForwardPortForAppName("gitea", 3000, stopChannelGitea),
 	)
 
 	testEnv.Finish(
