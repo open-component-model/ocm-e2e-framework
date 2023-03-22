@@ -6,6 +6,8 @@ package gitsync
 
 import (
 	"context"
+	"os"
+	"path/filepath"
 	"testing"
 	"time"
 
@@ -22,23 +24,29 @@ import (
 	"github.com/open-component-model/git-sync-controller/api/v1alpha1"
 
 	"github.com/open-component-model/ocm-e2e-framework/shared"
+	"github.com/open-component-model/ocm-e2e-framework/shared/steps/assess"
 	"github.com/open-component-model/ocm-e2e-framework/shared/steps/setup"
 )
 
 func TestGitSyncApply(t *testing.T) {
 	t.Log("running git sync apply")
 
+	resourceContent, err := os.ReadFile(filepath.Join("testdata", "deployment.tar"))
+	if err != nil {
+		t.Fatal("test file not found")
+	}
+
 	feature := features.New("Custom GitSync").
 		Setup(setup.AddSchemeAndNamespace(v1alpha1.AddToScheme, namespace)).
 		Setup(setup.AddComponentVersion(shared.Component{
 			Name:    "github.com/acme/podinfo",
 			Version: "v6.0.0",
-		}, "ocm-podinfo", shared.Resource{
+		}, "podinfo", shared.Resource{
 			Name: "deployment",
-			Data: "this is my deployment",
+			Data: string(resourceContent),
 		})).
 		Setup(setup.AddGitRepository("test")).
-		Setup(setup.ApplyTestData(namespace, "*")).
+		Setup(setup.ApplyTestData(namespace, "*.yaml")).
 		Assess("wait for git sync done condition", func(ctx context.Context, t *testing.T, cfg *envconf.Config) context.Context {
 			t.Helper()
 			t.Log("waiting for condition ready on the component version")
@@ -78,7 +86,9 @@ func TestGitSyncApply(t *testing.T) {
 			t.Logf("got resource status %+v", gitSync.Status)
 
 			return ctx
-		}).Teardown(setup.DeleteGitRepository("test")).Feature()
+		}).Assess("check if content exists in repo",
+		assess.CheckRepoFileContent("test", "deployment.yaml", "this is my deployment")).
+		Teardown(setup.DeleteGitRepository("test")).Feature()
 
 	testEnv.Test(t, feature)
 }

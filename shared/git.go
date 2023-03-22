@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2022 SAP SE or an SAP affiliate company and Gardener contributors.
+//
+// SPDX-License-Identifier: Apache-2.0
+
 package shared
 
 import (
@@ -31,6 +35,7 @@ var (
 	// TestUserToken is the token generated for API access on the created test user.
 	TestUserToken = "91efc1d52e9d6069729f373c2cad057da974f11e" //nolint:gosec // this is a test key
 	BaseURL       = "http://127.0.0.1:3000"
+	Owner         = "e2e-tester"
 )
 
 // StartGitServer installs a Gitea Git server into the cluster using the deployment configuration files provided
