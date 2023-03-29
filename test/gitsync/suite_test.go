@@ -2,7 +2,7 @@
 //
 // SPDX-License-Identifier: Apache-2.0
 
-package componentversion
+package gitsync
 
 import (
 	"os"
@@ -24,20 +24,25 @@ var (
 func TestMain(m *testing.M) {
 	cfg, _ := envconf.NewFromFlags()
 	testEnv = env.NewWithConfig(cfg)
-	kindClusterName = envconf.RandomName("component-version", 32)
+	kindClusterName = envconf.RandomName("git-sync", 32)
 	namespace = "ocm-system"
 
-	stopChannel := make(chan struct{}, 1)
+	stopChannelRegistry := make(chan struct{}, 1)
+	stopChannelGitea := make(chan struct{}, 1)
 
 	testEnv.Setup(
 		envfuncs.CreateKindCluster(kindClusterName),
 		envfuncs.CreateNamespace(namespace),
-		shared.RunTiltForControllers("ocm-controller", "replication-controller"),
-		shared.ForwardPortForAppName("registry", 5000, stopChannel),
+		shared.StartGitServer(namespace),
+		shared.RunTiltForControllers("ocm-controller", "git-sync-controller"),
+		shared.ForwardPortForAppName("registry", 5000, stopChannelRegistry),
+		shared.ForwardPortForAppName("gitea", 3000, stopChannelGitea),
 	)
 
 	testEnv.Finish(
-		shared.ShutdownPortForward(stopChannel),
+		shared.RemoveGitServer(namespace),
+		shared.ShutdownPortForward(stopChannelRegistry),
+		shared.ShutdownPortForward(stopChannelGitea),
 		envfuncs.DeleteNamespace(namespace),
 		envfuncs.DestroyKindCluster(kindClusterName),
 	)

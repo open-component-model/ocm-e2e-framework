@@ -22,16 +22,13 @@ import (
 )
 
 const (
-	registryPort                    = 5000
 	defaultPortForwardReadyWaitTime = 10
 )
 
-var stopChannel = make(chan struct{}, 1)
-
-// ForwardRegistry forwards the in cluster oci registry to a local port.
-func ForwardRegistry() env.Func {
+// ForwardPortForAppName forwards the given port for the given app name.
+func ForwardPortForAppName(name string, port int, stopChannel chan struct{}) env.Func {
 	return func(ctx context.Context, config *envconf.Config) (context.Context, error) {
-		podName, err := getPodNameForRegistry(ctx, config)
+		podName, err := getPodNameForApp(ctx, config, name)
 		if err != nil {
 			return ctx, fmt.Errorf("failed to get pod for the registry: %w", err)
 		}
@@ -60,7 +57,7 @@ func ForwardRegistry() env.Func {
 		fw, err := portforward.NewOnAddresses(
 			dialer,
 			[]string{"127.0.0.1"},
-			[]string{fmt.Sprintf("%d:%d", registryPort, registryPort)},
+			[]string{fmt.Sprintf("%d:%d", port, port)},
 			stopChannel,
 			readyChannel,
 			os.Stdout,
@@ -99,8 +96,8 @@ func ForwardRegistry() env.Func {
 	}
 }
 
-// getPodNameForRegistry returns the name of the pod the registry is running in for port-forwarding requests to.
-func getPodNameForRegistry(ctx context.Context, config *envconf.Config) (string, error) {
+// getPodNameForApp returns the name of the pod the registry is running in for port-forwarding requests to.
+func getPodNameForApp(ctx context.Context, config *envconf.Config, name string) (string, error) {
 	r, err := resources.New(config.Client().RESTConfig())
 	if err != nil {
 		return "", fmt.Errorf("failed to create resource client: %w", err)
@@ -112,7 +109,7 @@ func getPodNameForRegistry(ctx context.Context, config *envconf.Config) (string,
 
 	pods := &v1.PodList{}
 	if err := r.List(ctx, pods, resources.WithLabelSelector(
-		labels.FormatLabels(map[string]string{"app": "registry"})),
+		labels.FormatLabels(map[string]string{"app": name})),
 	); err != nil {
 		return "", fmt.Errorf("failed to list pods: %w", err)
 	}
@@ -125,7 +122,7 @@ func getPodNameForRegistry(ctx context.Context, config *envconf.Config) (string,
 }
 
 // ShutdownPortForward sends a signal to the stop channel.
-func ShutdownPortForward() env.Func {
+func ShutdownPortForward(stopChannel chan struct{}) env.Func {
 	return func(ctx context.Context, config *envconf.Config) (context.Context, error) {
 		stopChannel <- struct{}{}
 

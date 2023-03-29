@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2022 SAP SE or an SAP affiliate company and Gardener contributors.
+//
+// SPDX-License-Identifier: Apache-2.0
+
 package setup
 
 import (
@@ -5,7 +9,6 @@ import (
 	"os"
 	"testing"
 
-	"k8s.io/apimachinery/pkg/runtime"
 	"sigs.k8s.io/e2e-framework/klient/decoder"
 	"sigs.k8s.io/e2e-framework/klient/k8s/resources"
 	"sigs.k8s.io/e2e-framework/pkg/envconf"
@@ -13,7 +16,7 @@ import (
 )
 
 // ApplyTestData takes a pattern and applies that from a testdata location.
-func ApplyTestData(addToSchemeFunc func(s *runtime.Scheme) error, namespace, pattern string) features.Func {
+func ApplyTestData(namespace, pattern string) features.Func {
 	return func(ctx context.Context, t *testing.T, c *envconf.Config) context.Context {
 		t.Helper()
 		t.Log("in setup phase")

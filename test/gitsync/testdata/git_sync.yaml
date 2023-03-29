@@ -1,0 +1,20 @@
+apiVersion: delivery.ocm.software/v1alpha1
+kind: GitSync
+metadata:
+  name: git-sync-sample
+  namespace: ocm-system
+spec:
+  authRef:
+    name: git-sync-secret
+    namespace: ocm-system
+  branch: main
+  commitTemplate:
+    email: testy@mctestface.test
+    message: "Update made from git-sync-controller"
+    name: Testy McTestface
+  interval: 10m0s
+  subPath: .
+  url: http://gitea.ocm-system.svc.cluster.local:3000/e2e-tester/test
+  snapshotRef:
+    name: podinfo-deployment
+    namespace: ocm-system
