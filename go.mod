@@ -6,7 +6,7 @@ require (
 	code.gitea.io/sdk/gitea v0.15.1
 	github.com/fluxcd/pkg/apis/meta v0.19.0
 	github.com/fluxcd/pkg/runtime v0.27.0
-	github.com/open-component-model/git-sync-controller v0.1.1-0.20230320084224-3f7a7816f7b4
+	github.com/open-component-model/git-controller v0.1.1-0.20230329122303-9df36862f8f8
 	github.com/open-component-model/ocm v0.2.0-rc.1
 	github.com/open-component-model/replication-controller v0.1.0
 	sigs.k8s.io/e2e-framework v0.1.0

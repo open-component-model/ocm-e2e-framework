@@ -21,14 +21,14 @@ import (
 	"sigs.k8s.io/e2e-framework/pkg/envconf"
 	"sigs.k8s.io/e2e-framework/pkg/features"
 
-	"github.com/open-component-model/git-sync-controller/api/v1alpha1"
+	"github.com/open-component-model/git-controller/api/v1alpha1"
 
 	"github.com/open-component-model/ocm-e2e-framework/shared"
 	"github.com/open-component-model/ocm-e2e-framework/shared/steps/assess"
 	"github.com/open-component-model/ocm-e2e-framework/shared/steps/setup"
 )
 
-func TestGitSyncApply(t *testing.T) {
+func TestSyncApply(t *testing.T) {
 	t.Log("running git sync apply")
 
 	resourceContent, err := os.ReadFile(filepath.Join("testdata", "deployment.tar"))
@@ -36,7 +36,7 @@ func TestGitSyncApply(t *testing.T) {
 		t.Fatal("test file not found")
 	}
 
-	feature := features.New("Custom GitSync").
+	feature := features.New("Custom Sync").
 		Setup(setup.AddSchemeAndNamespace(v1alpha1.AddToScheme, namespace)).
 		Setup(setup.AddComponentVersion(shared.Component{
 			Name:    "github.com/acme/podinfo",
@@ -55,13 +55,13 @@ func TestGitSyncApply(t *testing.T) {
 				t.Fail()
 			}
 
-			gitSync := &v1alpha1.GitSync{
-				ObjectMeta: metav1.ObjectMeta{Name: "git-sync-sample", Namespace: cfg.Namespace()},
+			gitSync := &v1alpha1.Sync{
+				ObjectMeta: metav1.ObjectMeta{Name: "git-sample", Namespace: cfg.Namespace()},
 			}
 
 			// wait for component version to be reconciled
 			err = wait.For(conditions.New(client.Resources()).ResourceMatch(gitSync, func(object k8s.Object) bool {
-				obj, ok := object.(*v1alpha1.GitSync)
+				obj, ok := object.(*v1alpha1.Sync)
 				if !ok {
 					return false
 				}
@@ -79,7 +79,7 @@ func TestGitSyncApply(t *testing.T) {
 			}
 
 			r.WithNamespace(namespace)
-			if err := r.Get(ctx, "git-sync-sample", namespace, gitSync); err != nil {
+			if err := r.Get(ctx, "git-sample", namespace, gitSync); err != nil {
 				t.Fail()
 			}
 

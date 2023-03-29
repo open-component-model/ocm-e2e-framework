@@ -24,7 +24,7 @@ var (
 func TestMain(m *testing.M) {
 	cfg, _ := envconf.NewFromFlags()
 	testEnv = env.NewWithConfig(cfg)
-	kindClusterName = envconf.RandomName("git-sync", 32)
+	kindClusterName = envconf.RandomName("git", 32)
 	namespace = "ocm-system"
 
 	stopChannelRegistry := make(chan struct{}, 1)
@@ -34,7 +34,7 @@ func TestMain(m *testing.M) {
 		envfuncs.CreateKindCluster(kindClusterName),
 		envfuncs.CreateNamespace(namespace),
 		shared.StartGitServer(namespace),
-		shared.RunTiltForControllers("ocm-controller", "git-sync-controller"),
+		shared.RunTiltForControllers("ocm-controller", "git-controller"),
 		shared.ForwardPortForAppName("registry", 5000, stopChannelRegistry),
 		shared.ForwardPortForAppName("gitea", 3000, stopChannelGitea),
 	)

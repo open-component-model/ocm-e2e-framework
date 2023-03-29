@@ -712,8 +712,8 @@ github.com/onsi/gomega v1.10.1/go.mod h1:iN09h71vgCQne3DLsj+A5owkum+a2tYe+TOCB1y
 github.com/onsi/gomega v1.10.3/go.mod h1:V9xEwhxec5O8UDM77eCW8vLymOMltsqPVYWrpDsH8xc=
 github.com/onsi/gomega v1.27.2 h1:SKU0CXeKE/WVgIV1T61kSa3+IRE8Ekrv9rdXDwwTqnY=
 github.com/onsi/gomega v1.27.2/go.mod h1:5mR3phAHpkAVIDkHEUBY6HGVsU+cpcEscrGPB4oPlZI=
-github.com/open-component-model/git-sync-controller v0.1.1-0.20230320084224-3f7a7816f7b4 h1:JKTYUtM2Ksr8RCfFVaBpNaQniarfq0aoLm0+TFpHLIw=
-github.com/open-component-model/git-sync-controller v0.1.1-0.20230320084224-3f7a7816f7b4/go.mod h1:3cSqoTus/4tHbqVyuKH2sGzYUNRwTMJMVhPfSsItA10=
+github.com/open-component-model/git-controller v0.1.1-0.20230329122303-9df36862f8f8 h1:7sirhGYDZfMIkHUVShKBKffDR7scU/OHj+5X1hKpQeo=
+github.com/open-component-model/git-controller v0.1.1-0.20230329122303-9df36862f8f8/go.mod h1:/p/PYxnuGuMosu2BX1zU++w8a5J/nV8hF9E0/9GzZFg=
 github.com/open-component-model/ocm v0.2.0-rc.1 h1:J5/C1aRG3x5UuvuH5lMDYvFIMNN75XY7teDYHLVIA4g=
 github.com/open-component-model/ocm v0.2.0-rc.1/go.mod h1:SzDUp1q7p/8hUf7sdHCx3qNzJzU6cyAAfJZMtBrJqAI=
 github.com/open-component-model/ocm-controller v0.5.0 h1:zlQKMFT8pfec5QmgHxokSkAB8XWJc7/fw2TDiL+gzr8=
