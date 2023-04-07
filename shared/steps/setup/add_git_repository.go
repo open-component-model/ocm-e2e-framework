@@ -35,7 +35,7 @@ func AddGitRepository(repoName string) features.Func {
 			t.Fatal(fmt.Errorf("failed to create repository: %w", err))
 		}
 
-		t.Logf("successfully create repository at url %s", repo.CloneURL)
+		t.Logf("successfully created repository at url %s", repo.CloneURL)
 
 		return ctx
 	}

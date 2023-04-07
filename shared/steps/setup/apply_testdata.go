@@ -19,7 +19,7 @@ import (
 func ApplyTestData(namespace, pattern string) features.Func {
 	return func(ctx context.Context, t *testing.T, c *envconf.Config) context.Context {
 		t.Helper()
-		t.Log("in setup phase")
+		t.Log("applying test data...")
 
 		r, err := resources.New(c.Client().RESTConfig())
 		if err != nil {
@@ -34,7 +34,7 @@ func ApplyTestData(namespace, pattern string) features.Func {
 			t.Fail()
 		}
 
-		t.Log("set up is done, component version should have been applied")
+		t.Log("apply test data complete")
 
 		return ctx
 	}
