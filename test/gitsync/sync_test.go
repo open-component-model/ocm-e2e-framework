@@ -21,7 +21,7 @@ import (
 	"sigs.k8s.io/e2e-framework/pkg/envconf"
 	"sigs.k8s.io/e2e-framework/pkg/features"
 
-	"github.com/open-component-model/git-controller/api/v1alpha1"
+	"github.com/open-component-model/git-controller/apis/delivery/v1alpha1"
 
 	"github.com/open-component-model/ocm-e2e-framework/shared"
 	"github.com/open-component-model/ocm-e2e-framework/shared/steps/assess"
