@@ -32,7 +32,7 @@ func TestComponentSubscribeApply(t *testing.T) {
 	t.Log("running component subscription apply")
 
 	feature := features.New("Custom ComponentSubscription").
-		Setup(setup.AddSchemeAndNamespace(v1alpha1.AddToScheme, namespace)).
+		Setup(setup.AddScheme(v1alpha1.AddToScheme)).
 		Setup(setup.AddComponentVersion(shared.Component{
 			Name:    "github.com/acme/podinfo",
 			Version: "v1.0.0",
