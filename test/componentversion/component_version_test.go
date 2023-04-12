@@ -32,7 +32,7 @@ func TestComponentVersionApply(t *testing.T) {
 	t.Log("running component version apply")
 
 	feature := features.New("Custom ComponentVersion").
-		Setup(setup.AddSchemeAndNamespace(v1alpha1.AddToScheme, namespace)).
+		Setup(setup.AddScheme(v1alpha1.AddToScheme)).
 		Setup(setup.AddComponentVersion(shared.Component{
 			Name:    "github.com/acme/podinfo",
 			Version: "v6.0.0",

@@ -2,7 +2,7 @@
 //
 // SPDX-License-Identifier: Apache-2.0
 
-package setup
+package assess
 
 import (
 	"context"
@@ -16,8 +16,8 @@ import (
 	"github.com/open-component-model/ocm-e2e-framework/shared"
 )
 
-// AddGitRepository creates a git repository for the test user.
-func AddGitRepository(repoName string) features.Func {
+// CheckRepoExists adds a check to verify that a repository exists
+func CheckRepoExists(repoName string) features.Func {
 	return func(ctx context.Context, t *testing.T, config *envconf.Config) context.Context {
 		t.Helper()
 
@@ -26,16 +26,10 @@ func AddGitRepository(repoName string) features.Func {
 			t.Fatal(fmt.Errorf("failed to create gitea client: %w", err))
 		}
 
-		repo, _, err := gclient.CreateRepo(gitea.CreateRepoOption{
-			AutoInit:      true,
-			Name:          repoName,
-			DefaultBranch: "main",
-		})
+		_, _, err = gclient.GetRepo(shared.Owner, repoName)
 		if err != nil {
-			t.Fatal(fmt.Errorf("failed to create repository: %w", err))
+			t.Fatal(fmt.Errorf("failed to find expected repository: %w", err))
 		}
-
-		t.Logf("successfully created repository at url %s", repo.CloneURL)
 
 		return ctx
 	}

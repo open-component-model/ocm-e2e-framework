@@ -6,7 +6,10 @@ package setup
 
 import (
 	"context"
+	"encoding/base64"
 	"fmt"
+	"os"
+	"path/filepath"
 	"testing"
 
 	"code.gitea.io/sdk/gitea"
@@ -16,8 +19,8 @@ import (
 	"github.com/open-component-model/ocm-e2e-framework/shared"
 )
 
-// AddGitRepository creates a git repository for the test user.
-func AddGitRepository(repoName string) features.Func {
+// AddFileToGitRepository adds a file to a git repository
+func AddFileToGitRepository(repoName, sourceFilepath, destFilepath string) features.Func {
 	return func(ctx context.Context, t *testing.T, config *envconf.Config) context.Context {
 		t.Helper()
 
@@ -26,16 +29,19 @@ func AddGitRepository(repoName string) features.Func {
 			t.Fatal(fmt.Errorf("failed to create gitea client: %w", err))
 		}
 
-		repo, _, err := gclient.CreateRepo(gitea.CreateRepoOption{
-			AutoInit:      true,
-			Name:          repoName,
-			DefaultBranch: "main",
-		})
+		data, err := os.ReadFile(filepath.Join("./testdata", sourceFilepath))
 		if err != nil {
-			t.Fatal(fmt.Errorf("failed to create repository: %w", err))
+			return nil
 		}
 
-		t.Logf("successfully created repository at url %s", repo.CloneURL)
+		_, _, err = gclient.CreateFile(shared.Owner, repoName, destFilepath, gitea.CreateFileOptions{
+			Content: base64.StdEncoding.EncodeToString(data),
+		})
+		if err != nil {
+			t.Fatal(fmt.Errorf("failed to add file to repository: %w", err))
+		}
+
+		t.Logf("successfully added %s to repository %s", destFilepath, repoName)
 
 		return ctx
 	}
