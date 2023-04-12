@@ -27,7 +27,7 @@ import (
 // internal values.
 var (
 	//go:embed private_git_key/id_25519
-	privateTestKey string
+	privateTestKey string //nolint:unused // this is for a later date
 	//go:embed gitea/gitea_deployment.yaml
 	giteaDeployment string
 	timeout         = time.Minute * 5

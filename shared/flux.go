@@ -9,12 +9,19 @@ import (
 	"github.com/fluxcd/flux2/v2/pkg/manifestgen"
 	"github.com/fluxcd/flux2/v2/pkg/manifestgen/install"
 	runclient "github.com/fluxcd/pkg/runtime/client"
-	"github.com/open-component-model/ocm-e2e-framework/internal/utils"
 	"k8s.io/cli-runtime/pkg/genericclioptions"
 	"sigs.k8s.io/e2e-framework/pkg/env"
 	"sigs.k8s.io/e2e-framework/pkg/envconf"
+
+	"github.com/open-component-model/ocm-e2e-framework/internal/utils"
 )
 
+const (
+	maximumQueriesPerSecond = 50.0
+	burst                   = 300
+)
+
+// InstallFlux creates a flux installation with a given version.
 func InstallFlux(version string) env.Func {
 	// add files to cluster
 	return func(ctx context.Context, cfg *envconf.Config) (context.Context, error) {
@@ -23,6 +30,7 @@ func InstallFlux(version string) env.Func {
 		if err != nil {
 			return ctx, err
 		}
+
 		defer os.RemoveAll(tmpDir)
 
 		opts := install.MakeDefaultOptions()
@@ -40,11 +48,11 @@ func InstallFlux(version string) env.Func {
 		kubeConfig := cfg.KubeconfigFile()
 		kfg := genericclioptions.ConfigFlags{KubeConfig: &kubeConfig}
 		runOpts := &runclient.Options{
-			QPS:   50.0,
-			Burst: 300,
+			QPS:   maximumQueriesPerSecond,
+			Burst: burst,
 		}
-		_, err = utils.Apply(ctx, &kfg, runOpts, tmpDir, filepath.Join(tmpDir, manifest.Path))
-		if err != nil {
+
+		if _, err = utils.Apply(ctx, &kfg, runOpts, tmpDir, filepath.Join(tmpDir, manifest.Path)); err != nil {
 			return ctx, fmt.Errorf("install apply failed: %w", err)
 		}
 

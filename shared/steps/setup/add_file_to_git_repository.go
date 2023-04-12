@@ -19,7 +19,7 @@ import (
 	"github.com/open-component-model/ocm-e2e-framework/shared"
 )
 
-// AddFileToGitRepository adds a file to a git repository
+// AddFileToGitRepository adds a file to a git repository.
 func AddFileToGitRepository(repoName, sourceFilepath, destFilepath string) features.Func {
 	return func(ctx context.Context, t *testing.T, config *envconf.Config) context.Context {
 		t.Helper()
