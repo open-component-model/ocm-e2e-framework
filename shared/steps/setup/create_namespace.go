@@ -14,17 +14,22 @@ import (
 	"sigs.k8s.io/e2e-framework/pkg/features"
 )
 
-// CreateNamespace creates the given namespace in the configured environment
+// CreateNamespace creates the given namespace in the configured environment.
 func CreateNamespace(name string) features.Func {
 	return func(ctx context.Context, t *testing.T, cfg *envconf.Config) context.Context {
+		t.Helper()
+
 		namespace := corev1.Namespace{ObjectMeta: metav1.ObjectMeta{Name: name}}
+
 		client, err := cfg.NewClient()
 		if err != nil {
 			t.Fail()
 		}
+
 		if err := client.Resources().Create(ctx, &namespace); err != nil {
 			t.Fail()
 		}
+
 		return ctx
 	}
 }

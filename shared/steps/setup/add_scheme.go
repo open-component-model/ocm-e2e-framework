@@ -16,7 +16,7 @@ import (
 
 // AddScheme provides a setup function to add the scheme to the client.
 // Consider renaming this to create a client and pass it over via the context.
-func AddScheme(addSchemeFunc func(scheme *runtime.Scheme) error) features.Func {
+func AddScheme(addSchemeFuncs ...func(scheme *runtime.Scheme) error) features.Func {
 	return func(ctx context.Context, t *testing.T, config *envconf.Config) context.Context {
 		t.Helper()
 
@@ -25,11 +25,11 @@ func AddScheme(addSchemeFunc func(scheme *runtime.Scheme) error) features.Func {
 			t.Fail()
 		}
 
-		if err := addSchemeFunc(r.GetScheme()); err != nil {
-			t.Fail()
+		for _, f := range addSchemeFuncs {
+			if err := f(r.GetScheme()); err != nil {
+				t.Fail()
+			}
 		}
-
-		// r.WithNamespace(namespace)
 
 		return ctx
 	}

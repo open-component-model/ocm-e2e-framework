@@ -13,12 +13,13 @@ import (
 	kustomizev1 "github.com/fluxcd/kustomize-controller/api/v1beta2"
 	"github.com/fluxcd/pkg/apis/meta"
 	sourcev1 "github.com/fluxcd/source-controller/api/v1beta2"
-	"github.com/open-component-model/ocm-e2e-framework/shared"
 	corev1 "k8s.io/api/core/v1"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"sigs.k8s.io/e2e-framework/klient/k8s/resources"
 	"sigs.k8s.io/e2e-framework/pkg/envconf"
 	"sigs.k8s.io/e2e-framework/pkg/features"
+
+	"github.com/open-component-model/ocm-e2e-framework/shared"
 )
 
 func AddFluxSyncForRepo(name, path, giteaNamespace string) features.Func {
@@ -42,6 +43,7 @@ func AddFluxSyncForRepo(name, path, giteaNamespace string) features.Func {
 
 		if err := r.Create(ctx, &tokenSecret); err != nil {
 			t.Error(err)
+
 			return ctx
 		}
 
@@ -68,6 +70,7 @@ func AddFluxSyncForRepo(name, path, giteaNamespace string) features.Func {
 
 		if err := r.Create(ctx, &gitRepo); err != nil {
 			t.Error(err)
+
 			return ctx
 		}
 
@@ -94,6 +97,7 @@ func AddFluxSyncForRepo(name, path, giteaNamespace string) features.Func {
 
 		if err := r.Create(ctx, &kust); err != nil {
 			t.Error(err)
+
 			return ctx
 		}
 
