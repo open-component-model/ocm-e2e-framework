@@ -4,9 +4,6 @@ metadata:
   name: git-sample
   namespace: ocm-system
 spec:
-  authRef:
-    name: git-secret
-    namespace: ocm-system
   branch: main
   commitTemplate:
     email: testy@mctestface.test
@@ -14,7 +11,7 @@ spec:
     name: Testy McTestface
   interval: 10m0s
   subPath: .
-  url: http://gitea.ocm-system.svc.cluster.local:3000/e2e-tester/test
   snapshotRef:
     name: podinfo-deployment
-    namespace: ocm-system
+  repositoryRef:
+    name: test-repository

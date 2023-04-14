@@ -22,6 +22,7 @@ import (
 	"sigs.k8s.io/e2e-framework/pkg/features"
 
 	"github.com/open-component-model/git-controller/apis/delivery/v1alpha1"
+	mpasv1alpha1 "github.com/open-component-model/git-controller/apis/mpas/v1alpha1"
 
 	"github.com/open-component-model/ocm-e2e-framework/shared"
 	"github.com/open-component-model/ocm-e2e-framework/shared/steps/assess"
@@ -37,7 +38,7 @@ func TestSyncApply(t *testing.T) {
 	}
 
 	feature := features.New("Custom Sync").
-		Setup(setup.AddScheme(v1alpha1.AddToScheme)).
+		Setup(setup.AddScheme(v1alpha1.AddToScheme, mpasv1alpha1.AddToScheme)).
 		Setup(setup.AddComponentVersion(shared.Component{
 			Name:    "github.com/acme/podinfo",
 			Version: "v6.0.0",
