@@ -1,17 +1,18 @@
 apiVersion: delivery.ocm.software/v1alpha1
 kind: Sync
 metadata:
-  name: git-sample
+  name: git-sample-with-pull-request
   namespace: ocm-system
 spec:
-  branch: main
   commitTemplate:
+    baseBranch: main
     email: testy@mctestface.test
     message: "Update made from git-controller"
     name: Testy McTestface
   interval: 10m0s
+  automaticPullRequestCreation: true
   subPath: .
   snapshotRef:
     name: podinfo-deployment
   repositoryRef:
-    name: test-repository
+    name: test-repository-2

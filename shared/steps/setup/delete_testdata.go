@@ -15,11 +15,11 @@ import (
 	"sigs.k8s.io/e2e-framework/pkg/features"
 )
 
-// ApplyTestData takes a pattern and applies that from a testdata location.
-func ApplyTestData(namespace, folder, pattern string) features.Func {
+// DeleteTestData takes a pattern and deletes that from a testdata location.
+func DeleteTestData(namespace, folder, pattern string) features.Func {
 	return func(ctx context.Context, t *testing.T, c *envconf.Config) context.Context {
 		t.Helper()
-		t.Log("applying test data...")
+		t.Log("deleting test data...")
 
 		r, err := resources.New(c.Client().RESTConfig())
 		if err != nil {
@@ -28,13 +28,13 @@ func ApplyTestData(namespace, folder, pattern string) features.Func {
 
 		if err := decoder.DecodeEachFile(
 			ctx, os.DirFS(folder), pattern,
-			decoder.CreateHandler(r),
+			decoder.DeleteHandler(r),
 			decoder.MutateNamespace(namespace),
 		); err != nil {
 			t.Fail()
 		}
 
-		t.Log("apply test data complete")
+		t.Log("deleting test data complete")
 
 		return ctx
 	}

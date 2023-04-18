@@ -32,12 +32,12 @@ import (
 func TestSyncApply(t *testing.T) {
 	t.Log("running git sync apply")
 
-	resourceContent, err := os.ReadFile(filepath.Join("testdata", "deployment.tar"))
+	resourceContent, err := os.ReadFile(filepath.Join("testdata_shared", "deployment.tar"))
 	if err != nil {
 		t.Fatal("test file not found")
 	}
 
-	feature := features.New("Custom Sync").
+	setupFeature := features.New("Setup Test System").
 		Setup(setup.AddScheme(v1alpha1.AddToScheme, mpasv1alpha1.AddToScheme)).
 		Setup(setup.AddComponentVersion(shared.Component{
 			Name:    "github.com/acme/podinfo",
@@ -47,7 +47,10 @@ func TestSyncApply(t *testing.T) {
 			Data: string(resourceContent),
 		})).
 		Setup(setup.AddGitRepository("test")).
-		Setup(setup.ApplyTestData(namespace, "*.yaml")).
+		Setup(setup.ApplyTestData(namespace, "testdata_shared", "*.yaml")).
+		Setup(setup.ApplyTestData(namespace, "testdata_with_normal_flow", "*.yaml")).Feature()
+
+	verifyState := features.New("Verify System State").
 		Assess("wait for git sync done condition", func(ctx context.Context, t *testing.T, cfg *envconf.Config) context.Context {
 			t.Helper()
 			t.Log("waiting for condition ready on the component version")
@@ -88,8 +91,82 @@ func TestSyncApply(t *testing.T) {
 
 			return ctx
 		}).Assess("check if content exists in repo",
-		assess.CheckRepoFileContent("test", "deployment.yaml", "this is my deployment")).
-		Teardown(setup.DeleteGitRepository("test")).Feature()
+		assess.CheckRepoFileContent("test", "deployment.yaml", "this is my deployment")).Feature()
 
-	testEnv.Test(t, feature)
+	teardownFeature := features.New("Cleanup Test System").Teardown(setup.DeleteGitRepository("test")).
+		Teardown(setup.DeleteTestData(namespace, "testdata_shared", "*.yaml")).
+		Teardown(setup.DeleteTestData(namespace, "testdata_with_normal_flow", "*.yaml")).Feature()
+
+	testEnv.Test(t, setupFeature, verifyState, teardownFeature)
+}
+
+func TestSyncApplyWithPullRequest(t *testing.T) {
+	t.Log("running git sync apply")
+
+	resourceContent, err := os.ReadFile(filepath.Join("testdata_shared", "deployment.tar"))
+	if err != nil {
+		t.Fatal("test file not found")
+	}
+
+	setupFeature := features.New("Apply Sync with Pull Request").
+		Setup(setup.AddScheme(v1alpha1.AddToScheme, mpasv1alpha1.AddToScheme)).
+		Setup(setup.AddComponentVersion(shared.Component{
+			Name:    "github.com/acme/podinfo",
+			Version: "v6.0.0",
+		}, "podinfo", shared.Resource{
+			Name: "deployment",
+			Data: string(resourceContent),
+		})).
+		Setup(setup.AddGitRepository("test-2")).
+		Setup(setup.ApplyTestData(namespace, "testdata_shared", "*.yaml")).
+		Setup(setup.ApplyTestData(namespace, "testdata_with_pull_request", "*.yaml")).Feature()
+
+	verifyState := features.New("Verify System State").
+		Assess("wait for git sync done condition", func(ctx context.Context, t *testing.T, cfg *envconf.Config) context.Context {
+			t.Helper()
+			t.Log("waiting for condition ready on the component version")
+			client, err := cfg.NewClient()
+			if err != nil {
+				t.Fail()
+			}
+
+			gitSync := &v1alpha1.Sync{
+				ObjectMeta: metav1.ObjectMeta{Name: "git-sample-with-pull-request", Namespace: cfg.Namespace()},
+			}
+
+			// wait for component version to be reconciled
+			err = wait.For(conditions.New(client.Resources()).ResourceMatch(gitSync, func(object k8s.Object) bool {
+				obj, ok := object.(*v1alpha1.Sync)
+				if !ok {
+					return false
+				}
+
+				return fconditions.IsTrue(obj, meta.ReadyCondition)
+			}), wait.WithTimeout(time.Minute*1))
+
+			if err != nil {
+				t.Fatal(err)
+			}
+
+			r, err := resources.New(cfg.Client().RESTConfig())
+			if err != nil {
+				t.Fail()
+			}
+
+			r.WithNamespace(namespace)
+			if err := r.Get(ctx, "git-sample-with-pull-request", namespace, gitSync); err != nil {
+				t.Fail()
+			}
+
+			t.Logf("got resource status %+v", gitSync.Status)
+
+			return ctx
+		}).Assess("check if content exists in repo", assess.CheckIfPullRequestExists("test-2", 1)).Feature()
+
+	teardownFeature := features.New("Teardown Test System").
+		Teardown(setup.DeleteGitRepository("test-2")).
+		Teardown(setup.DeleteTestData(namespace, "testdata_shared", "*.yaml")).
+		Teardown(setup.DeleteTestData(namespace, "testdata_with_pull_request", "*.yaml")).Feature()
+
+	testEnv.Test(t, setupFeature, verifyState, teardownFeature)
 }
