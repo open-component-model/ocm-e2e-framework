@@ -37,7 +37,7 @@ func TestComponentSubscribeApply(t *testing.T) {
 			Name:    "github.com/acme/podinfo",
 			Version: "v1.0.0",
 		}, "ocm-replication")).
-		Setup(setup.ApplyTestData(namespace, "*")).
+		Setup(setup.ApplyTestData(namespace, "testdata", "*")).
 		Assess("check if resource was created",
 			assess.ResourceWasCreated(
 				"componentsubscription-sample",

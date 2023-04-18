@@ -1,0 +1,18 @@
+apiVersion: delivery.ocm.software/v1alpha1
+kind: Sync
+metadata:
+  name: git-sample
+  namespace: ocm-system
+spec:
+  commitTemplate:
+    baseBranch: main
+    targetBranch: main
+    email: testy@mctestface.test
+    message: "Update made from git-controller"
+    name: Testy McTestface
+  interval: 10m0s
+  subPath: .
+  snapshotRef:
+    name: podinfo-deployment
+  repositoryRef:
+    name: test-repository

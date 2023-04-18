@@ -824,6 +824,8 @@ github.com/open-component-model/git-controller v0.1.1-0.20230414144802-0cb6f40da
 github.com/open-component-model/git-controller v0.1.1-0.20230414144802-0cb6f40da178/go.mod h1:84jgoVvTD/X96P5TOMeBbhw9QzGVPAN52qtNHxtgwgY=
 github.com/open-component-model/git-controller v0.1.1-0.20230414151726-631261d79688 h1:vOAQmWIDY25Esowj1Sv7rEx0vpwbbGdqSWWHVT2aPh4=
 github.com/open-component-model/git-controller v0.1.1-0.20230414151726-631261d79688/go.mod h1:84jgoVvTD/X96P5TOMeBbhw9QzGVPAN52qtNHxtgwgY=
+github.com/open-component-model/git-controller v0.1.1-0.20230417131524-ad2d5ae6f1c3 h1:PebktwvNlIVI6/Jz3d7ps6x7Tw+zYI/ul0obE6LzOsM=
+github.com/open-component-model/git-controller v0.1.1-0.20230417131524-ad2d5ae6f1c3/go.mod h1:gxAx3CO1s59hs6PGx4d9AjsbmDiWnwJMwiX9GWgaDmY=
 github.com/open-component-model/ocm v0.2.0-rc.1 h1:J5/C1aRG3x5UuvuH5lMDYvFIMNN75XY7teDYHLVIA4g=
 github.com/open-component-model/ocm v0.2.0-rc.1/go.mod h1:SzDUp1q7p/8hUf7sdHCx3qNzJzU6cyAAfJZMtBrJqAI=
 github.com/open-component-model/ocm-controller v0.5.0 h1:zlQKMFT8pfec5QmgHxokSkAB8XWJc7/fw2TDiL+gzr8=

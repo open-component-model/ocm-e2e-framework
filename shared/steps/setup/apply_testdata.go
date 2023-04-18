@@ -16,7 +16,7 @@ import (
 )
 
 // ApplyTestData takes a pattern and applies that from a testdata location.
-func ApplyTestData(namespace, pattern string) features.Func {
+func ApplyTestData(namespace, folder, pattern string) features.Func {
 	return func(ctx context.Context, t *testing.T, c *envconf.Config) context.Context {
 		t.Helper()
 		t.Log("applying test data...")
@@ -27,7 +27,7 @@ func ApplyTestData(namespace, pattern string) features.Func {
 		}
 
 		if err := decoder.DecodeEachFile(
-			ctx, os.DirFS("./testdata"), pattern,
+			ctx, os.DirFS(folder), pattern,
 			decoder.CreateHandler(r),
 			decoder.MutateNamespace(namespace),
 		); err != nil {
