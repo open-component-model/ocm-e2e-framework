@@ -4,6 +4,8 @@ on:
   workflow_dispatch: {}
   schedule:
     - cron: 0 0 * * 1 # every Monday at 00:00
+  repository_dispatch:
+    types: component.controlplane.mpas::updated
 
 permissions:
   contents: read # for actions/checkout to fetch code
