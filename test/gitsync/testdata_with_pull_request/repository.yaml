@@ -1,7 +1,7 @@
 apiVersion: mpas.ocm.software/v1alpha1
 kind: Repository
 metadata:
-  name: test-repository
+  name: test-repository-2
 spec:
   credentials:
     secretRef:

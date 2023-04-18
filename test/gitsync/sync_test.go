@@ -90,7 +90,8 @@ func TestSyncApply(t *testing.T) {
 			return ctx
 		}).Assess("check if content exists in repo",
 		assess.CheckRepoFileContent("test", "deployment.yaml", "this is my deployment")).
-		Teardown(setup.DeleteGitRepository("test")).Feature()
+		Teardown(setup.DeleteGitRepository("test")).
+		Teardown(setup.DeleteTestData(namespace, "testdata_shared", "*.yaml")).Feature()
 
 	testEnv.Test(t, feature)
 }
