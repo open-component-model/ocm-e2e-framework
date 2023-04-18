@@ -50,7 +50,7 @@ func TestSyncApply(t *testing.T) {
 		Setup(setup.ApplyTestData(namespace, "testdata_shared", "*.yaml")).
 		Setup(setup.ApplyTestData(namespace, "testdata_with_normal_flow", "*.yaml")).Feature()
 
-	assessFeature := features.New("Assess System State").
+	verifyState := features.New("Verify System State").
 		Assess("wait for git sync done condition", func(ctx context.Context, t *testing.T, cfg *envconf.Config) context.Context {
 			t.Helper()
 			t.Log("waiting for condition ready on the component version")
@@ -97,7 +97,7 @@ func TestSyncApply(t *testing.T) {
 		Teardown(setup.DeleteTestData(namespace, "testdata_shared", "*.yaml")).
 		Teardown(setup.DeleteTestData(namespace, "testdata_with_normal_flow", "*.yaml")).Feature()
 
-	testEnv.Test(t, setupFeature, assessFeature, teardownFeature)
+	testEnv.Test(t, setupFeature, verifyState, teardownFeature)
 }
 
 func TestSyncApplyWithPullRequest(t *testing.T) {
@@ -121,7 +121,7 @@ func TestSyncApplyWithPullRequest(t *testing.T) {
 		Setup(setup.ApplyTestData(namespace, "testdata_shared", "*.yaml")).
 		Setup(setup.ApplyTestData(namespace, "testdata_with_pull_request", "*.yaml")).Feature()
 
-	assessFeature := features.New("Assess test system").
+	verifyState := features.New("Verify System State").
 		Assess("wait for git sync done condition", func(ctx context.Context, t *testing.T, cfg *envconf.Config) context.Context {
 			t.Helper()
 			t.Log("waiting for condition ready on the component version")
@@ -163,10 +163,10 @@ func TestSyncApplyWithPullRequest(t *testing.T) {
 			return ctx
 		}).Assess("check if content exists in repo", assess.CheckIfPullRequestExists("test-2", 1)).Feature()
 
-	teardownFeature := features.New("Teardown test system").
+	teardownFeature := features.New("Teardown Test System").
 		Teardown(setup.DeleteGitRepository("test-2")).
 		Teardown(setup.DeleteTestData(namespace, "testdata_shared", "*.yaml")).
 		Teardown(setup.DeleteTestData(namespace, "testdata_with_pull_request", "*.yaml")).Feature()
 
-	testEnv.Test(t, setupFeature, assessFeature, teardownFeature)
+	testEnv.Test(t, setupFeature, verifyState, teardownFeature)
 }

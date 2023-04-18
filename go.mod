@@ -15,7 +15,7 @@ require (
 	github.com/fluxcd/pkg/ssa v0.27.0
 	github.com/fluxcd/pkg/version v0.2.1
 	github.com/fluxcd/source-controller/api v1.0.0-rc.1
-	github.com/open-component-model/git-controller v0.1.1-0.20230417131524-ad2d5ae6f1c3
+	github.com/open-component-model/git-controller v0.1.1-0.20230418111758-12e52c632dc4
 	github.com/open-component-model/ocm v0.2.0-rc.1
 	github.com/open-component-model/replication-controller v0.1.0
 	k8s.io/apiextensions-apiserver v0.26.3
