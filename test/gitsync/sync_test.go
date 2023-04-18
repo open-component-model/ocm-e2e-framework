@@ -93,9 +93,54 @@ func TestSyncApply(t *testing.T) {
 		}).Assess("check if content exists in repo",
 		assess.CheckRepoFileContent("test", "deployment.yaml", "this is my deployment")).Feature()
 
-	teardownFeature := features.New("Cleanup Test System").Teardown(setup.DeleteGitRepository("test")).
+	teardownFeature := features.New("Cleanup Test System").
+		Teardown(setup.DeleteGitRepository("test")).
 		Teardown(setup.DeleteTestData(namespace, "testdata_shared", "*.yaml")).
 		Teardown(setup.DeleteTestData(namespace, "testdata_with_normal_flow", "*.yaml")).Feature()
+
+	testEnv.Test(t, setupFeature, verifyState, teardownFeature)
+}
+
+func TestRepositoryWithMaintainers(t *testing.T) {
+	t.Log("running git repository apply")
+
+	setupFeature := features.New("Setup Test System").
+		Setup(setup.AddScheme(v1alpha1.AddToScheme, mpasv1alpha1.AddToScheme)).
+		Setup(setup.ApplyTestData(namespace, "testdata_repository_only", "*.yaml")).Feature()
+
+	verifyState := features.New("Verify System State").
+		Assess("wait for repository done condition", func(ctx context.Context, t *testing.T, cfg *envconf.Config) context.Context {
+			t.Helper()
+			t.Log("waiting for condition ready on the component version")
+			client, err := cfg.NewClient()
+			if err != nil {
+				t.Fail()
+			}
+
+			repository := &mpasv1alpha1.Repository{
+				ObjectMeta: metav1.ObjectMeta{Name: "test-repository-maintainers", Namespace: cfg.Namespace()},
+			}
+
+			// wait for component version to be reconciled
+			err = wait.For(conditions.New(client.Resources()).ResourceMatch(repository, func(object k8s.Object) bool {
+				obj, ok := object.(*mpasv1alpha1.Repository)
+				if !ok {
+					return false
+				}
+
+				return fconditions.IsTrue(obj, meta.ReadyCondition)
+			}), wait.WithTimeout(time.Minute*1))
+			if err != nil {
+				t.Fatal(err)
+			}
+
+			return ctx
+		}).Assess("check if content exists in repo",
+		assess.CheckRepoFileContent("test-3", "CODEOWNERS", "@e2e-tester")).Feature()
+
+	teardownFeature := features.New("Cleanup Test System").
+		Teardown(setup.DeleteGitRepository("test-3")).
+		Teardown(setup.DeleteTestData(namespace, "testdata_repository_only", "*.yaml")).Feature()
 
 	testEnv.Test(t, setupFeature, verifyState, teardownFeature)
 }
