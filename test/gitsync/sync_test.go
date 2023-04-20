@@ -135,8 +135,18 @@ func TestRepositoryWithMaintainers(t *testing.T) {
 			}
 
 			return ctx
-		}).Assess("check if content exists in repo",
-		assess.CheckRepoFileContent("test-3", "CODEOWNERS", "@e2e-tester")).Feature()
+		}).
+		Assess("check if CODEOWNERS exists in repo",
+			assess.CheckRepoFileContent("test-3", "CODEOWNERS", "@e2e-tester")).
+		Assess("check if products exists in repo",
+			assess.CheckRepoFileContent("test-3", "products/.keep", "")).
+		Assess("check if targets exists in repo",
+			assess.CheckRepoFileContent("test-3", "targets/.keep", "")).
+		Assess("check if subscriptions exists in repo",
+			assess.CheckRepoFileContent("test-3", "subscriptions/.keep", "")).
+		Assess("check if generators exists in repo",
+			assess.CheckRepoFileContent("test-3", "generators/.keep", "")).
+		Feature()
 
 	teardownFeature := features.New("Cleanup Test System").
 		Teardown(setup.DeleteGitRepository("test-3")).
