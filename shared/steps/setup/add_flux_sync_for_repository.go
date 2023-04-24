@@ -61,7 +61,7 @@ func AddFluxSyncForRepo(name, path, giteaNamespace string) features.Func {
 					Name: tokenSecret.GetName(),
 				},
 				Interval: v1.Duration{
-					Duration: time.Hour,
+					Duration: time.Second * 5,
 				},
 				Reference: &sourcev1.GitRepositoryRef{
 					Branch: "main",
@@ -84,7 +84,7 @@ func AddFluxSyncForRepo(name, path, giteaNamespace string) features.Func {
 			},
 			Spec: kustomizev1.KustomizationSpec{
 				Interval: v1.Duration{
-					Duration: time.Hour,
+					Duration: time.Second * 5,
 				},
 				Path:  path,
 				Prune: true,
