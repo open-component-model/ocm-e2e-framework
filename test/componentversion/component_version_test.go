@@ -33,12 +33,19 @@ func TestComponentVersionApply(t *testing.T) {
 
 	feature := features.New("Custom ComponentVersion").
 		Setup(setup.AddScheme(v1alpha1.AddToScheme)).
-		Setup(setup.AddComponentVersion(shared.Component{
-			Name:    "github.com/acme/podinfo",
-			Version: "v6.0.0",
-		}, "ocm-podinfo")).
+		Setup(setup.AddComponentVersions(setup.Component{
+			Component: shared.Component{
+				Name:    "github.com/acme/podinfo",
+				Version: "v6.0.0",
+			},
+			Repository: "ocm-podinfo",
+		})).
 		Setup(setup.ApplyTestData(namespace, "testdata", "*")).
-		Assess("check if resource was created", assess.ResourceWasCreated("podinfo", namespace, &v1alpha1.ComponentVersion{})).
+		Assess("check if resource was created", assess.ResourceWasCreated(assess.Object{
+			Name:      "podinfo",
+			Namespace: namespace,
+			Obj:       &v1alpha1.ComponentVersion{},
+		})).
 		Assess("wait for condition to be successful", func(ctx context.Context, t *testing.T, cfg *envconf.Config) context.Context {
 			t.Helper()
 			t.Log("waiting for condition ready on the component version")

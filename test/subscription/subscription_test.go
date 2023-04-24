@@ -33,17 +33,20 @@ func TestComponentSubscribeApply(t *testing.T) {
 
 	feature := features.New("Custom ComponentSubscription").
 		Setup(setup.AddScheme(v1alpha1.AddToScheme)).
-		Setup(setup.AddComponentVersion(shared.Component{
-			Name:    "github.com/acme/podinfo",
-			Version: "v1.0.0",
-		}, "ocm-replication")).
+		Setup(setup.AddComponentVersions(setup.Component{
+			Component: shared.Component{
+				Name:    "github.com/acme/podinfo",
+				Version: "v1.0.0",
+			},
+			Repository: "ocm-replication",
+		})).
 		Setup(setup.ApplyTestData(namespace, "testdata", "*")).
 		Assess("check if resource was created",
-			assess.ResourceWasCreated(
-				"componentsubscription-sample",
-				namespace,
-				&v1alpha1.ComponentSubscription{},
-			)).
+			assess.ResourceWasCreated(assess.Object{
+				Name:      "componentsubscription-sample",
+				Namespace: namespace,
+				Obj:       &v1alpha1.ComponentSubscription{},
+			})).
 		Assess("wait for condition to be successful", func(ctx context.Context, t *testing.T, cfg *envconf.Config) context.Context {
 			t.Helper()
 			t.Log("waiting for condition ready on the component version")

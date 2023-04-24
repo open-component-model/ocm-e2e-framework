@@ -16,8 +16,15 @@ import (
 	"github.com/open-component-model/ocm-e2e-framework/shared"
 )
 
+// File contains details about a file that needs to be checked in a repository.
+type File struct {
+	Repository string
+	Path       string
+	Content    string
+}
+
 // CheckRepoFileContent adds a check to verify that content of a pushed file has the expected content.
-func CheckRepoFileContent(repoName, filename, expectedContent string) features.Func {
+func CheckRepoFileContent(files ...File) features.Func {
 	return func(ctx context.Context, t *testing.T, config *envconf.Config) context.Context {
 		t.Helper()
 
@@ -26,13 +33,15 @@ func CheckRepoFileContent(repoName, filename, expectedContent string) features.F
 			t.Fatal(fmt.Errorf("failed to create gitea client: %w", err))
 		}
 
-		content, _, err := gclient.GetFile(shared.Owner, repoName, "main", filename)
-		if err != nil {
-			t.Fatal(fmt.Errorf("failed to find expected file: %w", err))
-		}
+		for _, file := range files {
+			content, _, err := gclient.GetFile(shared.Owner, file.Repository, "main", file.Path)
+			if err != nil {
+				t.Fatal(fmt.Errorf("failed to find expected file: %w", err))
+			}
 
-		if expectedContent != string(content) {
-			t.Fatalf("expected content did not equal actual: %s", string(content))
+			if file.Content != string(content) {
+				t.Fatalf("expected content did not equal actual: %s", string(content))
+			}
 		}
 
 		return ctx

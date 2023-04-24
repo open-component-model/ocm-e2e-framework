@@ -14,8 +14,15 @@ import (
 	"sigs.k8s.io/e2e-framework/pkg/features"
 )
 
+// Object contains information about the object to check existence on.
+type Object struct {
+	Name      string
+	Namespace string
+	Obj       k8s.Object
+}
+
 // ResourceWasCreated is an assess step to check if a given resource was created.
-func ResourceWasCreated(name, namespace string, obj k8s.Object) features.Func {
+func ResourceWasCreated(objs ...Object) features.Func {
 	return func(ctx context.Context, t *testing.T, c *envconf.Config) context.Context {
 		t.Helper()
 		t.Log("check if resources are created")
@@ -25,11 +32,14 @@ func ResourceWasCreated(name, namespace string, obj k8s.Object) features.Func {
 			t.Fail()
 		}
 
-		if err := r.Get(ctx, name, namespace, obj); err != nil {
-			t.Fail()
+		for _, obj := range objs {
+			if err := r.Get(ctx, obj.Name, obj.Namespace, obj.Obj); err != nil {
+				t.Fail()
+			}
+
 		}
 
-		t.Log("resource successfully created")
+		t.Log("resources successfully created")
 
 		return ctx
 	}
