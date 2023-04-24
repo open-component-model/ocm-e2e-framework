@@ -22,6 +22,7 @@ import (
 	"github.com/open-component-model/ocm-e2e-framework/shared"
 )
 
+// AddFluxSyncForRepo adds a sync request for a repository for flux to reconcile.
 func AddFluxSyncForRepo(name, path, giteaNamespace string) features.Func {
 	return func(ctx context.Context, t *testing.T, config *envconf.Config) context.Context {
 		t.Helper()

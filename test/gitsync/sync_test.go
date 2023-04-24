@@ -39,12 +39,18 @@ func TestSyncApply(t *testing.T) {
 
 	setupFeature := features.New("Setup Test System").
 		Setup(setup.AddScheme(v1alpha1.AddToScheme, mpasv1alpha1.AddToScheme)).
-		Setup(setup.AddComponentVersion(shared.Component{
-			Name:    "github.com/acme/podinfo",
-			Version: "v6.0.0",
-		}, "podinfo", shared.Resource{
-			Name: "deployment",
-			Data: string(resourceContent),
+		Setup(setup.AddComponentVersions(setup.Component{
+			Component: shared.Component{
+				Name:    "github.com/acme/podinfo",
+				Version: "v6.0.0",
+			},
+			Repository: "podinfo",
+			Resources: []shared.Resource{
+				{
+					Name: "deployment",
+					Data: string(resourceContent),
+				},
+			},
 		})).
 		Setup(setup.AddGitRepository("test")).
 		Setup(setup.ApplyTestData(namespace, "testdata_shared", "*.yaml")).
@@ -91,7 +97,11 @@ func TestSyncApply(t *testing.T) {
 
 			return ctx
 		}).Assess("check if content exists in repo",
-		assess.CheckRepoFileContent("test", "deployment.yaml", "this is my deployment")).Feature()
+		assess.CheckRepoFileContent(assess.File{
+			Repository: "test",
+			Path:       "deployment.yaml",
+			Content:    "this is my deployment",
+		})).Feature()
 
 	teardownFeature := features.New("Cleanup Test System").
 		Teardown(setup.DeleteGitRepository("test")).
@@ -136,17 +146,24 @@ func TestRepositoryWithMaintainers(t *testing.T) {
 
 			return ctx
 		}).
-		Assess("check if CODEOWNERS exists in repo",
-			assess.CheckRepoFileContent("test-3", "CODEOWNERS", "@e2e-tester")).
-		Assess("check if products exists in repo",
-			assess.CheckRepoFileContent("test-3", "products/.keep", "")).
-		Assess("check if targets exists in repo",
-			assess.CheckRepoFileContent("test-3", "targets/.keep", "")).
-		Assess("check if subscriptions exists in repo",
-			assess.CheckRepoFileContent("test-3", "subscriptions/.keep", "")).
-		Assess("check if generators exists in repo",
-			assess.CheckRepoFileContent("test-3", "generators/.keep", "")).
-		Feature()
+		Assess("check if files are in the repo",
+			assess.CheckRepoFileContent(assess.File{
+				Repository: "test-3",
+				Path:       "CODEOWNERS",
+				Content:    "@e2e-tester",
+			}, assess.File{
+				Repository: "test-3",
+				Path:       "products/.keep",
+			}, assess.File{
+				Repository: "test-3",
+				Path:       "targets/.keep", Content: "",
+			}, assess.File{
+				Repository: "test-3",
+				Path:       "subscriptions/.keep",
+			}, assess.File{
+				Repository: "test-3",
+				Path:       "generators/.keep",
+			})).Feature()
 
 	teardownFeature := features.New("Cleanup Test System").
 		Teardown(setup.DeleteGitRepository("test-3")).
@@ -165,12 +182,18 @@ func TestSyncApplyWithPullRequest(t *testing.T) {
 
 	setupFeature := features.New("Apply Sync with Pull Request").
 		Setup(setup.AddScheme(v1alpha1.AddToScheme, mpasv1alpha1.AddToScheme)).
-		Setup(setup.AddComponentVersion(shared.Component{
-			Name:    "github.com/acme/podinfo",
-			Version: "v6.0.0",
-		}, "podinfo", shared.Resource{
-			Name: "deployment",
-			Data: string(resourceContent),
+		Setup(setup.AddComponentVersions(setup.Component{
+			Component: shared.Component{
+				Name:    "github.com/acme/podinfo",
+				Version: "v6.0.0",
+			},
+			Repository: "podinfo",
+			Resources: []shared.Resource{
+				{
+					Name: "deployment",
+					Data: string(resourceContent),
+				},
+			},
 		})).
 		Setup(setup.AddGitRepository("test-2")).
 		Setup(setup.ApplyTestData(namespace, "testdata_shared", "*.yaml")).

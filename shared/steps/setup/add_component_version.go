@@ -14,13 +14,22 @@ import (
 	"github.com/open-component-model/ocm-e2e-framework/shared"
 )
 
-// AddComponentVersion defines a setup step for tests to use.
-func AddComponentVersion(component shared.Component, repository string, resources ...shared.Resource) features.Func {
+// Component contains information about a component to add.
+type Component struct {
+	Component  shared.Component
+	Repository string
+	Resources  []shared.Resource
+}
+
+// AddComponentVersions defines a list of component versions to add.
+func AddComponentVersions(components ...Component) features.Func {
 	return func(ctx context.Context, t *testing.T, config *envconf.Config) context.Context {
 		t.Helper()
 
-		if err := shared.AddComponentVersionToRepository(component, repository, resources...); err != nil {
-			t.Fatal(err)
+		for _, c := range components {
+			if err := shared.AddComponentVersionToRepository(c.Component, c.Repository, c.Resources...); err != nil {
+				t.Fatal(err)
+			}
 		}
 
 		return ctx
