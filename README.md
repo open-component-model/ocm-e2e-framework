@@ -166,3 +166,10 @@ Then, this feature can be executed together with others.
 ```go
 	testEnv.TestInParallel(t, createDeployment, checkDeployment, deleteDeployment)
 ```
+
+## Using ocm-e2e-framework as a library
+
+## Release Process
+
+To release a new version of this library, simply make sure everything is pushed that you would like to release, than
+push a new tag. The release job should take care of the rest.
