@@ -10,7 +10,6 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
-	"runtime"
 	"strings"
 	"time"
 
@@ -46,7 +45,10 @@ func RunTiltForControllers(controllers ...string) env.Func {
 
 		defer cancel()
 
-		_, dir, _, _ := runtime.Caller(0)
+		dir, err := os.Getwd()
+		if err != nil {
+			return ctx, fmt.Errorf("failed to get working directory: %w", err)
+		}
 
 		for _, controller := range controllers {
 			path, err := lookForController(controller, dir)
