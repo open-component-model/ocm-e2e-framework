@@ -46,14 +46,12 @@ func TestSyncApply(t *testing.T) {
 				Version: "v6.0.0",
 			},
 			Repository: "podinfo",
-			CreateOptions: []shared.CreateOptions{
-				{
-					Resource: &shared.Resource{
-						Name: "deployment",
-						Data: string(resourceContent),
-						Type: resourcetypes.BLOB,
-					},
-				},
+			ComponentVersionModifications: []shared.ComponentModification{
+				shared.BlobResource(shared.Resource{
+					Name: "deployment",
+					Data: string(resourceContent),
+					Type: resourcetypes.BLOB,
+				}),
 			},
 		})).
 		Setup(setup.AddGitRepository("test")).
@@ -192,14 +190,12 @@ func TestSyncApplyWithPullRequest(t *testing.T) {
 				Version: "v6.0.0",
 			},
 			Repository: "podinfo",
-			CreateOptions: []shared.CreateOptions{
-				{
-					Resource: &shared.Resource{
-						Name: "deployment",
-						Data: string(resourceContent),
-						Type: resourcetypes.BLOB,
-					},
-				},
+			ComponentVersionModifications: []shared.ComponentModification{
+				shared.BlobResource(shared.Resource{
+					Name: "deployment",
+					Data: string(resourceContent),
+					Type: resourcetypes.BLOB,
+				}),
 			},
 		})).
 		Setup(setup.AddGitRepository("test-2")).

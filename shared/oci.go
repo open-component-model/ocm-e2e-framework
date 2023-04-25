@@ -10,6 +10,7 @@ import (
 
 	"github.com/open-component-model/ocm/pkg/common/accessio"
 	"github.com/open-component-model/ocm/pkg/contexts/ocm"
+	"github.com/open-component-model/ocm/pkg/contexts/ocm/accessmethods/ociartifact"
 	"github.com/open-component-model/ocm/pkg/contexts/ocm/attrs/signingattr"
 	"github.com/open-component-model/ocm/pkg/contexts/ocm/compdesc"
 	ocmmetav1 "github.com/open-component-model/ocm/pkg/contexts/ocm/compdesc/meta/v1"
@@ -57,9 +58,57 @@ type Component struct {
 	Sign    *Sign
 }
 
+// BlobResource creates a blob type resource for local access.
+func BlobResource(resource Resource) ComponentModification {
+	return func(compvers ocm.ComponentVersionAccess) error {
+		return compvers.SetResourceBlob(
+			&compdesc.ResourceMeta{
+				ElementMeta: compdesc.ElementMeta{
+					Name:    resource.Name,
+					Version: resource.Version,
+				},
+				Type:     resource.Type,
+				Relation: ocmmetav1.LocalRelation,
+			},
+			accessio.BlobAccessForString(mime.MIME_TEXT, resource.Data),
+			"", nil,
+		)
+	}
+}
+
+// ImageRefResource creates an image reference type resource.
+func ImageRefResource(ref string, resource Resource) ComponentModification {
+	return func(compvers ocm.ComponentVersionAccess) error {
+		return compvers.SetResource(&compdesc.ResourceMeta{
+			ElementMeta: compdesc.ElementMeta{
+				Name:    resource.Name,
+				Version: resource.Version,
+			},
+			Type:     resource.Type,
+			Relation: ocmmetav1.ExternalRelation,
+		}, ociartifact.New(ref))
+	}
+}
+
+// ComponentVersionRef creates a component version reference for the given component version.
+func ComponentVersionRef(ref ComponentRef) ComponentModification {
+	return func(compvers ocm.ComponentVersionAccess) error {
+		return compvers.SetReference(&compdesc.ComponentReference{
+			ElementMeta: compdesc.ElementMeta{
+				Name:    ref.Name,
+				Version: ref.Version,
+			},
+			ComponentName: ref.ComponentName,
+		})
+	}
+}
+
+// ComponentModification defines functions that can modify the generated component version.
+type ComponentModification func(compvers ocm.ComponentVersionAccess) error
+
 // AddComponentVersionToRepository takes a component description and optional resources. Then pushes that component
 // into the locally forwarded registry.
-func AddComponentVersionToRepository(component Component, repository string, opts ...CreateOptions) error {
+func AddComponentVersionToRepository(component Component, repository string, componentModifications ...ComponentModification) error {
 	baseURL := "http://127.0.0.1:5000/" + repository
 	octx := ocm.ForContext(context.Background())
 
@@ -82,34 +131,9 @@ func AddComponentVersionToRepository(component Component, repository string, opt
 
 	defer compvers.Close()
 
-	for _, opt := range opts {
-		if opt.Resource != nil {
-			if err := compvers.SetResourceBlob(
-				&compdesc.ResourceMeta{
-					ElementMeta: compdesc.ElementMeta{
-						Name:    opt.Resource.Name,
-						Version: opt.Resource.Version,
-					},
-					Type:     opt.Resource.Type,
-					Relation: ocmmetav1.LocalRelation,
-				},
-				accessio.BlobAccessForString(mime.MIME_TEXT, opt.Resource.Data),
-				"", nil,
-			); err != nil {
-				return fmt.Errorf("failed to set resource blob: %w", err)
-			}
-		}
-
-		if opt.ComponentRef != nil {
-			if err := compvers.SetReference(&compdesc.ComponentReference{
-				ElementMeta: compdesc.ElementMeta{
-					Name:    opt.ComponentRef.Name,
-					Version: opt.ComponentRef.Version,
-				},
-				ComponentName: opt.ComponentRef.ComponentName,
-			}); err != nil {
-				return fmt.Errorf("failed to add component reference: %w", err)
-			}
+	for _, modify := range componentModifications {
+		if err := modify(compvers); err != nil {
+			return fmt.Errorf("failed to modify component version: %w", err)
 		}
 	}
 
