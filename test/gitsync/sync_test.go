@@ -13,6 +13,7 @@ import (
 
 	"github.com/fluxcd/pkg/apis/meta"
 	fconditions "github.com/fluxcd/pkg/runtime/conditions"
+	"github.com/open-component-model/ocm/pkg/contexts/ocm/resourcetypes"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"sigs.k8s.io/e2e-framework/klient/k8s"
 	"sigs.k8s.io/e2e-framework/klient/k8s/resources"
@@ -45,10 +46,13 @@ func TestSyncApply(t *testing.T) {
 				Version: "v6.0.0",
 			},
 			Repository: "podinfo",
-			Resources: []shared.Resource{
+			CreateOptions: []shared.CreateOptions{
 				{
-					Name: "deployment",
-					Data: string(resourceContent),
+					Resource: &shared.Resource{
+						Name: "deployment",
+						Data: string(resourceContent),
+						Type: resourcetypes.BLOB,
+					},
 				},
 			},
 		})).
@@ -188,10 +192,13 @@ func TestSyncApplyWithPullRequest(t *testing.T) {
 				Version: "v6.0.0",
 			},
 			Repository: "podinfo",
-			Resources: []shared.Resource{
+			CreateOptions: []shared.CreateOptions{
 				{
-					Name: "deployment",
-					Data: string(resourceContent),
+					Resource: &shared.Resource{
+						Name: "deployment",
+						Data: string(resourceContent),
+						Type: resourcetypes.BLOB,
+					},
 				},
 			},
 		})).

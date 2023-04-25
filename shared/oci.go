@@ -14,7 +14,6 @@ import (
 	"github.com/open-component-model/ocm/pkg/contexts/ocm/compdesc"
 	ocmmetav1 "github.com/open-component-model/ocm/pkg/contexts/ocm/compdesc/meta/v1"
 	ocmreg "github.com/open-component-model/ocm/pkg/contexts/ocm/repositories/ocireg"
-	"github.com/open-component-model/ocm/pkg/contexts/ocm/resourcetypes"
 	"github.com/open-component-model/ocm/pkg/contexts/ocm/signing"
 	"github.com/open-component-model/ocm/pkg/mime"
 	ocmsigning "github.com/open-component-model/ocm/pkg/signing"
@@ -25,11 +24,23 @@ const (
 	SignAlgo = rsa.Algorithm
 )
 
-// Resource presents a simple layout for a resource that AddComponentVersionToRepository will use.
 type Resource struct {
 	Name    string
 	Version string
 	Data    string
+	Type    string
+}
+
+type ComponentRef struct {
+	Name          string
+	Version       string
+	ComponentName string
+}
+
+// CreateOptions presents a simple layout for a resource that AddComponentVersionToRepository will use.
+type CreateOptions struct {
+	Resource     *Resource
+	ComponentRef *ComponentRef
 }
 
 // Sign defines the two needed values to perform a component signing.
@@ -48,7 +59,7 @@ type Component struct {
 
 // AddComponentVersionToRepository takes a component description and optional resources. Then pushes that component
 // into the locally forwarded registry.
-func AddComponentVersionToRepository(component Component, repository string, resources ...Resource) error {
+func AddComponentVersionToRepository(component Component, repository string, opts ...CreateOptions) error {
 	baseURL := "http://127.0.0.1:5000/" + repository
 	octx := ocm.ForContext(context.Background())
 
@@ -71,21 +82,34 @@ func AddComponentVersionToRepository(component Component, repository string, res
 
 	defer compvers.Close()
 
-	for _, resource := range resources {
-		err = compvers.SetResourceBlob(
-			&compdesc.ResourceMeta{
-				ElementMeta: compdesc.ElementMeta{
-					Name:    resource.Name,
-					Version: resource.Version,
+	for _, opt := range opts {
+		if opt.Resource != nil {
+			if err := compvers.SetResourceBlob(
+				&compdesc.ResourceMeta{
+					ElementMeta: compdesc.ElementMeta{
+						Name:    opt.Resource.Name,
+						Version: opt.Resource.Version,
+					},
+					Type:     opt.Resource.Type,
+					Relation: ocmmetav1.LocalRelation,
 				},
-				Type:     resourcetypes.BLOB,
-				Relation: ocmmetav1.LocalRelation,
-			},
-			accessio.BlobAccessForString(mime.MIME_TEXT, resource.Data),
-			"", nil,
-		)
-		if err != nil {
-			return fmt.Errorf("failed to set resource blob: %w", err)
+				accessio.BlobAccessForString(mime.MIME_TEXT, opt.Resource.Data),
+				"", nil,
+			); err != nil {
+				return fmt.Errorf("failed to set resource blob: %w", err)
+			}
+		}
+
+		if opt.ComponentRef != nil {
+			if err := compvers.SetReference(&compdesc.ComponentReference{
+				ElementMeta: compdesc.ElementMeta{
+					Name:    opt.ComponentRef.Name,
+					Version: opt.ComponentRef.Version,
+				},
+				ComponentName: opt.ComponentRef.ComponentName,
+			}); err != nil {
+				return fmt.Errorf("failed to add component reference: %w", err)
+			}
 		}
 	}
 
