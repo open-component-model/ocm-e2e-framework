@@ -16,9 +16,9 @@ import (
 
 // Component contains information about a component to add.
 type Component struct {
-	Component     shared.Component
-	Repository    string
-	CreateOptions []shared.CreateOptions
+	Component                     shared.Component
+	Repository                    string
+	ComponentVersionModifications []shared.ComponentModification
 }
 
 // AddComponentVersions defines a list of component versions to add.
@@ -27,7 +27,7 @@ func AddComponentVersions(components ...Component) features.Func {
 		t.Helper()
 
 		for _, c := range components {
-			if err := shared.AddComponentVersionToRepository(c.Component, c.Repository, c.CreateOptions...); err != nil {
+			if err := shared.AddComponentVersionToRepository(c.Component, c.Repository, c.ComponentVersionModifications...); err != nil {
 				t.Fatal(err)
 			}
 		}
