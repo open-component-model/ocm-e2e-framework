@@ -23,7 +23,7 @@ func ApplyTestData(namespace, folder, pattern string) features.Func {
 
 		r, err := resources.New(c.Client().RESTConfig())
 		if err != nil {
-			t.Fail()
+			t.Fatal(err)
 		}
 
 		if err := decoder.DecodeEachFile(
@@ -31,7 +31,7 @@ func ApplyTestData(namespace, folder, pattern string) features.Func {
 			decoder.CreateHandler(r),
 			decoder.MutateNamespace(namespace),
 		); err != nil {
-			t.Fail()
+			t.Fatal(err)
 		}
 
 		t.Log("apply test data complete")
