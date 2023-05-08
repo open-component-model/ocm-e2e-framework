@@ -17,7 +17,6 @@ require (
 	github.com/fluxcd/source-controller/api v1.0.0-rc.1
 	github.com/open-component-model/git-controller v0.2.1-0.20230420095143-61f3c56dd194
 	github.com/open-component-model/ocm v0.2.0-rc.1
-	github.com/open-component-model/replication-controller v0.1.0
 	k8s.io/apiextensions-apiserver v0.26.3
 	k8s.io/cli-runtime v0.26.3
 	sigs.k8s.io/cli-utils v0.34.0
@@ -66,6 +65,7 @@ require (
 	github.com/docker/go-connections v0.4.0 // indirect
 	github.com/docker/go-metrics v0.0.1 // indirect
 	github.com/docker/go-units v0.5.0 // indirect
+	github.com/dprotaso/go-yit v0.0.0-20191028211022-135eb7262960 // indirect
 	github.com/evanphx/json-patch v5.6.0+incompatible // indirect
 	github.com/exponent-io/jsonpath v0.0.0-20210407135951-1de76d718b3f // indirect
 	github.com/fluxcd/pkg/apis/acl v0.1.0 // indirect
@@ -122,6 +122,7 @@ require (
 	github.com/tonglil/buflogr v1.0.1 // indirect
 	github.com/ulikunitz/xz v0.5.11 // indirect
 	github.com/vbatts/tar-split v0.11.2 // indirect
+	github.com/vmware-labs/yaml-jsonpath v0.3.2 // indirect
 	github.com/xeipuuv/gojsonpointer v0.0.0-20190905194746-02993c407bfb // indirect
 	github.com/xeipuuv/gojsonreference v0.0.0-20180127040603-bd5ef7bd5415 // indirect
 	github.com/xeipuuv/gojsonschema v1.2.0 // indirect
