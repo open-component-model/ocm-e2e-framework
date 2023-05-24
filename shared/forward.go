@@ -10,24 +10,98 @@ import (
 	"net/http"
 	"net/url"
 	"os"
+	"testing"
 	"time"
 
 	v1 "k8s.io/api/core/v1"
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/labels"
 	"k8s.io/client-go/tools/portforward"
 	"k8s.io/client-go/transport/spdy"
 	"sigs.k8s.io/e2e-framework/klient/k8s/resources"
+	"sigs.k8s.io/e2e-framework/klient/wait"
+	"sigs.k8s.io/e2e-framework/klient/wait/conditions"
 	"sigs.k8s.io/e2e-framework/pkg/env"
 	"sigs.k8s.io/e2e-framework/pkg/envconf"
 )
 
 const (
 	defaultPortForwardReadyWaitTime = 10
+	timeoutDuration                 = time.Minute * 2
 )
 
 // ForwardPortForAppName forwards the given port for the given app name.
 func ForwardPortForAppName(name string, port int, stopChannel chan struct{}) env.Func {
 	return func(ctx context.Context, config *envconf.Config) (context.Context, error) {
+		podName, err := getPodNameForApp(ctx, config, name)
+		if err != nil {
+			return ctx, fmt.Errorf("failed to get pod for the registry: %w", err)
+		}
+
+		transport, upgrader, err := spdy.RoundTripperFor(config.Client().RESTConfig())
+		if err != nil {
+			return ctx, fmt.Errorf("failed to process round tripper: %w", err)
+		}
+
+		readyChannel := make(chan struct{})
+
+		reqURL, err := url.Parse(
+			fmt.Sprintf(
+				"%s/api/v1/namespaces/%s/pods/%s/portforward",
+				config.Client().RESTConfig().Host,
+				config.Namespace(),
+				podName,
+			),
+		)
+		if err != nil {
+			return ctx, fmt.Errorf("could not build URL for portforward: %w", err)
+		}
+
+		dialer := spdy.NewDialer(upgrader, &http.Client{Transport: transport}, "POST", reqURL)
+
+		fw, err := portforward.NewOnAddresses(
+			dialer,
+			[]string{"127.0.0.1"},
+			[]string{fmt.Sprintf("%d:%d", port, port)},
+			stopChannel,
+			readyChannel,
+			os.Stdout,
+			os.Stderr,
+		)
+		if err != nil {
+			return ctx, fmt.Errorf("failed to create port forwarder: %w", err)
+		}
+
+		go func() {
+			if err := fw.ForwardPorts(); err != nil {
+				panic(err)
+			}
+		}()
+
+		tctx, cancel := context.WithTimeout(ctx, defaultPortForwardReadyWaitTime*time.Second)
+		defer cancel()
+
+		select {
+		case <-readyChannel:
+			break
+		case <-tctx.Done():
+			return ctx, fmt.Errorf("failed to start port forwarder: %w", ctx.Err())
+		}
+
+		ports, err := fw.GetPorts()
+		if err != nil {
+			return ctx, fmt.Errorf("failed to get ports: %w", err)
+		}
+
+		if len(ports) != 1 {
+			return ctx, fmt.Errorf("failed to get expected ports: %+v", ports)
+		}
+
+		return ctx, nil
+	}
+}
+func ForwardPortForAppNameAfterTest(name string, port int, stopChannel chan struct{}) env.TestFunc {
+	return func(ctx context.Context, config *envconf.Config, t *testing.T) (context.Context, error) {
 		podName, err := getPodNameForApp(ctx, config, name)
 		if err != nil {
 			return ctx, fmt.Errorf("failed to get pod for the registry: %w", err)
@@ -108,22 +182,40 @@ func getPodNameForApp(ctx context.Context, config *envconf.Config, name string) 
 	}
 
 	pods := &v1.PodList{}
-	if err := r.List(ctx, pods, resources.WithLabelSelector(
-		labels.FormatLabels(map[string]string{"app": name})),
-	); err != nil {
+	if err := r.List(ctx, pods, resources.WithLabelSelector(labels.FormatLabels(map[string]string{"app": name}))); err != nil {
 		return "", fmt.Errorf("failed to list pods: %w", err)
 	}
 
-	if len(pods.Items) != 1 {
-		return "", fmt.Errorf("invalid number of pods found for registry %d", len(pods.Items))
+	for _, pod := range pods.Items {
+		if pod.DeletionTimestamp == nil {
+
+			podObj := v1.Pod{
+				ObjectMeta: metav1.ObjectMeta{Name: pod.Name, Namespace: config.Namespace()},
+			}
+
+			err = wait.For(conditions.New(config.Client().Resources()).PodConditionMatch(&podObj, v1.PodReady, v1.ConditionTrue), wait.WithTimeout(timeoutDuration))
+			if err != nil {
+				return "", fmt.Errorf(err.Error())
+			}
+			return pod.Name, nil
+		}
 	}
 
-	return pods.Items[0].Name, nil
+	return "", nil
 }
 
 // ShutdownPortForward sends a signal to the stop channel.
 func ShutdownPortForward(stopChannel chan struct{}) env.Func {
 	return func(ctx context.Context, config *envconf.Config) (context.Context, error) {
+		stopChannel <- struct{}{}
+
+		return ctx, nil
+	}
+}
+
+// ShutdownPortForward sends a signal to the stop channel.
+func ShutdownPortForwardAfterTest(stopChannel chan struct{}) env.TestFunc {
+	return func(ctx context.Context, config *envconf.Config, t *testing.T) (context.Context, error) {
 		stopChannel <- struct{}{}
 
 		return ctx, nil

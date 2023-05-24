@@ -16,7 +16,9 @@ require (
 	github.com/fluxcd/pkg/version v0.2.1
 	github.com/fluxcd/source-controller/api v1.0.0-rc.1
 	github.com/open-component-model/git-controller v0.2.1-0.20230420095143-61f3c56dd194
-	github.com/open-component-model/ocm v0.2.0-rc.1
+	github.com/open-component-model/ocm v0.3.0-rc.2
+	github.com/open-component-model/replication-controller v0.2.1
+	github.com/vmware-labs/yaml-jsonpath v0.3.2
 	k8s.io/apiextensions-apiserver v0.26.3
 	k8s.io/cli-runtime v0.26.3
 	sigs.k8s.io/cli-utils v0.34.0
@@ -56,6 +58,7 @@ require (
 	github.com/containers/libtrust v0.0.0-20200511145503-9c3a6c22cd9a // indirect
 	github.com/containers/ocicrypt v1.1.6 // indirect
 	github.com/containers/storage v1.43.0 // indirect
+	github.com/cyberphone/json-canonicalization v0.0.0-20220623050100-57a0ce2678a7 // indirect
 	github.com/cyphar/filepath-securejoin v0.2.3 // indirect
 	github.com/docker/cli v23.0.1+incompatible // indirect
 	github.com/docker/distribution v2.8.1+incompatible // indirect
@@ -90,8 +93,8 @@ require (
 	github.com/klauspost/compress v1.16.0 // indirect
 	github.com/klauspost/pgzip v1.2.5 // indirect
 	github.com/liggitt/tabwriter v0.0.0-20181228230101-89fcab3d43de // indirect
-	github.com/mandelsoft/filepath v0.0.0-20220503095057-4432a2285b68 // indirect
-	github.com/mandelsoft/logging v0.0.0-20221114215048-ab754b164dd6 // indirect
+	github.com/mandelsoft/filepath v0.0.0-20230412200429-36b1eb66bd27 // indirect
+	github.com/mandelsoft/logging v0.0.0-20230331123830-36542ef18f6f // indirect
 	github.com/mandelsoft/spiff v1.7.0-beta-4 // indirect
 	github.com/mandelsoft/vfs v0.0.0-20230114230722-fb9b39ce80b9 // indirect
 	github.com/marstr/guid v1.1.0 // indirect
@@ -122,7 +125,6 @@ require (
 	github.com/tonglil/buflogr v1.0.1 // indirect
 	github.com/ulikunitz/xz v0.5.11 // indirect
 	github.com/vbatts/tar-split v0.11.2 // indirect
-	github.com/vmware-labs/yaml-jsonpath v0.3.2 // indirect
 	github.com/xeipuuv/gojsonpointer v0.0.0-20190905194746-02993c407bfb // indirect
 	github.com/xeipuuv/gojsonreference v0.0.0-20180127040603-bd5ef7bd5415 // indirect
 	github.com/xeipuuv/gojsonschema v1.2.0 // indirect
@@ -175,7 +177,7 @@ require (
 	google.golang.org/protobuf v1.29.1 // indirect
 	gopkg.in/inf.v0 v0.9.1 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
-	gopkg.in/yaml.v3 v3.0.1 // indirect
+	gopkg.in/yaml.v3 v3.0.1
 	k8s.io/api v0.26.3
 	k8s.io/apimachinery v0.26.3
 	k8s.io/client-go v0.26.3
