@@ -18,7 +18,6 @@ require (
 	github.com/open-component-model/git-controller v0.2.1-0.20230420095143-61f3c56dd194
 	github.com/open-component-model/ocm v0.3.0-rc.2
 	github.com/open-component-model/replication-controller v0.2.1
-	github.com/vmware-labs/yaml-jsonpath v0.3.2
 	k8s.io/apiextensions-apiserver v0.26.3
 	k8s.io/cli-runtime v0.26.3
 	sigs.k8s.io/cli-utils v0.34.0
@@ -68,7 +67,6 @@ require (
 	github.com/docker/go-connections v0.4.0 // indirect
 	github.com/docker/go-metrics v0.0.1 // indirect
 	github.com/docker/go-units v0.5.0 // indirect
-	github.com/dprotaso/go-yit v0.0.0-20191028211022-135eb7262960 // indirect
 	github.com/evanphx/json-patch v5.6.0+incompatible // indirect
 	github.com/exponent-io/jsonpath v0.0.0-20210407135951-1de76d718b3f // indirect
 	github.com/fluxcd/pkg/apis/acl v0.1.0 // indirect
@@ -177,7 +175,7 @@ require (
 	google.golang.org/protobuf v1.29.1 // indirect
 	gopkg.in/inf.v0 v0.9.1 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
-	gopkg.in/yaml.v3 v3.0.1
+	gopkg.in/yaml.v3 v3.0.1 // indirect
 	k8s.io/api v0.26.3
 	k8s.io/apimachinery v0.26.3
 	k8s.io/client-go v0.26.3

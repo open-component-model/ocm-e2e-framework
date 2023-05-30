@@ -155,6 +155,7 @@ func AddComponentVersionToRepository(component Component, repository string, com
 		}
 
 		if _, err := signing.Apply(nil, nil, compvers, opts); err != nil {
+			fmt.Println("22222")
 			return fmt.Errorf("failed to apply signing: %w", err)
 		}
 	}
