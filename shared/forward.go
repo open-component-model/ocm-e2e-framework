@@ -111,7 +111,7 @@ func ForwardPortForAppNameAfterTest(name string, port int, stopChannel chan stru
 		if err != nil || podName == "" {
 			return ctx, fmt.Errorf("failed to get pod for the registry: %w", err)
 		}
-		t.Log("\nForwarding port for Pod: "+podName, "\n")
+		t.Log("Forwarding port for New Pod: "+podName, "\n")
 		return PortForward(port, stopChannel, podName, ctx, config)
 	}
 }
@@ -141,7 +141,7 @@ func getPodNameForApp(ctx context.Context, config *envconf.Config, name string) 
 	return pods.Items[0].Name, nil
 }
 
-// getPodNameForAppAfterTest Waits for new Registry Pod to be Running && Ready to accept traffic
+// getPodNameForAppAfterTest Waits for new Pod to be Running & Ready to accept traffic
 func getPodNameForAppAfterTest(ctx context.Context, config *envconf.Config, name string) (string, error) {
 	r, err := resources.New(config.Client().RESTConfig())
 	if err != nil {
