@@ -1,3 +1,6 @@
 .idea
 .vscode
 .envrc
+*__debug_bin
+tilt
+kind

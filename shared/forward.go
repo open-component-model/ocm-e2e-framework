@@ -23,76 +23,80 @@ import (
 
 const (
 	defaultPortForwardReadyWaitTime = 10
+	timeoutDuration                 = time.Minute * 2
 )
 
-// ForwardPortForAppName forwards the given port for the given app name.
+// PortForward forwards the given port for the given pod name.
+func PortForward(port int, stopChannel chan struct{}, podName string, ctx context.Context, config *envconf.Config) (context.Context, error) {
+	transport, upgrader, err := spdy.RoundTripperFor(config.Client().RESTConfig())
+	if err != nil {
+		return ctx, fmt.Errorf("failed to process round tripper: %w", err)
+	}
+	readyChannel := make(chan struct{})
+
+	reqURL, err := url.Parse(
+		fmt.Sprintf(
+			"%s/api/v1/namespaces/%s/pods/%s/portforward",
+			config.Client().RESTConfig().Host,
+			config.Namespace(),
+			podName,
+		),
+	)
+	if err != nil {
+		return ctx, fmt.Errorf("could not build URL for portforward: %w", err)
+	}
+
+	dialer := spdy.NewDialer(upgrader, &http.Client{Transport: transport}, "POST", reqURL)
+
+	fw, err := portforward.NewOnAddresses(
+		dialer,
+		[]string{"127.0.0.1"},
+		[]string{fmt.Sprintf("%d:%d", port, port)},
+		stopChannel,
+		readyChannel,
+		os.Stdout,
+		os.Stderr,
+	)
+	if err != nil {
+		return ctx, fmt.Errorf("failed to create port forwarder: %w", err)
+	}
+
+	go func() {
+		if err := fw.ForwardPorts(); err != nil {
+			panic(err)
+		}
+	}()
+
+	tctx, cancel := context.WithTimeout(ctx, defaultPortForwardReadyWaitTime*time.Second)
+	defer cancel()
+
+	select {
+	case <-readyChannel:
+		break
+	case <-tctx.Done():
+		return ctx, fmt.Errorf("failed to start port forwarder: %w", ctx.Err())
+	}
+
+	ports, err := fw.GetPorts()
+	if err != nil {
+		return ctx, fmt.Errorf("failed to get ports: %w", err)
+	}
+
+	if len(ports) != 1 {
+		return ctx, fmt.Errorf("failed to get expected ports: %+v", ports)
+	}
+
+	return ctx, nil
+}
+
+// ForwardPortForAppName port forwards at test setup phase
 func ForwardPortForAppName(name string, port int, stopChannel chan struct{}) env.Func {
 	return func(ctx context.Context, config *envconf.Config) (context.Context, error) {
 		podName, err := getPodNameForApp(ctx, config, name)
-		if err != nil {
+		if err != nil || podName == "" {
 			return ctx, fmt.Errorf("failed to get pod for the registry: %w", err)
 		}
-
-		transport, upgrader, err := spdy.RoundTripperFor(config.Client().RESTConfig())
-		if err != nil {
-			return ctx, fmt.Errorf("failed to process round tripper: %w", err)
-		}
-
-		readyChannel := make(chan struct{})
-
-		reqURL, err := url.Parse(
-			fmt.Sprintf(
-				"%s/api/v1/namespaces/%s/pods/%s/portforward",
-				config.Client().RESTConfig().Host,
-				config.Namespace(),
-				podName,
-			),
-		)
-		if err != nil {
-			return ctx, fmt.Errorf("could not build URL for portforward: %w", err)
-		}
-
-		dialer := spdy.NewDialer(upgrader, &http.Client{Transport: transport}, "POST", reqURL)
-
-		fw, err := portforward.NewOnAddresses(
-			dialer,
-			[]string{"127.0.0.1"},
-			[]string{fmt.Sprintf("%d:%d", port, port)},
-			stopChannel,
-			readyChannel,
-			os.Stdout,
-			os.Stderr,
-		)
-		if err != nil {
-			return ctx, fmt.Errorf("failed to create port forwarder: %w", err)
-		}
-
-		go func() {
-			if err := fw.ForwardPorts(); err != nil {
-				panic(err)
-			}
-		}()
-
-		tctx, cancel := context.WithTimeout(ctx, defaultPortForwardReadyWaitTime*time.Second)
-		defer cancel()
-
-		select {
-		case <-readyChannel:
-			break
-		case <-tctx.Done():
-			return ctx, fmt.Errorf("failed to start port forwarder: %w", ctx.Err())
-		}
-
-		ports, err := fw.GetPorts()
-		if err != nil {
-			return ctx, fmt.Errorf("failed to get ports: %w", err)
-		}
-
-		if len(ports) != 1 {
-			return ctx, fmt.Errorf("failed to get expected ports: %+v", ports)
-		}
-
-		return ctx, nil
+		return PortForward(port, stopChannel, podName, ctx, config)
 	}
 }
 
