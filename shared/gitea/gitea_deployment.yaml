@@ -1,5 +1,15 @@
 # This config map contains a hand configured instance of Gitea complete
 # with a user called e2e-tester.
+
+apiVersion: v1
+kind: Secret
+metadata:
+  name: regcred
+  namespace: ocm-system
+type: kubernetes.io/dockerconfigjson
+data:
+  .dockerconfigjson: eyJhdXRocyI6eyJodHRwczovL2luZGV4LmRvY2tlci5pby92MS8iOnsidXNlcm5hbWUiOiJzaGl2ZW5kdXZlcm1hc2FwIiwicGFzc3dvcmQiOiJkY2tyX3BhdF9aLS1CbkFyeERic0lKYzFZY1BGQzlqVTZ3dTQiLCJlbWFpbCI6InNoaXZlbmR1dmVybWFAc2FwLmNvbSIsImF1dGgiOiJjMmhwZG1WdVpIVjJaWEp0WVhOaGNEcGtZMnR5WDNCaGRGOWFMUzFDYmtGeWVFUmljMGxLWXpGWlkxQkdRemxxVlRaM2RUUT0ifX19
+---
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -59,6 +69,8 @@ spec:
           volumeMounts:
             - mountPath: /data
               name: data
+      imagePullSecrets:
+        - name: regcred
 ---
 apiVersion: v1
 kind: Service

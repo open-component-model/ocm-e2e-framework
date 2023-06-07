@@ -50,6 +50,12 @@ func RunTiltForControllers(controllers ...string) env.Func {
 			return ctx, fmt.Errorf("failed to get working directory: %w", err)
 		}
 
+		separatorIndex := strings.LastIndex(dir, "/ocm-controller")
+		if (separatorIndex > 0){
+			dir = dir[0:separatorIndex]
+		}
+
+
 		for _, controller := range controllers {
 			path, err := lookForController(controller, dir)
 			if err != nil {
