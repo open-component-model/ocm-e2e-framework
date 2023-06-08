@@ -15,9 +15,9 @@ require (
 	github.com/fluxcd/pkg/ssa v0.27.0
 	github.com/fluxcd/pkg/version v0.2.1
 	github.com/fluxcd/source-controller/api v1.0.0-rc.1
-	github.com/open-component-model/git-controller v0.2.1-0.20230420095143-61f3c56dd194
-	github.com/open-component-model/ocm v0.3.0-rc.2
-	github.com/open-component-model/replication-controller v0.2.1
+	github.com/open-component-model/git-controller v0.4.1
+	github.com/open-component-model/ocm v0.3.0-rc.1.0.20230607081545-8d3b8aa59b92
+	github.com/open-component-model/replication-controller v0.3.0
 	k8s.io/apiextensions-apiserver v0.26.3
 	k8s.io/cli-runtime v0.26.3
 	sigs.k8s.io/cli-utils v0.34.0
@@ -93,13 +93,15 @@ require (
 	github.com/liggitt/tabwriter v0.0.0-20181228230101-89fcab3d43de // indirect
 	github.com/mandelsoft/filepath v0.0.0-20230412200429-36b1eb66bd27 // indirect
 	github.com/mandelsoft/logging v0.0.0-20230331123830-36542ef18f6f // indirect
-	github.com/mandelsoft/spiff v1.7.0-beta-4 // indirect
-	github.com/mandelsoft/vfs v0.0.0-20230114230722-fb9b39ce80b9 // indirect
+	github.com/mandelsoft/spiff v1.7.0-beta-5 // indirect
+	github.com/mandelsoft/vfs v0.0.0-20230506183150-975954b82357 // indirect
 	github.com/marstr/guid v1.1.0 // indirect
 	github.com/matttproud/golang_protobuf_extensions v1.0.4 // indirect
 	github.com/miekg/pkcs11 v1.1.1 // indirect
+	github.com/mitchellh/copystructure v1.2.0 // indirect
 	github.com/mitchellh/go-wordwrap v1.0.1 // indirect
 	github.com/mitchellh/hashstructure/v2 v2.0.2 // indirect
+	github.com/mitchellh/reflectwalk v1.0.2 // indirect
 	github.com/moby/locker v1.0.1 // indirect
 	github.com/moby/sys/sequential v0.5.0 // indirect
 	github.com/moby/term v0.0.0-20221205130635-1aeaba878587 // indirect
@@ -129,14 +131,17 @@ require (
 	github.com/xlab/treeprint v1.1.0 // indirect
 	go.starlark.net v0.0.0-20221028183056-acb66ad56dd2 // indirect
 	golang.org/x/crypto v0.7.0 // indirect
+	golang.org/x/exp v0.0.0-20221212164502-fae10dda9338 // indirect
 	golang.org/x/mod v0.9.0 // indirect
 	golang.org/x/sync v0.1.0 // indirect
 	golang.org/x/tools v0.7.0 // indirect
 	gomodules.xyz/jsonpatch/v2 v2.2.0 // indirect
 	google.golang.org/genproto v0.0.0-20221027153422-115e99e71e1c // indirect
 	google.golang.org/grpc v1.50.1 // indirect
+	helm.sh/helm/v3 v3.11.1 // indirect
 	k8s.io/component-base v0.26.3 // indirect
 	k8s.io/kubectl v0.26.3 // indirect
+	oras.land/oras-go v1.2.2 // indirect
 	sigs.k8s.io/kustomize/kyaml v0.13.9 // indirect
 )
 
@@ -165,11 +170,11 @@ require (
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
 	github.com/vladimirvivien/gexe v0.2.0 // indirect
-	golang.org/x/net v0.8.0 // indirect
-	golang.org/x/oauth2 v0.6.0 // indirect
+	golang.org/x/net v0.9.0 // indirect
+	golang.org/x/oauth2 v0.7.0 // indirect
 	golang.org/x/sys v0.7.0 // indirect
 	golang.org/x/term v0.7.0 // indirect
-	golang.org/x/text v0.8.0 // indirect
+	golang.org/x/text v0.9.0 // indirect
 	golang.org/x/time v0.3.0 // indirect
 	google.golang.org/appengine v1.6.7 // indirect
 	google.golang.org/protobuf v1.29.1 // indirect
