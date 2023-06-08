@@ -110,7 +110,7 @@ type ComponentModification func(compvers ocm.ComponentVersionAccess) error
 // into the locally forwarded registry.
 func AddComponentVersionToRepository(component Component, repository string, componentModifications ...ComponentModification) error {
 	baseURL := "http://127.0.0.1:5000/" + repository
-	octx := ocm.ForContext(context.Background())
+	octx := ocm.FromContext(context.Background())
 
 	target, err := octx.RepositoryForSpec(ocmreg.NewRepositorySpec(baseURL, nil))
 	if err != nil {
