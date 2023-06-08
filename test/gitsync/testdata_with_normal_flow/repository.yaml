@@ -1,7 +1,7 @@
 apiVersion: mpas.ocm.software/v1alpha1
 kind: Repository
 metadata:
-  name: test-repository
+  name: test
 spec:
   credentials:
     secretRef:
@@ -9,4 +9,3 @@ spec:
   owner: e2e-tester
   provider: gitea
   domain: http://gitea.ocm-system.svc.cluster.local:3000
-  repositoryName: test # this must match with the repository created in the test.
