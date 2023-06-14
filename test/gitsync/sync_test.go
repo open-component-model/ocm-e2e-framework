@@ -123,14 +123,14 @@ func TestRepositoryWithMaintainers(t *testing.T) {
 	verifyState := features.New("Verify System State").
 		Assess("wait for repository done condition", func(ctx context.Context, t *testing.T, cfg *envconf.Config) context.Context {
 			t.Helper()
-			t.Log("waiting for condition ready on the component version")
+			t.Log("waiting for condition ready on the repository")
 			client, err := cfg.NewClient()
 			if err != nil {
 				t.Fail()
 			}
 
 			repository := &mpasv1alpha1.Repository{
-				ObjectMeta: metav1.ObjectMeta{Name: "test-repository-maintainers", Namespace: cfg.Namespace()},
+				ObjectMeta: metav1.ObjectMeta{Name: "test-3", Namespace: cfg.Namespace()},
 			}
 
 			// wait for component version to be reconciled
