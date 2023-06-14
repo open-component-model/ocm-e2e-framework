@@ -15,4 +15,4 @@ spec:
   snapshotRef:
     name: podinfo-deployment
   repositoryRef:
-    name: test-repository-2
+    name: test-2
