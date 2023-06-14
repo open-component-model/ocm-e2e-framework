@@ -27,6 +27,7 @@ func AddComponentVersions(components ...Component) features.Func {
 		t.Helper()
 
 		for _, c := range components {
+			t.Log("c.Component: %s c.Component.Version %s c.Repository: %s ", c.Component.Name, c.Component.Version, c.Repository)
 			if err := shared.AddComponentVersionToRepository(c.Component, c.Repository, c.ComponentVersionModifications...); err != nil {
 				t.Fatal(err)
 			}
