@@ -6,10 +6,10 @@ package setup
 
 import (
 	"context"
-	"testing"
-
+	"fmt"
 	"sigs.k8s.io/e2e-framework/pkg/envconf"
 	"sigs.k8s.io/e2e-framework/pkg/features"
+	"testing"
 
 	"github.com/open-component-model/ocm-e2e-framework/shared"
 )
@@ -27,7 +27,7 @@ func AddComponentVersions(components ...Component) features.Func {
 		t.Helper()
 
 		for _, c := range components {
-			t.Log("c.Component: %s c.Component.Version %s c.Repository: %s ", c.Component.Name, c.Component.Version, c.Repository)
+			t.Log(fmt.Sprintf("c.Component: %s c.Component.Version %s c.Repository: %s ", c.Component.Name, c.Component.Version, c.Repository))
 			if err := shared.AddComponentVersionToRepository(c.Component, c.Repository, c.ComponentVersionModifications...); err != nil {
 				t.Fatal(err)
 			}
