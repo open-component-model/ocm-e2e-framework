@@ -116,12 +116,11 @@ func AddComponentVersionToRepository(component Component, repository string, com
 	if err != nil {
 		return fmt.Errorf("failed to create repository for spec: %w", err)
 	}
-
 	defer target.Close()
 
 	comp, err := target.LookupComponent(component.Name)
 	if err != nil {
-		return fmt.Errorf("failed to look up component: %w", err)
+		return fmt.Errorf("failed to look up component: %s %w", component.Name, err)
 	}
 
 	compvers, err := comp.NewVersion(component.Version, true)
