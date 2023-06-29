@@ -18,6 +18,7 @@ import (
 type Component struct {
 	Component                     shared.Component
 	Repository                    string
+	Scheme                        string
 	ComponentVersionModifications []shared.ComponentModification
 }
 
@@ -27,7 +28,11 @@ func AddComponentVersions(components ...Component) features.Func {
 		t.Helper()
 
 		for _, c := range components {
-			if err := shared.AddComponentVersionToRepository(c.Component, c.Repository, c.ComponentVersionModifications...); err != nil {
+			scheme := "https"
+			if c.Scheme != "" {
+				scheme = c.Scheme
+			}
+			if err := shared.AddComponentVersionToRepository(c.Component, c.Repository, scheme, c.ComponentVersionModifications...); err != nil {
 				t.Fatal(err)
 			}
 		}
