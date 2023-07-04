@@ -7,6 +7,7 @@ package shared
 import (
 	"context"
 	"fmt"
+	"net/url"
 
 	"github.com/open-component-model/ocm/pkg/common/accessio"
 	"github.com/open-component-model/ocm/pkg/contexts/ocm"
@@ -108,8 +109,23 @@ type ComponentModification func(compvers ocm.ComponentVersionAccess) error
 
 // AddComponentVersionToRepository takes a component description and optional resources. Then pushes that component
 // into the locally forwarded registry.
-func AddComponentVersionToRepository(component Component, repository string, componentModifications ...ComponentModification) error {
-	baseURL := "http://127.0.0.1:5000/" + repository
+func AddComponentVersionToRepository(component Component, repository, scheme string, componentModifications ...ComponentModification) error {
+	u, err := url.Parse("https://127.0.0.1:5000")
+	if err != nil {
+		return fmt.Errorf("failed to parse base url: %w", err)
+	}
+	u.Scheme = scheme
+
+	// Re-parsing after scheme was set.
+	u, err = url.Parse(u.String())
+	if err != nil {
+		return fmt.Errorf("failed to reparse base url: %w", err)
+	}
+
+	// join up with the repository.
+	u = u.JoinPath(repository)
+
+	baseURL := u.String()
 	octx := ocm.FromContext(context.Background())
 
 	target, err := octx.RepositoryForSpec(ocmreg.NewRepositorySpec(baseURL, nil))

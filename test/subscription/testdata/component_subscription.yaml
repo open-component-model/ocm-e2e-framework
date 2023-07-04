@@ -5,9 +5,9 @@ metadata:
   namespace: ocm-system
 spec:
   source:
-    url: http://registry.ocm-system.svc.cluster.local:5000/ocm-replication
+    url: registry.ocm-system.svc.cluster.local:5000/ocm-replication
   destination:
-    url: http://registry.ocm-system.svc.cluster.local:5000/ocm-destination
+    url: registry.ocm-system.svc.cluster.local:5000/ocm-destination
   component: "github.com/acme/podinfo"
   interval: 10s
   semver: ">=0.0.1"
