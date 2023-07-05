@@ -17,7 +17,6 @@ import (
 // Component contains information about a component to add.
 type Component struct {
 	Component                     shared.Component
-	Repository                    string
 	Scheme                        string
 	ComponentVersionModifications []shared.ComponentModification
 }
@@ -32,7 +31,7 @@ func AddComponentVersions(components ...Component) features.Func {
 			if c.Scheme != "" {
 				scheme = c.Scheme
 			}
-			if err := shared.AddComponentVersionToRepository(c.Component, c.Repository, scheme, c.ComponentVersionModifications...); err != nil {
+			if err := shared.AddComponentVersionToRepository(c.Component, scheme, c.ComponentVersionModifications...); err != nil {
 				t.Fatal(err)
 			}
 		}

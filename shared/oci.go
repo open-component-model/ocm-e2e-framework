@@ -109,7 +109,7 @@ type ComponentModification func(compvers ocm.ComponentVersionAccess) error
 
 // AddComponentVersionToRepository takes a component description and optional resources. Then pushes that component
 // into the locally forwarded registry.
-func AddComponentVersionToRepository(component Component, repository, scheme string, componentModifications ...ComponentModification) error {
+func AddComponentVersionToRepository(component Component, scheme string, componentModifications ...ComponentModification) error {
 	u, err := url.Parse("https://127.0.0.1:5000")
 	if err != nil {
 		return fmt.Errorf("failed to parse base url: %w", err)
@@ -121,9 +121,6 @@ func AddComponentVersionToRepository(component Component, repository, scheme str
 	if err != nil {
 		return fmt.Errorf("failed to reparse base url: %w", err)
 	}
-
-	// join up with the repository.
-	u = u.JoinPath(repository)
 
 	baseURL := u.String()
 	octx := ocm.FromContext(context.Background())
