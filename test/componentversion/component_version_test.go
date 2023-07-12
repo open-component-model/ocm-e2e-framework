@@ -38,7 +38,6 @@ func TestComponentVersionApply(t *testing.T) {
 				Name:    "github.com/acme/podinfo",
 				Version: "v6.0.0",
 			},
-			Repository: "ocm-podinfo",
 		})).
 		Setup(setup.ApplyTestData(namespace, "testdata", "*")).
 		Assess("check if resource was created", assess.ResourceWasCreated(assess.Object{
