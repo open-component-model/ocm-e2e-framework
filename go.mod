@@ -151,7 +151,7 @@ require (
 	github.com/gregjones/httpcache v0.0.0-20190611155906-901d90724c79 // indirect
 	github.com/hashicorp/go-cleanhttp v0.5.2 // indirect
 	github.com/hashicorp/go-retryablehttp v0.7.2 // indirect
-	github.com/hashicorp/go-version v1.6.0 // indirect
+	github.com/hashicorp/go-version v1.2.1 // indirect
 	github.com/hashicorp/hcl v1.0.0 // indirect
 	github.com/in-toto/in-toto-golang v0.9.0 // indirect
 	github.com/inconshreveable/mousetrap v1.1.0 // indirect
@@ -306,12 +306,10 @@ require (
 	sigs.k8s.io/yaml v1.3.0
 )
 
-replace github.com/open-component-model/ocm-controller v0.5.0 => ../ocm-controller
-
-//replace github.com/open-component-model/ocm v0.3.0-rc.2 => github.com/open-component-model/ocm v0.3.0-rc.1.0.20230408161516-7bac90d616ab
-
 replace github.com/open-component-model/ocm => ../ocm
 
-replace github.com/open-component-model/replication-controller => ../replication-controller
+replace github.com/open-component-model/ocm-controller => ../ocm-controller
 
 replace github.com/open-component-model/git-controller => ../git-controller
+
+replace github.com/open-component-model/replication-controller => ../replication-controller

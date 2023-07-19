@@ -7,6 +7,7 @@ package shared
 import (
 	"context"
 	"fmt"
+	"net/url"
 
 	"github.com/open-component-model/ocm/pkg/common/accessio"
 	"github.com/open-component-model/ocm/pkg/contexts/ocm"
@@ -108,20 +109,32 @@ type ComponentModification func(compvers ocm.ComponentVersionAccess) error
 
 // AddComponentVersionToRepository takes a component description and optional resources. Then pushes that component
 // into the locally forwarded registry.
-func AddComponentVersionToRepository(component Component, repository string, componentModifications ...ComponentModification) error {
-	baseURL := "http://127.0.0.1:5000/"
-	//octx := ocm.FromContext(context.Background())
+func AddComponentVersionToRepository(component Component, scheme string, componentModifications ...ComponentModification) error {
+	u, err := url.Parse("https://127.0.0.1:5000")
+	if err != nil {
+		return fmt.Errorf("failed to parse base url: %w", err)
+	}
+	u.Scheme = scheme
+
+	// Re-parsing after scheme was set.
+	u, err = url.Parse(u.String())
+	if err != nil {
+		return fmt.Errorf("failed to reparse base url: %w", err)
+	}
+
+	baseURL := u.String()
 	octx := ocm.FromContext(context.Background())
 
 	target, err := octx.RepositoryForSpec(ocmreg.NewRepositorySpec(baseURL, nil))
 	if err != nil {
 		return fmt.Errorf("failed to create repository for spec: %w", err)
 	}
+
 	defer target.Close()
 
 	comp, err := target.LookupComponent(component.Name)
 	if err != nil {
-		return fmt.Errorf("failed to look up component: %s %w", component.Name, err)
+		return fmt.Errorf("failed to look up component: %w", err)
 	}
 
 	compvers, err := comp.NewVersion(component.Version, true)

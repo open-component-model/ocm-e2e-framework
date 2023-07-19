@@ -9,6 +9,6 @@ spec:
   version:
     semver: "v6.0.0"
   repository:
-    url: http://registry.ocm-system.svc.cluster.local:5000
+    url: registry.ocm-system.svc.cluster.local:5000
     secretRef:
       name: creds
