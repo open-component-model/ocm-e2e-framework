@@ -45,7 +45,6 @@ func TestSyncApply(t *testing.T) {
 				Name:    "github.com/acme/podinfo",
 				Version: "v6.0.0",
 			},
-			Repository: "podinfo",
 			ComponentVersionModifications: []shared.ComponentModification{
 				shared.BlobResource(shared.Resource{
 					Name: "deployment",
@@ -189,7 +188,6 @@ func TestSyncApplyWithPullRequest(t *testing.T) {
 				Name:    "github.com/acme/podinfo",
 				Version: "v6.0.0",
 			},
-			Repository: "podinfo",
 			ComponentVersionModifications: []shared.ComponentModification{
 				shared.BlobResource(shared.Resource{
 					Name: "deployment",
