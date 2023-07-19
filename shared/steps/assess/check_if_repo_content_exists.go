@@ -7,6 +7,7 @@ package assess
 import (
 	"context"
 	"fmt"
+	"strings"
 	"testing"
 
 	"code.gitea.io/sdk/gitea"
@@ -34,13 +35,14 @@ func CheckRepoFileContent(files ...File) features.Func {
 		}
 
 		for _, file := range files {
+			fmt.Println(fmt.Sprintf("shared.Owner %s file.Repository %s file.Path %s", shared.Owner, file.Repository, file.Path))
 			content, _, err := gclient.GetFile(shared.Owner, file.Repository, "main", file.Path)
 			if err != nil {
-				t.Fatal(fmt.Errorf("failed to find expected file: %w", err))
+				t.Fatal(fmt.Errorf("failed to find expected file %s/%s with error: %w", file.Repository, file.Path, err))
 			}
 
-			if file.Content != string(content) {
-				t.Fatalf("expected content did not equal actual: %s", string(content))
+			if strings.Compare(strings.TrimSpace(file.Content), strings.TrimSpace(string(content))) != 0 {
+				t.Fatalf("expected content '%s' did not equal actual: '%s'", file.Content, string(content))
 			}
 		}
 

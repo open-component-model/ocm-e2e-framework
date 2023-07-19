@@ -23,11 +23,11 @@ func CreateNamespace(name string) features.Func {
 
 		client, err := cfg.NewClient()
 		if err != nil {
-			t.Fail()
+			t.Fatal(err)
 		}
 
 		if err := client.Resources().Create(ctx, &namespace); err != nil {
-			t.Fail()
+			t.Fatal(err)
 		}
 
 		return ctx
