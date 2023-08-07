@@ -56,6 +56,9 @@ func CreateSecret(name string, data map[string][]byte, stringData map[string]str
 			return true
 		}), wait.WithTimeout(time.Minute*2))
 
+		if err != nil {
+			t.Fatal(err)
+		}
 		return ctx
 	}
 }
