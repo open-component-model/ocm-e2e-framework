@@ -7,7 +7,6 @@ package assess
 import (
 	"context"
 	"fmt"
-	"strings"
 	"testing"
 
 	"code.gitea.io/sdk/gitea"
@@ -41,7 +40,7 @@ func CheckRepoFileContent(files ...File) features.Func {
 				t.Fatal(fmt.Errorf("failed to find expected file %s/%s with error: %w", file.Repository, file.Path, err))
 			}
 
-			if strings.Compare(strings.TrimSpace(file.Content), strings.TrimSpace(string(content))) != 0 {
+			if file.Content != string(content) {
 				t.Fatalf("expected content '%s' did not equal actual: '%s'", file.Content, string(content))
 			}
 		}

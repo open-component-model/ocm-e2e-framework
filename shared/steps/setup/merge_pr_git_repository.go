@@ -26,7 +26,8 @@ type Payload struct {
 	ForceMerge             bool   `json:"force_merge"`
 }
 
-// MergePullRequest merges a PR
+// MergePullRequest merges a PR; gitea API is used instead of gitea-sdk because validation checks take time to complete for tests
+// and options MergeWhenChecksSucceed: false, ForceMerge: true, are not available in the current latest version of the gitea-sdk
 func MergePullRequest(repoName string, prNumber int) features.Func {
 	return func(ctx context.Context, t *testing.T, config *envconf.Config) context.Context {
 		t.Helper()
@@ -70,7 +71,7 @@ func MergePullRequest(repoName string, prNumber int) features.Func {
 func readResponse(response io.Reader) string {
 	content, err := io.ReadAll(response)
 	if err != nil {
-		println(err)
+		return err.Error()
 	}
 	return string(content)
 }
