@@ -17,7 +17,7 @@ import (
 )
 
 // CheckRepoExists adds a check to verify that a repository exists.
-func CheckRepoExists(repoName string) features.Func {
+func CheckRepoExists(repo string) features.Func {
 	return func(ctx context.Context, t *testing.T, config *envconf.Config) context.Context {
 		t.Helper()
 
@@ -26,9 +26,9 @@ func CheckRepoExists(repoName string) features.Func {
 			t.Fatal(fmt.Errorf("failed to create gitea client: %w", err))
 		}
 
-		_, _, err = gclient.GetRepo(shared.Owner, repoName)
+		_, _, err = gclient.GetRepo(shared.Owner, repo)
 		if err != nil {
-			t.Fatal(fmt.Errorf("failed to find expected repository: %w", err))
+			t.Fatal(fmt.Errorf("failed to find expected repository %s with error: %w", repo, err))
 		}
 
 		return ctx

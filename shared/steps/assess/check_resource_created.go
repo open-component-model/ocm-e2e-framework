@@ -29,14 +29,13 @@ func ResourceWasCreated(objs ...Object) features.Func {
 
 		r, err := resources.New(c.Client().RESTConfig())
 		if err != nil {
-			t.Fail()
+			t.Fatal(err)
 		}
 
 		for _, obj := range objs {
 			if err := r.Get(ctx, obj.Name, obj.Namespace, obj.Obj); err != nil {
-				t.Fail()
+				t.Fatal(err)
 			}
-
 		}
 
 		t.Log("resources successfully created")
