@@ -7,7 +7,9 @@ import (
 	"testing"
 
 	v1 "k8s.io/api/core/v1"
+	"k8s.io/apimachinery/pkg/labels"
 	"k8s.io/client-go/kubernetes"
+	"sigs.k8s.io/e2e-framework/klient/k8s/resources"
 	"sigs.k8s.io/e2e-framework/pkg/envconf"
 	"sigs.k8s.io/e2e-framework/pkg/features"
 )
@@ -58,10 +60,18 @@ func dumpLogs(ctx context.Context, t *testing.T, config *envconf.Config, control
 		t.Fatal(err)
 	}
 
-	pod := &v1.Pod{}
-	if err := client.Resources().Get(ctx, controller, config.Namespace(), pod); err != nil {
-		t.Fatal(fmt.Errorf("failed to get controller %s in namespace %s: %w", controller, config.Namespace(), err))
+	pods := &v1.PodList{}
+	if err := client.Resources(config.Namespace()).List(ctx, pods, resources.WithLabelSelector(
+		labels.FormatLabels(map[string]string{"app": controller})),
+	); err != nil {
+		t.Fatal(fmt.Errorf("failed to list pods: %w", err))
 	}
+
+	if len(pods.Items) != 1 {
+		t.Fatal(fmt.Errorf("invalid number of pods found for registry %d", len(pods.Items)))
+	}
+
+	pod := pods.Items[0]
 
 	// creates the clientset
 	clientset, err := kubernetes.NewForConfig(config.Client().RESTConfig())
