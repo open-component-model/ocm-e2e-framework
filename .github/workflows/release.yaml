@@ -17,7 +17,7 @@ jobs:
       packages: 'write'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - uses: webfactory/ssh-agent@v0.8.0
         with:
           ssh-private-key: ${{ secrets.GIT_CHECKOUT_KEY }}
@@ -31,7 +31,7 @@ jobs:
           echo ::set-output name=BUILD_DATE::$(date -u +'%Y-%m-%dT%H:%M:%SZ')
           echo ::set-output name=VERSION::${VERSION}
       - name: Run GoReleaser
-        uses: goreleaser/goreleaser-action@v1
+        uses: goreleaser/goreleaser-action@v5
         with:
           version: latest
           args: release --release-notes=docs/release_notes/${{ steps.prep.outputs.VERSION }}.md --skip-validate
