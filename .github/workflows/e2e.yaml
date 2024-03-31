@@ -13,25 +13,25 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout this repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           path: e2e
       - name: Checkout ocm-controller
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           repository: 'open-component-model/ocm-controller'
           path: ocm-controller
 #      - name: Checkout replication-controller
-#        uses: actions/checkout@v3
+#        uses: actions/checkout@v4
 #        with:
 #          repository: 'open-component-model/replication-controller'
 #          path: replication-controller
       - name: Setup Go
-        uses: actions/setup-go@v3
+        uses: actions/setup-go@v5
         with:
           go-version-file: '${{ github.workspace }}/e2e/go.mod'
       - name: Restore Go cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: /home/runner/work/_temp/_github_home/go/pkg/mod
           key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
