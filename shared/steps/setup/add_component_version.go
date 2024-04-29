@@ -31,7 +31,7 @@ func AddComponentVersions(components ...Component) features.Func {
 			if c.Scheme != "" {
 				scheme = c.Scheme
 			}
-			t.Log("c.Component: %s c.Component.Version %s c.Scheme: %s ", c.Component.Name, c.Component.Version, c.Scheme)
+			t.Logf("c.Component: %s c.Component.Version %s c.Scheme: %s ", c.Component.Name, c.Component.Version, c.Scheme)
 
 			if err := shared.AddComponentVersionToRepository(c.Component, scheme, c.ComponentVersionModifications...); err != nil {
 				t.Fatal(err)
