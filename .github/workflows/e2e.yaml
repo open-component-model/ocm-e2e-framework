@@ -21,11 +21,11 @@ jobs:
         with:
           repository: 'open-component-model/ocm-controller'
           path: ocm-controller
-#      - name: Checkout replication-controller
-#        uses: actions/checkout@v3
-#        with:
-#          repository: 'open-component-model/replication-controller'
-#          path: replication-controller
+      - name: Checkout replication-controller
+        uses: actions/checkout@v3
+        with:
+          repository: 'open-component-model/replication-controller'
+          path: replication-controller
       - name: Setup Go
         uses: actions/setup-go@v3
         with:
