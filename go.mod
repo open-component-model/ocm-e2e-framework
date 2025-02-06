@@ -1,7 +1,6 @@
 module github.com/open-component-model/ocm-e2e-framework
 
-go 1.23
-toolchain go1.23.2
+go 1.23.5
 
 replace github.com/opencontainers/go-digest => github.com/opencontainers/go-digest v1.0.1-0.20220411205349-bde1400a84be
 
