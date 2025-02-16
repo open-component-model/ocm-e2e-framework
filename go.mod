@@ -12,25 +12,25 @@ require (
 	github.com/fluxcd/cli-utils v0.36.0-flux.12
 	github.com/fluxcd/flux2/v2 v2.4.0
 	github.com/fluxcd/helm-controller/api v1.1.0
-	github.com/fluxcd/image-automation-controller/api v0.39.0
-	github.com/fluxcd/image-reflector-controller/api v0.33.0
+	github.com/fluxcd/image-automation-controller/api v0.40.0
+	github.com/fluxcd/image-reflector-controller/api v0.34.0
 	github.com/fluxcd/kustomize-controller/api v1.4.0
-	github.com/fluxcd/notification-controller/api v1.4.0
+	github.com/fluxcd/notification-controller/api v1.5.0
 	github.com/fluxcd/pkg/apis/meta v1.10.0
-	github.com/fluxcd/pkg/runtime v0.53.0
-	github.com/fluxcd/pkg/ssa v0.45.0
+	github.com/fluxcd/pkg/runtime v0.53.1
+	github.com/fluxcd/pkg/ssa v0.45.1
 	github.com/fluxcd/pkg/version v0.6.0
-	github.com/fluxcd/source-controller/api v1.4.1
+	github.com/fluxcd/source-controller/api v1.5.0
 	github.com/open-component-model/git-controller v0.12.1
 	github.com/open-component-model/ocm v0.11.0
 	github.com/open-component-model/ocm-controller v0.25.4
 	github.com/open-component-model/replication-controller v0.13.1
-	k8s.io/api v0.32.1
-	k8s.io/apiextensions-apiserver v0.32.1
-	k8s.io/apimachinery v0.32.1
-	k8s.io/cli-runtime v0.32.1
-	k8s.io/client-go v0.32.1
-	sigs.k8s.io/controller-runtime v0.20.1
+	k8s.io/api v0.32.2
+	k8s.io/apiextensions-apiserver v0.32.2
+	k8s.io/apimachinery v0.32.2
+	k8s.io/cli-runtime v0.32.2
+	k8s.io/client-go v0.32.2
+	sigs.k8s.io/controller-runtime v0.20.2
 	sigs.k8s.io/e2e-framework v0.6.0
 	sigs.k8s.io/kustomize/api v0.19.0
 	sigs.k8s.io/yaml v1.4.0
@@ -314,10 +314,10 @@ require (
 	golang.org/x/mod v0.21.0 // indirect
 	golang.org/x/net v0.34.0 // indirect
 	golang.org/x/oauth2 v0.25.0 // indirect
-	golang.org/x/sync v0.10.0 // indirect
+	golang.org/x/sync v0.11.0 // indirect
 	golang.org/x/sys v0.29.0 // indirect
 	golang.org/x/term v0.28.0 // indirect
-	golang.org/x/text v0.21.0 // indirect
+	golang.org/x/text v0.22.0 // indirect
 	golang.org/x/time v0.9.0 // indirect
 	gomodules.xyz/jsonpatch/v2 v2.4.0 // indirect
 	google.golang.org/api v0.197.0 // indirect
@@ -331,7 +331,7 @@ require (
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 	helm.sh/helm/v3 v3.15.1 // indirect
-	k8s.io/component-base v0.32.1 // indirect
+	k8s.io/component-base v0.32.2 // indirect
 	k8s.io/klog/v2 v2.130.1 // indirect
 	k8s.io/kube-openapi v0.0.0-20241212222426-2c72e554b1e7 // indirect
 	k8s.io/kubectl v0.32.1 // indirect
