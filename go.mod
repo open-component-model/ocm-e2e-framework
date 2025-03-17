@@ -2,6 +2,8 @@ module github.com/open-component-model/ocm-e2e-framework
 
 go 1.23.5
 
+toolchain go1.24.1
+
 replace github.com/opencontainers/go-digest => github.com/opencontainers/go-digest v1.0.1-0.20220411205349-bde1400a84be
 
 // OCM dependent re-writes
@@ -17,7 +19,7 @@ require (
 	github.com/fluxcd/kustomize-controller/api v1.5.1
 	github.com/fluxcd/notification-controller/api v1.5.0
 	github.com/fluxcd/pkg/apis/meta v1.10.0
-	github.com/fluxcd/pkg/runtime v0.54.0
+	github.com/fluxcd/pkg/runtime v0.55.0
 	github.com/fluxcd/pkg/ssa v0.45.1
 	github.com/fluxcd/pkg/version v0.6.0
 	github.com/fluxcd/source-controller/api v1.5.0
@@ -25,12 +27,12 @@ require (
 	github.com/open-component-model/ocm v0.11.0
 	github.com/open-component-model/ocm-controller v0.25.4
 	github.com/open-component-model/replication-controller v0.13.1
-	k8s.io/api v0.32.2
-	k8s.io/apiextensions-apiserver v0.32.2
-	k8s.io/apimachinery v0.32.2
-	k8s.io/cli-runtime v0.32.2
-	k8s.io/client-go v0.32.2
-	sigs.k8s.io/controller-runtime v0.20.2
+	k8s.io/api v0.32.3
+	k8s.io/apiextensions-apiserver v0.32.3
+	k8s.io/apimachinery v0.32.3
+	k8s.io/cli-runtime v0.32.3
+	k8s.io/client-go v0.32.3
+	sigs.k8s.io/controller-runtime v0.20.3
 	sigs.k8s.io/e2e-framework v0.6.0
 	sigs.k8s.io/kustomize/api v0.19.0
 	sigs.k8s.io/yaml v1.4.0
@@ -334,7 +336,7 @@ require (
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 	helm.sh/helm/v3 v3.17.0 // indirect
-	k8s.io/component-base v0.32.2 // indirect
+	k8s.io/component-base v0.32.3 // indirect
 	k8s.io/klog/v2 v2.130.1 // indirect
 	k8s.io/kube-openapi v0.0.0-20241212222426-2c72e554b1e7 // indirect
 	k8s.io/kubectl v0.32.2 // indirect
