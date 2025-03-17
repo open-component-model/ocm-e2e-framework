@@ -1,7 +1,6 @@
 module github.com/open-component-model/ocm-e2e-framework
 
 go 1.23.5
-toolchain go1.24.1
 
 toolchain go1.24.1
 
