@@ -1,7 +1,6 @@
 module github.com/open-component-model/ocm-e2e-framework
 
 go 1.23.5
-
 toolchain go1.24.1
 
 replace github.com/opencontainers/go-digest => github.com/opencontainers/go-digest v1.0.1-0.20220411205349-bde1400a84be
@@ -19,7 +18,7 @@ require (
 	github.com/fluxcd/kustomize-controller/api v1.5.1
 	github.com/fluxcd/notification-controller/api v1.5.0
 	github.com/fluxcd/pkg/apis/meta v1.10.0
-	github.com/fluxcd/pkg/runtime v0.55.0
+	github.com/fluxcd/pkg/runtime v0.58.0
 	github.com/fluxcd/pkg/ssa v0.45.1
 	github.com/fluxcd/pkg/version v0.6.0
 	github.com/fluxcd/source-controller/api v1.5.0
@@ -32,7 +31,7 @@ require (
 	k8s.io/apimachinery v0.32.3
 	k8s.io/cli-runtime v0.32.3
 	k8s.io/client-go v0.32.3
-	sigs.k8s.io/controller-runtime v0.20.3
+	sigs.k8s.io/controller-runtime v0.20.4
 	sigs.k8s.io/e2e-framework v0.6.0
 	sigs.k8s.io/kustomize/api v0.19.0
 	sigs.k8s.io/yaml v1.4.0

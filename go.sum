@@ -377,8 +377,8 @@ github.com/fluxcd/pkg/apis/meta v1.10.0 h1:rqbAuyl5ug7A5jjRf/rNwBXmNl6tJ9wG2iIsr
 github.com/fluxcd/pkg/apis/meta v1.10.0/go.mod h1:n7NstXHDaleAUMajcXTVkhz0MYkvEXy1C/eLI/t1xoI=
 github.com/fluxcd/pkg/kustomize v1.16.0 h1:UBOeIvkrC6y4owYs7vZwG5PUVFeqnRoDFN9eaNhuNPI=
 github.com/fluxcd/pkg/kustomize v1.16.0/go.mod h1:6yQkAZaG+w3nXY30LbyWRYHimjRcLRwlYkrwG0ygMSI=
-github.com/fluxcd/pkg/runtime v0.55.0 h1:bjXz7t1g9DsXUtIbOWZAqAKOo/qccEPQ5JlHMeSO7bk=
-github.com/fluxcd/pkg/runtime v0.55.0/go.mod h1:PC73Yn/AaBQXnd2YYq0cnQqF3RmQKoM265crrjFJnKI=
+github.com/fluxcd/pkg/runtime v0.58.0 h1:aic88k/PUqEOzq62nxav9XEyUicAbT+fiDcJ7dzWhqc=
+github.com/fluxcd/pkg/runtime v0.58.0/go.mod h1:ZRlEHAHhlP3gPl7/+kZ8i8nimZ+/mSnpURlexBJULnI=
 github.com/fluxcd/pkg/ssa v0.45.1 h1:ISl84TJwRP/GuZXrKiR9Tf8JOnG5XFgtjcYoR4XQYf4=
 github.com/fluxcd/pkg/ssa v0.45.1/go.mod h1:8Anf7XVZ0zxOve7HXbDaW1s0gfmP95ksJBlKfDYinhQ=
 github.com/fluxcd/pkg/tar v0.11.0 h1:pjf/rzr6HNAPiuxT59mtba9tfBtdNiSQ/UqduG8vZ2I=
@@ -1293,8 +1293,8 @@ k8s.io/utils v0.0.0-20241210054802-24370beab758 h1:sdbE21q2nlQtFh65saZY+rRM6x6aJ
 k8s.io/utils v0.0.0-20241210054802-24370beab758/go.mod h1:OLgZIPagt7ERELqWJFomSt595RzquPNLL48iOWgYOg0=
 oras.land/oras-go v1.2.5 h1:XpYuAwAb0DfQsunIyMfeET92emK8km3W4yEzZvUbsTo=
 oras.land/oras-go v1.2.5/go.mod h1:PuAwRShRZCsZb7g8Ar3jKKQR/2A/qN+pkYxIOd/FAoo=
-sigs.k8s.io/controller-runtime v0.20.3 h1:I6Ln8JfQjHH7JbtCD2HCYHoIzajoRxPNuvhvcDbZgkI=
-sigs.k8s.io/controller-runtime v0.20.3/go.mod h1:xg2XB0K5ShQzAgsoujxuKN4LNXR2LfwwHsPj7Iaw+XY=
+sigs.k8s.io/controller-runtime v0.20.4 h1:X3c+Odnxz+iPTRobG4tp092+CvBU9UK0t/bRf+n0DGU=
+sigs.k8s.io/controller-runtime v0.20.4/go.mod h1:xg2XB0K5ShQzAgsoujxuKN4LNXR2LfwwHsPj7Iaw+XY=
 sigs.k8s.io/e2e-framework v0.6.0 h1:p7hFzHnLKO7eNsWGI2AbC1Mo2IYxidg49BiT4njxkrM=
 sigs.k8s.io/e2e-framework v0.6.0/go.mod h1:IREnCHnKgRCioLRmNi0hxSJ1kJ+aAdjEKK/gokcZu4k=
 sigs.k8s.io/json v0.0.0-20241014173422-cfa47c3a1cc8 h1:gBQPwqORJ8d8/YNZWEjoZs7npUVDpVXUUOFfW6CgAqE=
