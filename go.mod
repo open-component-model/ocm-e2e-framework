@@ -10,7 +10,7 @@ replace github.com/opencontainers/go-digest => github.com/opencontainers/go-dige
 replace github.com/texttheater/golang-levenshtein => github.com/texttheater/golang-levenshtein v0.0.0-20200805054039-cae8b0eaed6c
 
 require (
-	code.gitea.io/sdk/gitea v0.20.0
+	code.gitea.io/sdk/gitea v0.21.0
 	github.com/fluxcd/cli-utils v0.36.0-flux.12
 	github.com/fluxcd/flux2/v2 v2.5.1
 	github.com/fluxcd/helm-controller/api v1.2.0
@@ -19,7 +19,7 @@ require (
 	github.com/fluxcd/kustomize-controller/api v1.5.1
 	github.com/fluxcd/notification-controller/api v1.5.0
 	github.com/fluxcd/pkg/apis/meta v1.10.0
-	github.com/fluxcd/pkg/runtime v0.55.0
+	github.com/fluxcd/pkg/runtime v0.58.0
 	github.com/fluxcd/pkg/ssa v0.45.1
 	github.com/fluxcd/pkg/version v0.6.0
 	github.com/fluxcd/source-controller/api v1.5.0
@@ -32,7 +32,7 @@ require (
 	k8s.io/apimachinery v0.32.3
 	k8s.io/cli-runtime v0.32.3
 	k8s.io/client-go v0.32.3
-	sigs.k8s.io/controller-runtime v0.20.3
+	sigs.k8s.io/controller-runtime v0.20.4
 	sigs.k8s.io/e2e-framework v0.6.0
 	sigs.k8s.io/kustomize/api v0.19.0
 	sigs.k8s.io/yaml v1.4.0
@@ -44,7 +44,7 @@ require (
 	cloud.google.com/go/compute/metadata v0.6.0 // indirect
 	cuelabs.dev/go/oci/ociregistry v0.0.0-20240404174027-a39bec0462d2 // indirect
 	filippo.io/edwards25519 v1.1.0 // indirect
-	github.com/42wim/httpsig v1.2.1 // indirect
+	github.com/42wim/httpsig v1.2.2 // indirect
 	github.com/AdaLogics/go-fuzz-headers v0.0.0-20240806141605-e8a1dd7889d6 // indirect
 	github.com/AliyunContainerService/ack-ram-tool/pkg/credentials/alibabacloudsdkgo/helper v0.2.0 // indirect
 	github.com/Azure/azure-sdk-for-go v68.0.0+incompatible // indirect
