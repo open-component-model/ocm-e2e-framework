@@ -73,7 +73,7 @@ func BlobResource(resource Resource) ComponentModification {
 				Relation: ocmmetav1.LocalRelation,
 			},
 			blobaccess.ForString(mime.MIME_TEXT, resource.Data),
-			"", nil,
+			"", nil, ocm.ModifyElement(true),
 		)
 	}
 }
@@ -88,7 +88,7 @@ func ImageRefResource(ref string, resource Resource) ComponentModification {
 			},
 			Type:     resource.Type,
 			Relation: ocmmetav1.ExternalRelation,
-		}, ociartifact.New(ref))
+		}, ociartifact.New(ref), ocm.ModifyElement(true))
 	}
 }
 
@@ -101,7 +101,7 @@ func ComponentVersionRef(ref ComponentRef) ComponentModification {
 				Version: ref.Version,
 			},
 			ComponentName: ref.ComponentName,
-		})
+		}, ocm.ModifyElement(true))
 	}
 }
 
