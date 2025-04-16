@@ -151,7 +151,7 @@ func AddComponentVersionToRepository(component Component, scheme string, compone
 		}
 	}
 
-	if err := comp.AddVersion(compvers); err != nil {
+	if err := comp.AddVersion(compvers, true); err != nil {
 		return fmt.Errorf("failed to add Version: %w", err)
 	}
 
