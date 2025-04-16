@@ -9,17 +9,18 @@ import (
 	"fmt"
 	"net/url"
 
-	"ocm.software/ocm/api/utils/accessio"
 	"ocm.software/ocm/api/ocm"
-	"ocm.software/ocm/api/ocm/extensions/accessmethods/ociartifact"
-	"ocm.software/ocm/api/ocm/extensions/attrs/signingattr"
 	"ocm.software/ocm/api/ocm/compdesc"
 	ocmmetav1 "ocm.software/ocm/api/ocm/compdesc/meta/v1"
+	"ocm.software/ocm/api/ocm/extensions/accessmethods/ociartifact"
+	"ocm.software/ocm/api/ocm/extensions/attrs/signingattr"
 	ocmreg "ocm.software/ocm/api/ocm/extensions/repositories/ocireg"
+	"ocm.software/ocm/api/ocm/resolvers"
 	"ocm.software/ocm/api/ocm/tools/signing"
-	"ocm.software/ocm/api/utils/mime"
 	ocmsigning "ocm.software/ocm/api/tech/signing"
 	"ocm.software/ocm/api/tech/signing/handlers/rsa"
+	"ocm.software/ocm/api/utils/blobaccess"
+	"ocm.software/ocm/api/utils/mime"
 )
 
 const (
@@ -71,8 +72,8 @@ func BlobResource(resource Resource) ComponentModification {
 				Type:     resource.Type,
 				Relation: ocmmetav1.LocalRelation,
 			},
-			accessio.BlobAccessForString(mime.MIME_TEXT, resource.Data),
-			"", nil,
+			blobaccess.ForString(mime.MIME_TEXT, resource.Data),
+			"", nil, ocm.ModifyElement(true),
 		)
 	}
 }
@@ -87,20 +88,20 @@ func ImageRefResource(ref string, resource Resource) ComponentModification {
 			},
 			Type:     resource.Type,
 			Relation: ocmmetav1.ExternalRelation,
-		}, ociartifact.New(ref))
+		}, ociartifact.New(ref), ocm.ModifyElement(true))
 	}
 }
 
 // ComponentVersionRef creates a component version reference for the given component version.
 func ComponentVersionRef(ref ComponentRef) ComponentModification {
 	return func(compvers ocm.ComponentVersionAccess) error {
-		return compvers.SetReference(&compdesc.ComponentReference{
+		return compvers.SetReference(&compdesc.Reference{
 			ElementMeta: compdesc.ElementMeta{
 				Name:    ref.Name,
 				Version: ref.Version,
 			},
 			ComponentName: ref.ComponentName,
-		})
+		}, ocm.ModifyElement(true))
 	}
 }
 
@@ -150,12 +151,12 @@ func AddComponentVersionToRepository(component Component, scheme string, compone
 		}
 	}
 
-	if err := comp.AddVersion(compvers); err != nil {
+	if err := comp.AddVersion(compvers, true); err != nil {
 		return fmt.Errorf("failed to add Version: %w", err)
 	}
 
 	if component.Sign != nil {
-		resolver := ocm.NewCompoundResolver(target)
+		resolver := resolvers.NewCompoundResolver(target)
 		opts := signing.NewOptions(
 			signing.Sign(ocmsigning.DefaultHandlerRegistry().GetSigner(SignAlgo), component.Sign.Name),
 			signing.Resolver(resolver),
