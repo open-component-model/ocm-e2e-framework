@@ -13,8 +13,8 @@ import (
 
 	"github.com/fluxcd/pkg/apis/meta"
 	fconditions "github.com/fluxcd/pkg/runtime/conditions"
-	"github.com/open-component-model/ocm/pkg/contexts/ocm/resourcetypes"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	resourcetypes "ocm.software/ocm/api/ocm/extensions/artifacttypes"
 	"sigs.k8s.io/e2e-framework/klient/k8s"
 	"sigs.k8s.io/e2e-framework/klient/k8s/resources"
 	"sigs.k8s.io/e2e-framework/klient/wait"
