@@ -10,7 +10,7 @@ replace github.com/opencontainers/go-digest => github.com/opencontainers/go-dige
 replace github.com/texttheater/golang-levenshtein => github.com/texttheater/golang-levenshtein v0.0.0-20200805054039-cae8b0eaed6c
 
 require (
-	code.gitea.io/sdk/gitea v0.20.0
+	code.gitea.io/sdk/gitea v0.21.0
 	github.com/fluxcd/cli-utils v0.36.0-flux.12
 	github.com/fluxcd/flux2/v2 v2.5.1
 	github.com/fluxcd/helm-controller/api v1.2.0
@@ -19,12 +19,12 @@ require (
 	github.com/fluxcd/kustomize-controller/api v1.5.1
 	github.com/fluxcd/notification-controller/api v1.5.0
 	github.com/fluxcd/pkg/apis/meta v1.10.0
-	github.com/fluxcd/pkg/runtime v0.55.0
+	github.com/fluxcd/pkg/runtime v0.58.0
 	github.com/fluxcd/pkg/ssa v0.45.1
 	github.com/fluxcd/pkg/version v0.6.0
 	github.com/fluxcd/source-controller/api v1.5.0
 	github.com/open-component-model/git-controller v0.12.1
-	github.com/open-component-model/ocm-controller v0.25.4
+	github.com/open-component-model/ocm-controller v0.26.0
 	github.com/open-component-model/replication-controller v0.13.1
 	k8s.io/api v0.32.3
 	k8s.io/apiextensions-apiserver v0.32.3
@@ -32,7 +32,7 @@ require (
 	k8s.io/cli-runtime v0.32.3
 	k8s.io/client-go v0.32.3
 	ocm.software/ocm v0.22.1
-	sigs.k8s.io/controller-runtime v0.20.3
+	sigs.k8s.io/controller-runtime v0.20.4
 	sigs.k8s.io/e2e-framework v0.6.0
 	sigs.k8s.io/kustomize/api v0.19.0
 	sigs.k8s.io/yaml v1.4.0
@@ -43,7 +43,7 @@ require (
 	cloud.google.com/go/auth/oauth2adapt v0.2.7 // indirect
 	cloud.google.com/go/compute/metadata v0.6.0 // indirect
 	dario.cat/mergo v1.0.1 // indirect
-	github.com/42wim/httpsig v1.2.1 // indirect
+	github.com/42wim/httpsig v1.2.2 // indirect
 	github.com/AdaLogics/go-fuzz-headers v0.0.0-20240806141605-e8a1dd7889d6 // indirect
 	github.com/AliyunContainerService/ack-ram-tool/pkg/credentials/provider v0.15.2 // indirect
 	github.com/Azure/azure-sdk-for-go v68.0.0+incompatible // indirect
@@ -222,6 +222,7 @@ require (
 	github.com/jbenet/go-context v0.0.0-20150711004518-d14ea06fba99 // indirect
 	github.com/jedisct1/go-minisign v0.0.0-20230811132847-661be99b8267 // indirect
 	github.com/jinzhu/copier v0.4.0 // indirect
+	github.com/jinzhu/gorm v1.9.16 // indirect
 	github.com/josharian/intern v1.0.0 // indirect
 	github.com/json-iterator/go v1.1.12 // indirect
 	github.com/kevinburke/ssh_config v1.2.0 // indirect
@@ -234,7 +235,6 @@ require (
 	github.com/mandelsoft/filepath v0.0.0-20240223090642-3e2777258aa3 // indirect
 	github.com/mandelsoft/goutils v0.0.0-20241005173814-114fa825bbdc // indirect
 	github.com/mandelsoft/logging v0.0.0-20240618075559-fdca28a87b0a // indirect
-	github.com/mandelsoft/spiff v1.7.0-beta-7 // indirect
 	github.com/mandelsoft/vfs v0.4.4 // indirect
 	github.com/marstr/guid v1.1.0 // indirect
 	github.com/mattn/go-colorable v0.1.14 // indirect
@@ -264,7 +264,6 @@ require (
 	github.com/oklog/ulid v1.3.1 // indirect
 	github.com/oleiade/reflections v1.1.0 // indirect
 	github.com/onsi/gomega v1.36.2 // indirect
-	github.com/open-component-model/ocm v0.11.0 // indirect
 	github.com/opencontainers/go-digest v1.0.0 // indirect
 	github.com/opencontainers/image-spec v1.1.1 // indirect
 	github.com/opencontainers/runtime-spec v1.2.0 // indirect
