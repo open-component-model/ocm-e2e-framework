@@ -3,6 +3,9 @@ name: Check for diff after manifest and generated targets
 on:
   pull_request: {}
 
+permissions:
+  contents: read
+
 jobs:
   check:
     name: Check for diff
