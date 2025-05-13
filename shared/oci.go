@@ -28,10 +28,11 @@ const (
 )
 
 type Resource struct {
-	Name    string
-	Version string
-	Data    string
-	Type    string
+	Name          string
+	Version       string
+	Data          string
+	Type          string
+	ExtraIdentity map[string]string
 }
 
 type ComponentRef struct {
@@ -66,8 +67,9 @@ func BlobResource(resource Resource) ComponentModification {
 		return compvers.SetResourceBlob(
 			&compdesc.ResourceMeta{
 				ElementMeta: compdesc.ElementMeta{
-					Name:    resource.Name,
-					Version: resource.Version,
+					Name:          resource.Name,
+					Version:       resource.Version,
+					ExtraIdentity: resource.ExtraIdentity,
 				},
 				Type:     resource.Type,
 				Relation: ocmmetav1.LocalRelation,
@@ -83,8 +85,9 @@ func ImageRefResource(ref string, resource Resource) ComponentModification {
 	return func(compvers ocm.ComponentVersionAccess) error {
 		return compvers.SetResource(&compdesc.ResourceMeta{
 			ElementMeta: compdesc.ElementMeta{
-				Name:    resource.Name,
-				Version: resource.Version,
+				Name:          resource.Name,
+				Version:       resource.Version,
+				ExtraIdentity: resource.ExtraIdentity,
 			},
 			Type:     resource.Type,
 			Relation: ocmmetav1.ExternalRelation,

@@ -21,7 +21,14 @@ func DumpRepositoryContent(owner, repo string) features.Func {
 			t.Fatal(fmt.Errorf("failed to create gitea client: %w", err))
 		}
 
-		r, _, err := gclient.GetTrees(owner, repo, "main", true)
+		r, _, err := gclient.GetTrees(owner, repo, gitea.ListTreeOptions{
+			ListOptions: gitea.ListOptions{
+				PageSize: 100,
+				Page:     0,
+			},
+			Ref:       "main",
+			Recursive: true,
+		})
 		if err != nil {
 			t.Fatal(fmt.Errorf("failed to find repo for %s/%s: %w", owner, repo, err))
 		}

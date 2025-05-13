@@ -44,7 +44,7 @@ func AddFilesToGitRepository(files ...File) features.Func {
 				Content: base64.StdEncoding.EncodeToString(data),
 			})
 			if err != nil {
-				t.Fatal(fmt.Errorf("failed to add file to repository: %w", err))
+				t.Fatal(fmt.Errorf("failed to add file to repository %s: %w", file, err))
 			}
 
 			t.Logf("successfully added %s to repository %s", file.DestFilepath, file.RepoName)
