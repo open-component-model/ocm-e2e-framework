@@ -10,17 +10,17 @@ replace github.com/texttheater/golang-levenshtein => github.com/texttheater/gola
 require (
 	code.gitea.io/sdk/gitea v0.21.0
 	github.com/fluxcd/cli-utils v0.36.0-flux.13
-	github.com/fluxcd/flux2/v2 v2.6.2
+	github.com/fluxcd/flux2/v2 v2.6.3
 	github.com/fluxcd/helm-controller/api v1.3.0
-	github.com/fluxcd/image-automation-controller/api v0.41.1
+	github.com/fluxcd/image-automation-controller/api v0.41.2
 	github.com/fluxcd/image-reflector-controller/api v0.35.2
 	github.com/fluxcd/kustomize-controller/api v1.6.0
 	github.com/fluxcd/notification-controller/api v1.6.0
 	github.com/fluxcd/pkg/apis/meta v1.13.0
-	github.com/fluxcd/pkg/runtime v0.60.0
+	github.com/fluxcd/pkg/runtime v0.62.0
 	github.com/fluxcd/pkg/ssa v0.48.0
 	github.com/fluxcd/pkg/version v0.8.0
-	github.com/fluxcd/source-controller/api v1.6.1
+	github.com/fluxcd/source-controller/api v1.6.2
 	github.com/open-component-model/git-controller v0.12.1
 	github.com/open-component-model/ocm-controller v0.26.2
 	github.com/open-component-model/replication-controller v0.13.1
@@ -32,8 +32,8 @@ require (
 	ocm.software/ocm v0.25.0
 	sigs.k8s.io/controller-runtime v0.21.0
 	sigs.k8s.io/e2e-framework v0.6.0
-	sigs.k8s.io/kustomize/api v0.19.0
-	sigs.k8s.io/yaml v1.4.0
+	sigs.k8s.io/kustomize/api v0.20.0
+	sigs.k8s.io/yaml v1.5.0
 )
 
 require (
@@ -104,6 +104,7 @@ require (
 	github.com/buildkite/go-pipeline v0.13.3 // indirect
 	github.com/buildkite/interpolate v0.1.5 // indirect
 	github.com/buildkite/roko v1.3.1 // indirect
+	github.com/carapace-sh/carapace-shlex v1.0.1 // indirect
 	github.com/cenkalti/backoff/v4 v4.3.0 // indirect
 	github.com/cespare/xxhash/v2 v2.3.0 // indirect
 	github.com/chai2010/gettext-go v1.0.3 // indirect
@@ -194,7 +195,6 @@ require (
 	github.com/google/go-github/v55 v55.0.0 // indirect
 	github.com/google/go-querystring v1.1.0 // indirect
 	github.com/google/s2a-go v0.1.9 // indirect
-	github.com/google/shlex v0.0.0-20191202100458-e7afc7fbc510 // indirect
 	github.com/google/uuid v1.6.0 // indirect
 	github.com/googleapis/enterprise-certificate-proxy v0.3.6 // indirect
 	github.com/googleapis/gax-go/v2 v2.14.1 // indirect
@@ -339,6 +339,8 @@ require (
 	go.opentelemetry.io/proto/otlp v1.5.0 // indirect
 	go.uber.org/multierr v1.11.0 // indirect
 	go.uber.org/zap v1.27.0 // indirect
+	go.yaml.in/yaml/v2 v2.4.2 // indirect
+	go.yaml.in/yaml/v3 v3.0.3 // indirect
 	golang.org/x/crypto v0.39.0 // indirect
 	golang.org/x/exp v0.0.0-20241217172543-b2144cdd0a67 // indirect
 	golang.org/x/mod v0.25.0 // indirect
@@ -370,7 +372,7 @@ require (
 	k8s.io/utils v0.0.0-20250321185631-1f6e0b77f77e // indirect
 	oras.land/oras-go/v2 v2.5.0 // indirect
 	sigs.k8s.io/json v0.0.0-20241014173422-cfa47c3a1cc8 // indirect
-	sigs.k8s.io/kustomize/kyaml v0.19.0 // indirect
+	sigs.k8s.io/kustomize/kyaml v0.20.0 // indirect
 	sigs.k8s.io/randfill v1.0.0 // indirect
 	sigs.k8s.io/release-utils v0.11.1 // indirect
 	sigs.k8s.io/structured-merge-diff/v4 v4.7.0 // indirect
