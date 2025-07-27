@@ -17,12 +17,12 @@ require (
 	github.com/fluxcd/kustomize-controller/api v1.6.1
 	github.com/fluxcd/notification-controller/api v1.6.0
 	github.com/fluxcd/pkg/apis/meta v1.18.0
-	github.com/fluxcd/pkg/runtime v0.74.0
+	github.com/fluxcd/pkg/runtime v0.75.0
 	github.com/fluxcd/pkg/ssa v0.51.0
 	github.com/fluxcd/pkg/version v0.9.0
 	github.com/fluxcd/source-controller/api v1.6.2
 	github.com/open-component-model/git-controller v0.12.1
-	github.com/open-component-model/ocm-controller v0.26.4
+	github.com/open-component-model/ocm-controller v0.26.5
 	github.com/open-component-model/replication-controller v0.13.1
 	k8s.io/api v0.33.3
 	k8s.io/apiextensions-apiserver v0.33.3
@@ -32,8 +32,8 @@ require (
 	ocm.software/ocm v0.26.0
 	sigs.k8s.io/controller-runtime v0.21.0
 	sigs.k8s.io/e2e-framework v0.6.0
-	sigs.k8s.io/kustomize/api v0.20.0
-	sigs.k8s.io/yaml v1.5.0
+	sigs.k8s.io/kustomize/api v0.20.1
+	sigs.k8s.io/yaml v1.6.0
 )
 
 require (
@@ -104,7 +104,6 @@ require (
 	github.com/buildkite/go-pipeline v0.13.3 // indirect
 	github.com/buildkite/interpolate v0.1.5 // indirect
 	github.com/buildkite/roko v1.3.1 // indirect
-	github.com/carapace-sh/carapace-shlex v1.0.1 // indirect
 	github.com/cenkalti/backoff/v4 v4.3.0 // indirect
 	github.com/cespare/xxhash/v2 v2.3.0 // indirect
 	github.com/chai2010/gettext-go v1.0.3 // indirect
@@ -373,7 +372,7 @@ require (
 	k8s.io/utils v0.0.0-20250604170112-4c0f3b243397 // indirect
 	oras.land/oras-go/v2 v2.6.0 // indirect
 	sigs.k8s.io/json v0.0.0-20241014173422-cfa47c3a1cc8 // indirect
-	sigs.k8s.io/kustomize/kyaml v0.20.0 // indirect
+	sigs.k8s.io/kustomize/kyaml v0.20.1 // indirect
 	sigs.k8s.io/randfill v1.0.0 // indirect
 	sigs.k8s.io/release-utils v0.11.1 // indirect
 	sigs.k8s.io/structured-merge-diff/v4 v4.7.0 // indirect
