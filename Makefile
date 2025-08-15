@@ -34,3 +34,7 @@ vet: ## Run go vet against code.
 test: ## Run all of the tests
 	go test ./...
 
+.PHONY: test-unit
+test-unit: ## Run unit tests only
+	go test ./internal/... -short
+

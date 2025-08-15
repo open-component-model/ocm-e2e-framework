@@ -26,6 +26,7 @@ import (
 	"time"
 
 	"github.com/fluxcd/cli-utils/pkg/kstatus/polling"
+	"github.com/fluxcd/pkg/ssa/normalize"
 	"github.com/fluxcd/pkg/ssa/utils"
 	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
 	"k8s.io/cli-runtime/pkg/genericclioptions"
@@ -49,7 +50,7 @@ func Apply(ctx context.Context, rcg genericclioptions.RESTClientGetter, opts *ru
 		return "", fmt.Errorf("no Kubernetes objects found at: %s", manifestPath)
 	}
 
-	if err := ssa.SetNativeKindsDefaults(objs); err != nil {
+	if err := normalize.UnstructuredList(objs); err != nil {
 		return "", err
 	}
 
