@@ -14,8 +14,14 @@ import (
 	"sigs.k8s.io/e2e-framework/pkg/features"
 )
 
+// Controller contains information about a controller to dump.
+type Controller struct {
+	LabelSelector map[string]string
+	Namespace     string
+}
+
 // DumpClusterState dumps the status of pods and logs of given controllers.
-func DumpClusterState(controllers ...string) features.Func {
+func DumpClusterState(controllers ...Controller) features.Func {
 	return func(ctx context.Context, t *testing.T, config *envconf.Config) context.Context {
 		t.Helper()
 		// Dump controller logs
@@ -52,7 +58,7 @@ func DumpClusterState(controllers ...string) features.Func {
 	}
 }
 
-func dumpLogs(ctx context.Context, t *testing.T, config *envconf.Config, controller string) error {
+func dumpLogs(ctx context.Context, t *testing.T, config *envconf.Config, controller Controller) error {
 	t.Helper()
 
 	client, err := config.NewClient()
@@ -61,39 +67,37 @@ func dumpLogs(ctx context.Context, t *testing.T, config *envconf.Config, control
 	}
 
 	pods := &v1.PodList{}
-	if err := client.Resources(config.Namespace()).List(ctx, pods, resources.WithLabelSelector(
-		labels.FormatLabels(map[string]string{"app": controller})),
+	if err := client.Resources(controller.Namespace).List(ctx, pods, resources.WithLabelSelector(
+		labels.FormatLabels(controller.LabelSelector)),
 	); err != nil {
 		t.Fatal(fmt.Errorf("failed to list pods: %w", err))
 	}
 
-	if len(pods.Items) != 1 {
-		t.Fatal(fmt.Errorf("invalid number of pods found for registry %d", len(pods.Items)))
+	for _, pod := range pods.Items {
+		t.Logf("Dumping logs for Pod: %s | Status: %s", pod.Name, pod.Status.String())
+
+		// creates the clientset
+		clientset, err := kubernetes.NewForConfig(config.Client().RESTConfig())
+		if err != nil {
+			return fmt.Errorf("failed to create clientset: %w", err)
+		}
+
+		podReq := clientset.CoreV1().Pods(pod.Namespace).GetLogs(pod.Name, &v1.PodLogOptions{})
+
+		reader, err := podReq.Stream(ctx)
+		if err != nil {
+			t.Fatal(fmt.Errorf("failed to fetch pod logs: %w", err))
+		}
+
+		defer reader.Close()
+
+		content, err := io.ReadAll(reader)
+		if err != nil {
+			t.Fatal(fmt.Errorf("failed to read log: %w", err))
+		}
+
+		t.Logf("Pod: %s | Log: %s", controller, string(content))
 	}
-
-	pod := pods.Items[0]
-
-	// creates the clientset
-	clientset, err := kubernetes.NewForConfig(config.Client().RESTConfig())
-	if err != nil {
-		return fmt.Errorf("failed to create clientset: %w", err)
-	}
-
-	podReq := clientset.CoreV1().Pods(pod.Namespace).GetLogs(pod.Name, &v1.PodLogOptions{})
-
-	reader, err := podReq.Stream(ctx)
-	if err != nil {
-		t.Fatal(fmt.Errorf("failed to fetch pod logs: %w", err))
-	}
-
-	defer reader.Close()
-
-	content, err := io.ReadAll(reader)
-	if err != nil {
-		t.Fatal(fmt.Errorf("failed to read log: %w", err))
-	}
-
-	t.Logf("Pod: %s | Log: %s", controller, string(content))
 
 	return nil
 }
