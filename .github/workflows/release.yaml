@@ -17,7 +17,7 @@ jobs:
       packages: 'write'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - uses: webfactory/ssh-agent@v0.9.1
         with:
           ssh-private-key: ${{ secrets.GIT_CHECKOUT_KEY }}
