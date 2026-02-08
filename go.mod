@@ -10,7 +10,7 @@ replace github.com/texttheater/golang-levenshtein => github.com/texttheater/gola
 replace github.com/ThalesIgnite/crypto11 => github.com/ThalesGroup/crypto11 v1.6.0
 
 require (
-	code.gitea.io/sdk/gitea v0.22.1
+	code.gitea.io/sdk/gitea v0.23.2
 	github.com/fluxcd/cli-utils v0.37.1-flux.1
 	github.com/fluxcd/flux2/v2 v2.7.5
 	github.com/fluxcd/helm-controller/api v1.4.5
@@ -19,8 +19,8 @@ require (
 	github.com/fluxcd/kustomize-controller/api v1.7.3
 	github.com/fluxcd/notification-controller/api v1.7.5
 	github.com/fluxcd/pkg/apis/meta v1.25.0
-	github.com/fluxcd/pkg/runtime v0.97.0
-	github.com/fluxcd/pkg/ssa v0.65.0
+	github.com/fluxcd/pkg/runtime v0.99.0
+	github.com/fluxcd/pkg/ssa v0.66.0
 	github.com/fluxcd/pkg/version v0.12.0
 	github.com/fluxcd/source-controller/api v1.7.4
 	github.com/open-component-model/git-controller v0.12.1
