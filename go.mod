@@ -10,32 +10,32 @@ replace github.com/texttheater/golang-levenshtein => github.com/texttheater/gola
 replace github.com/ThalesIgnite/crypto11 => github.com/ThalesGroup/crypto11 v1.6.0
 
 require (
-	code.gitea.io/sdk/gitea v0.22.1
+	code.gitea.io/sdk/gitea v0.23.2
 	github.com/fluxcd/cli-utils v0.37.1-flux.1
 	github.com/fluxcd/flux2/v2 v2.7.5
-	github.com/fluxcd/helm-controller/api v1.4.5
-	github.com/fluxcd/image-automation-controller/api v1.0.4
-	github.com/fluxcd/image-reflector-controller/api v1.0.4
-	github.com/fluxcd/kustomize-controller/api v1.7.3
-	github.com/fluxcd/notification-controller/api v1.7.5
+	github.com/fluxcd/helm-controller/api v1.5.0
+	github.com/fluxcd/image-automation-controller/api v1.1.0
+	github.com/fluxcd/image-reflector-controller/api v1.1.0
+	github.com/fluxcd/kustomize-controller/api v1.8.0
+	github.com/fluxcd/notification-controller/api v1.8.0
 	github.com/fluxcd/pkg/apis/meta v1.25.0
-	github.com/fluxcd/pkg/runtime v0.97.0
-	github.com/fluxcd/pkg/ssa v0.65.0
-	github.com/fluxcd/pkg/version v0.12.0
-	github.com/fluxcd/source-controller/api v1.7.4
+	github.com/fluxcd/pkg/runtime v0.102.0
+	github.com/fluxcd/pkg/ssa v0.69.0
+	github.com/fluxcd/pkg/version v0.14.0
+	github.com/fluxcd/source-controller/api v1.8.0
 	github.com/open-component-model/git-controller v0.12.1
 	github.com/open-component-model/ocm-controller v0.28.0
 	github.com/open-component-model/replication-controller v0.13.1
 	github.com/stretchr/testify v1.11.1
-	k8s.io/api v0.35.0
-	k8s.io/apiextensions-apiserver v0.35.0
-	k8s.io/apimachinery v0.35.0
-	k8s.io/cli-runtime v0.35.0
-	k8s.io/client-go v0.35.0
+	k8s.io/api v0.35.1
+	k8s.io/apiextensions-apiserver v0.35.1
+	k8s.io/apimachinery v0.35.1
+	k8s.io/cli-runtime v0.35.1
+	k8s.io/client-go v0.35.1
 	ocm.software/ocm v0.35.0
 	sigs.k8s.io/controller-runtime v0.23.1
 	sigs.k8s.io/e2e-framework v0.6.0
-	sigs.k8s.io/kustomize/api v0.21.0
+	sigs.k8s.io/kustomize/api v0.21.1
 	sigs.k8s.io/yaml v1.6.0
 )
 
@@ -378,14 +378,14 @@ require (
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 	helm.sh/helm/v3 v3.19.2 // indirect
-	k8s.io/component-base v0.35.0 // indirect
+	k8s.io/component-base v0.35.1 // indirect
 	k8s.io/klog/v2 v2.130.1 // indirect
 	k8s.io/kube-openapi v0.0.0-20250910181357-589584f1c912 // indirect
 	k8s.io/kubectl v0.35.0 // indirect
 	k8s.io/utils v0.0.0-20251002143259-bc988d571ff4 // indirect
 	oras.land/oras-go/v2 v2.6.0 // indirect
 	sigs.k8s.io/json v0.0.0-20250730193827-2d320260d730 // indirect
-	sigs.k8s.io/kustomize/kyaml v0.21.0 // indirect
+	sigs.k8s.io/kustomize/kyaml v0.21.1 // indirect
 	sigs.k8s.io/randfill v1.0.0 // indirect
 	sigs.k8s.io/release-utils v0.12.3 // indirect
 	sigs.k8s.io/structured-merge-diff/v6 v6.3.2-0.20260122202528-d9cc6641c482 // indirect
