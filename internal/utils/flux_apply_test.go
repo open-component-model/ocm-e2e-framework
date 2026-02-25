@@ -117,7 +117,7 @@ kind: Kustomization
 resources:
 - deployment.yaml`
 				require.NoError(t, os.WriteFile(kustomizationPath, []byte(content), 0644))
-				
+
 				deploymentPath := filepath.Join(dir, "deployment.yaml")
 				deploymentContent := `apiVersion: apps/v1
 kind: Deployment
@@ -133,9 +133,9 @@ metadata:
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			root, manifestPath := tt.setupFile(t)
-			
+
 			objects, err := readObjects(root, manifestPath)
-			
+
 			if tt.expectError {
 				require.Error(t, err)
 				assert.Nil(t, objects)
