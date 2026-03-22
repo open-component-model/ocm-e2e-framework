@@ -12,8 +12,8 @@ replace github.com/ThalesIgnite/crypto11 => github.com/ThalesGroup/crypto11 v1.6
 require (
 	code.gitea.io/sdk/gitea v0.23.2
 	github.com/fluxcd/cli-utils v0.37.2-flux.1
-	github.com/fluxcd/flux2/v2 v2.8.2
-	github.com/fluxcd/helm-controller/api v1.5.2
+	github.com/fluxcd/flux2/v2 v2.8.3
+	github.com/fluxcd/helm-controller/api v1.5.3
 	github.com/fluxcd/image-automation-controller/api v1.1.1
 	github.com/fluxcd/image-reflector-controller/api v1.1.1
 	github.com/fluxcd/kustomize-controller/api v1.8.2
@@ -27,11 +27,11 @@ require (
 	github.com/open-component-model/ocm-controller v0.29.0
 	github.com/open-component-model/replication-controller v0.13.1
 	github.com/stretchr/testify v1.11.1
-	k8s.io/api v0.35.2
-	k8s.io/apiextensions-apiserver v0.35.2
-	k8s.io/apimachinery v0.35.2
-	k8s.io/cli-runtime v0.35.2
-	k8s.io/client-go v0.35.2
+	k8s.io/api v0.35.3
+	k8s.io/apiextensions-apiserver v0.35.3
+	k8s.io/apimachinery v0.35.3
+	k8s.io/cli-runtime v0.35.3
+	k8s.io/client-go v0.35.3
 	ocm.software/ocm v0.37.0
 	sigs.k8s.io/controller-runtime v0.23.3
 	sigs.k8s.io/e2e-framework v0.6.0
@@ -379,7 +379,7 @@ require (
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 	helm.sh/helm/v4 v4.1.3 // indirect
-	k8s.io/component-base v0.35.2 // indirect
+	k8s.io/component-base v0.35.3 // indirect
 	k8s.io/klog/v2 v2.130.1 // indirect
 	k8s.io/kube-openapi v0.0.0-20250910181357-589584f1c912 // indirect
 	k8s.io/kubectl v0.35.2 // indirect
