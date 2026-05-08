@@ -176,12 +176,17 @@ To release a new version of this library, simply make sure everything is pushed 
 push a new tag. The release job should take care of the rest.
 ## Contributing
 
-Code contributions, feature requests, bug reports, and help requests are very welcome. Please refer to the [Contributing Guide in the Community repository](https://github.com/open-component-model/community/blob/main/CONTRIBUTING.md) for more information on how to contribute to OCM.
+This project is open to feature requests/suggestions, bug reports etc. via [GitHub issues](https://github.com/open-component-model/ocm-e2e-framework/issues). Contribution and feedback are encouraged and always welcome. For more information about how to contribute, see our [Contributing Guide](https://ocm.software/community/contributing/).
 
-OCM follows the [CNCF Code of Conduct](https://github.com/cncf/foundation/blob/main/code-of-conduct.md).
+## Code of Conduct
+
+OCM follows the [NeoNephos Code of Conduct](https://github.com/neonephos/.github/blob/main/CODE_OF_CONDUCT.md).
 
 ## Licensing
 
-Copyright 2025 SAP SE or an SAP affiliate company and Open Component Model contributors.
 Please see our [LICENSE](LICENSE) for copyright and license information.
-Detailed information including third-party components and their licensing/copyright information is available [via the REUSE tool](https://api.reuse.software/info/github.com/open-component-model/replication-controller).
+Detailed information including third-party components and their licensing/copyright information is available [via the REUSE tool](https://api.reuse.software/info/github.com/open-component-model/ocm-e2e-framework).
+
+---
+
+<p align="center"><img alt="Bundesministerium für Wirtschaft und Energie (BMWE)-EU funding logo" src="https://apeirora.eu/assets/img/BMWK-EU.png" width="400"/></p>
