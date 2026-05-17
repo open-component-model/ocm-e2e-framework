@@ -10,30 +10,30 @@ replace github.com/texttheater/golang-levenshtein => github.com/texttheater/gola
 replace github.com/ThalesIgnite/crypto11 => github.com/ThalesGroup/crypto11 v1.6.0
 
 require (
-	code.gitea.io/sdk/gitea v0.25.0
-	github.com/fluxcd/cli-utils v1.2.0
-	github.com/fluxcd/flux2/v2 v2.8.6
+	code.gitea.io/sdk/gitea v0.25.1
+	github.com/fluxcd/cli-utils v1.2.1
+	github.com/fluxcd/flux2/v2 v2.8.7
 	github.com/fluxcd/helm-controller/api v1.5.4
-	github.com/fluxcd/image-automation-controller/api v1.1.2
+	github.com/fluxcd/image-automation-controller/api v1.1.3
 	github.com/fluxcd/image-reflector-controller/api v1.1.1
-	github.com/fluxcd/kustomize-controller/api v1.8.4
+	github.com/fluxcd/kustomize-controller/api v1.8.5
 	github.com/fluxcd/notification-controller/api v1.8.4
 	github.com/fluxcd/pkg/apis/meta v1.27.0
 	github.com/fluxcd/pkg/runtime v0.106.0
 	github.com/fluxcd/pkg/ssa v0.74.0
 	github.com/fluxcd/pkg/version v0.15.0
-	github.com/fluxcd/source-controller/api v1.8.3
+	github.com/fluxcd/source-controller/api v1.8.4
 	github.com/open-component-model/git-controller v0.12.1
 	github.com/open-component-model/ocm-controller v0.30.0
 	github.com/open-component-model/replication-controller v0.13.1
 	github.com/stretchr/testify v1.11.1
-	k8s.io/api v0.36.0
-	k8s.io/apiextensions-apiserver v0.36.0
-	k8s.io/apimachinery v0.36.0
-	k8s.io/cli-runtime v0.36.0
-	k8s.io/client-go v0.36.0
+	k8s.io/api v0.36.1
+	k8s.io/apiextensions-apiserver v0.36.1
+	k8s.io/apimachinery v0.36.1
+	k8s.io/cli-runtime v0.36.1
+	k8s.io/client-go v0.36.1
 	ocm.software/ocm v0.41.0
-	sigs.k8s.io/controller-runtime v0.24.0
+	sigs.k8s.io/controller-runtime v0.24.1
 	sigs.k8s.io/e2e-framework v0.7.0
 	sigs.k8s.io/kustomize/api v0.21.1
 	sigs.k8s.io/yaml v1.6.0
@@ -380,11 +380,11 @@ require (
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 	helm.sh/helm/v4 v4.1.4 // indirect
-	k8s.io/component-base v0.36.0 // indirect
+	k8s.io/component-base v0.36.1 // indirect
 	k8s.io/klog/v2 v2.140.0 // indirect
 	k8s.io/kube-openapi v0.0.0-20260317180543-43fb72c5454a // indirect
 	k8s.io/kubectl v0.36.0 // indirect
-	k8s.io/streaming v0.36.0 // indirect
+	k8s.io/streaming v0.36.1 // indirect
 	k8s.io/utils v0.0.0-20260210185600-b8788abfbbc2 // indirect
 	oras.land/oras-go/v2 v2.6.0 // indirect
 	sigs.k8s.io/json v0.0.0-20250730193827-2d320260d730 // indirect
