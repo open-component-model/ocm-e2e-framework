@@ -12,17 +12,17 @@ replace github.com/ThalesIgnite/crypto11 => github.com/ThalesGroup/crypto11 v1.6
 require (
 	code.gitea.io/sdk/gitea v0.25.1
 	github.com/fluxcd/cli-utils v1.2.2
-	github.com/fluxcd/flux2/v2 v2.9.0
-	github.com/fluxcd/helm-controller/api v1.6.1
-	github.com/fluxcd/image-automation-controller/api v1.2.1
-	github.com/fluxcd/image-reflector-controller/api v1.2.1
-	github.com/fluxcd/kustomize-controller/api v1.9.1
-	github.com/fluxcd/notification-controller/api v1.9.1
-	github.com/fluxcd/pkg/apis/meta v1.30.1
-	github.com/fluxcd/pkg/runtime v0.110.1
-	github.com/fluxcd/pkg/ssa v0.76.1
+	github.com/fluxcd/flux2/v2 v2.9.1
+	github.com/fluxcd/helm-controller/api v1.6.2
+	github.com/fluxcd/image-automation-controller/api v1.2.2
+	github.com/fluxcd/image-reflector-controller/api v1.2.2
+	github.com/fluxcd/kustomize-controller/api v1.9.2
+	github.com/fluxcd/notification-controller/api v1.9.2
+	github.com/fluxcd/pkg/apis/meta v1.31.0
+	github.com/fluxcd/pkg/runtime v0.111.0
+	github.com/fluxcd/pkg/ssa v0.77.0
 	github.com/fluxcd/pkg/version v0.16.0
-	github.com/fluxcd/source-controller/api v1.9.1
+	github.com/fluxcd/source-controller/api v1.9.2
 	github.com/open-component-model/git-controller v0.12.1
 	github.com/open-component-model/ocm-controller v0.31.0
 	github.com/open-component-model/replication-controller v0.13.1
@@ -149,8 +149,8 @@ require (
 	github.com/fatih/color v1.19.0 // indirect
 	github.com/felixge/httpsnoop v1.0.4 // indirect
 	github.com/fluxcd/pkg/apis/acl v0.10.0 // indirect
-	github.com/fluxcd/pkg/apis/kustomize v1.19.1 // indirect
-	github.com/fluxcd/pkg/kustomize v1.35.1 // indirect
+	github.com/fluxcd/pkg/apis/kustomize v1.20.0 // indirect
+	github.com/fluxcd/pkg/kustomize v1.35.2 // indirect
 	github.com/fluxcd/pkg/tar v1.2.0 // indirect
 	github.com/fsnotify/fsnotify v1.9.0 // indirect
 	github.com/fvbommel/sortorder v1.1.0 // indirect
