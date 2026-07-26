@@ -12,11 +12,11 @@ replace github.com/ThalesIgnite/crypto11 => github.com/ThalesGroup/crypto11 v1.6
 require (
 	code.gitea.io/sdk/gitea v0.25.1
 	github.com/fluxcd/cli-utils v1.2.2
-	github.com/fluxcd/flux2/v2 v2.9.2
-	github.com/fluxcd/helm-controller/api v1.6.2
+	github.com/fluxcd/flux2/v2 v2.9.3
+	github.com/fluxcd/helm-controller/api v1.6.3
 	github.com/fluxcd/image-automation-controller/api v1.2.3
 	github.com/fluxcd/image-reflector-controller/api v1.2.3
-	github.com/fluxcd/kustomize-controller/api v1.9.3
+	github.com/fluxcd/kustomize-controller/api v1.9.4
 	github.com/fluxcd/notification-controller/api v1.9.2
 	github.com/fluxcd/pkg/apis/meta v1.31.0
 	github.com/fluxcd/pkg/runtime v0.111.0
@@ -27,11 +27,11 @@ require (
 	github.com/open-component-model/ocm-controller v0.31.0
 	github.com/open-component-model/replication-controller v0.13.1
 	github.com/stretchr/testify v1.11.1
-	k8s.io/api v0.36.2
-	k8s.io/apiextensions-apiserver v0.36.2
-	k8s.io/apimachinery v0.36.2
-	k8s.io/cli-runtime v0.36.2
-	k8s.io/client-go v0.36.2
+	k8s.io/api v0.36.3
+	k8s.io/apiextensions-apiserver v0.36.3
+	k8s.io/apimachinery v0.36.3
+	k8s.io/cli-runtime v0.36.3
+	k8s.io/client-go v0.36.3
 	ocm.software/ocm v0.46.0
 	sigs.k8s.io/controller-runtime v0.24.1
 	sigs.k8s.io/e2e-framework v0.7.0
@@ -150,7 +150,7 @@ require (
 	github.com/felixge/httpsnoop v1.0.4 // indirect
 	github.com/fluxcd/pkg/apis/acl v0.10.0 // indirect
 	github.com/fluxcd/pkg/apis/kustomize v1.20.0 // indirect
-	github.com/fluxcd/pkg/kustomize v1.35.3 // indirect
+	github.com/fluxcd/pkg/kustomize v1.35.4 // indirect
 	github.com/fluxcd/pkg/tar v1.2.0 // indirect
 	github.com/fsnotify/fsnotify v1.9.0 // indirect
 	github.com/fvbommel/sortorder v1.1.0 // indirect
@@ -379,11 +379,11 @@ require (
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 	helm.sh/helm/v4 v4.2.2 // indirect
-	k8s.io/component-base v0.36.2 // indirect
+	k8s.io/component-base v0.36.3 // indirect
 	k8s.io/klog/v2 v2.140.0 // indirect
 	k8s.io/kube-openapi v0.0.0-20260603220949-865597e52e25 // indirect
 	k8s.io/kubectl v0.36.2 // indirect
-	k8s.io/streaming v0.36.2 // indirect
+	k8s.io/streaming v0.36.3 // indirect
 	k8s.io/utils v0.0.0-20260507154919-ff6756f316d2 // indirect
 	oras.land/oras-go/v2 v2.6.2 // indirect
 	sigs.k8s.io/json v0.0.0-20250730193827-2d320260d730 // indirect
