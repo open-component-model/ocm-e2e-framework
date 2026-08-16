@@ -10,17 +10,17 @@ replace github.com/texttheater/golang-levenshtein => github.com/texttheater/gola
 require (
 	code.gitea.io/sdk/gitea v0.25.1
 	github.com/fluxcd/cli-utils v1.2.2
-	github.com/fluxcd/flux2/v2 v2.9.3
+	github.com/fluxcd/flux2/v2 v2.9.4
 	github.com/fluxcd/helm-controller/api v1.6.3
-	github.com/fluxcd/image-automation-controller/api v1.2.3
-	github.com/fluxcd/image-reflector-controller/api v1.2.3
+	github.com/fluxcd/image-automation-controller/api v1.2.4
+	github.com/fluxcd/image-reflector-controller/api v1.2.4
 	github.com/fluxcd/kustomize-controller/api v1.9.4
-	github.com/fluxcd/notification-controller/api v1.9.2
+	github.com/fluxcd/notification-controller/api v1.9.3
 	github.com/fluxcd/pkg/apis/meta v1.31.0
 	github.com/fluxcd/pkg/runtime v0.111.0
 	github.com/fluxcd/pkg/ssa v0.77.0
 	github.com/fluxcd/pkg/version v0.16.0
-	github.com/fluxcd/source-controller/api v1.9.3
+	github.com/fluxcd/source-controller/api v1.9.4
 	github.com/open-component-model/git-controller v0.12.1
 	github.com/open-component-model/ocm-controller v0.27.2
 	github.com/open-component-model/replication-controller v0.13.1
