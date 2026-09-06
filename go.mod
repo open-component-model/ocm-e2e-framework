@@ -9,18 +9,18 @@ replace github.com/texttheater/golang-levenshtein => github.com/texttheater/gola
 
 require (
 	code.gitea.io/sdk/gitea v0.25.1
-	github.com/fluxcd/cli-utils v1.2.2
-	github.com/fluxcd/flux2/v2 v2.9.4
-	github.com/fluxcd/helm-controller/api v1.6.3
-	github.com/fluxcd/image-automation-controller/api v1.2.4
-	github.com/fluxcd/image-reflector-controller/api v1.2.4
-	github.com/fluxcd/kustomize-controller/api v1.9.4
-	github.com/fluxcd/notification-controller/api v1.9.3
+	github.com/fluxcd/cli-utils v1.2.3
+	github.com/fluxcd/flux2/v2 v2.9.5
+	github.com/fluxcd/helm-controller/api v1.6.4
+	github.com/fluxcd/image-automation-controller/api v1.2.5
+	github.com/fluxcd/image-reflector-controller/api v1.2.5
+	github.com/fluxcd/kustomize-controller/api v1.9.5
+	github.com/fluxcd/notification-controller/api v1.9.4
 	github.com/fluxcd/pkg/apis/meta v1.31.0
-	github.com/fluxcd/pkg/runtime v0.111.0
+	github.com/fluxcd/pkg/runtime v0.112.0
 	github.com/fluxcd/pkg/ssa v0.77.0
 	github.com/fluxcd/pkg/version v0.16.0
-	github.com/fluxcd/source-controller/api v1.9.4
+	github.com/fluxcd/source-controller/api v1.9.5
 	github.com/open-component-model/git-controller v0.12.1
 	github.com/open-component-model/ocm-controller v0.33.0
 	github.com/open-component-model/replication-controller v0.13.1
@@ -381,7 +381,7 @@ require (
 	k8s.io/component-base v0.37.0 // indirect
 	k8s.io/klog/v2 v2.140.0 // indirect
 	k8s.io/kube-openapi v0.0.0-20260721132016-d427ff9ee9ad // indirect
-	k8s.io/kubectl v0.36.2 // indirect
+	k8s.io/kubectl v0.36.4 // indirect
 	k8s.io/streaming v0.37.0 // indirect
 	k8s.io/utils v0.0.0-20260626114624-be93311217bd // indirect
 	oras.land/oras-go/v2 v2.6.2 // indirect
