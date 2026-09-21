@@ -16,10 +16,10 @@ require (
 	github.com/fluxcd/image-reflector-controller/api v1.2.5
 	github.com/fluxcd/kustomize-controller/api v1.9.5
 	github.com/fluxcd/notification-controller/api v1.9.4
-	github.com/fluxcd/pkg/apis/meta v1.31.0
-	github.com/fluxcd/pkg/runtime v0.112.0
-	github.com/fluxcd/pkg/ssa v0.77.0
-	github.com/fluxcd/pkg/version v0.16.0
+	github.com/fluxcd/pkg/apis/meta v1.32.0
+	github.com/fluxcd/pkg/runtime v0.113.0
+	github.com/fluxcd/pkg/ssa v0.78.0
+	github.com/fluxcd/pkg/version v0.17.0
 	github.com/fluxcd/source-controller/api v1.9.5
 	github.com/open-component-model/git-controller v0.12.1
 	github.com/open-component-model/ocm-controller v0.33.0
@@ -31,7 +31,7 @@ require (
 	k8s.io/cli-runtime v0.37.0
 	k8s.io/client-go v0.37.0
 	ocm.software/ocm v0.50.0
-	sigs.k8s.io/controller-runtime v0.25.0
+	sigs.k8s.io/controller-runtime v0.25.1
 	sigs.k8s.io/e2e-framework v0.7.0
 	sigs.k8s.io/kustomize/api v0.21.1
 	sigs.k8s.io/yaml v1.6.0
@@ -148,8 +148,8 @@ require (
 	github.com/extism/go-sdk v1.7.1 // indirect
 	github.com/fatih/color v1.19.0 // indirect
 	github.com/felixge/httpsnoop v1.1.0 // indirect
-	github.com/fluxcd/pkg/apis/acl v0.10.0 // indirect
-	github.com/fluxcd/pkg/apis/kustomize v1.20.0 // indirect
+	github.com/fluxcd/pkg/apis/acl v0.11.0 // indirect
+	github.com/fluxcd/pkg/apis/kustomize v1.21.0 // indirect
 	github.com/fluxcd/pkg/kustomize v1.39.0 // indirect
 	github.com/fluxcd/pkg/tar v1.2.0 // indirect
 	github.com/fsnotify/fsnotify v1.10.1 // indirect
@@ -264,7 +264,7 @@ require (
 	github.com/nozzle/throttler v0.0.0-20180817012639-2ea982251481 // indirect
 	github.com/oklog/ulid/v2 v2.1.1 // indirect
 	github.com/oleiade/reflections v1.1.0 // indirect
-	github.com/onsi/gomega v1.42.1 // indirect
+	github.com/onsi/gomega v1.43.0 // indirect
 	github.com/opencontainers/go-digest v1.0.0 // indirect
 	github.com/opencontainers/image-spec v1.1.1 // indirect
 	github.com/opencontainers/runtime-spec v1.3.0 // indirect
