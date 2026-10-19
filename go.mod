@@ -1,6 +1,6 @@
 module github.com/open-component-model/ocm-e2e-framework
 
-go 1.26.8
+go 1.27.0
 
 replace github.com/opencontainers/go-digest => github.com/opencontainers/go-digest v1.0.1-0.20220411205349-bde1400a84be
 
@@ -9,17 +9,17 @@ replace github.com/texttheater/golang-levenshtein => github.com/texttheater/gola
 
 require (
 	code.gitea.io/sdk/gitea v0.25.1
-	github.com/fluxcd/cli-utils v1.3.0
+	github.com/fluxcd/cli-utils v1.4.0
 	github.com/fluxcd/flux2/v2 v2.9.6
 	github.com/fluxcd/helm-controller/api v1.6.5
 	github.com/fluxcd/image-automation-controller/api v1.2.5
 	github.com/fluxcd/image-reflector-controller/api v1.2.5
 	github.com/fluxcd/kustomize-controller/api v1.9.6
 	github.com/fluxcd/notification-controller/api v1.9.4
-	github.com/fluxcd/pkg/apis/meta v1.32.0
-	github.com/fluxcd/pkg/runtime v0.115.0
-	github.com/fluxcd/pkg/ssa v0.78.0
-	github.com/fluxcd/pkg/version v0.17.0
+	github.com/fluxcd/pkg/apis/meta v1.35.0
+	github.com/fluxcd/pkg/runtime v0.119.0
+	github.com/fluxcd/pkg/ssa v0.80.0
+	github.com/fluxcd/pkg/version v0.19.0
 	github.com/fluxcd/source-controller/api v1.9.6
 	github.com/open-component-model/git-controller v0.12.1
 	github.com/open-component-model/ocm-controller v0.33.0
@@ -148,8 +148,8 @@ require (
 	github.com/extism/go-sdk v1.7.1 // indirect
 	github.com/fatih/color v1.19.0 // indirect
 	github.com/felixge/httpsnoop v1.1.0 // indirect
-	github.com/fluxcd/pkg/apis/acl v0.11.0 // indirect
-	github.com/fluxcd/pkg/apis/kustomize v1.21.0 // indirect
+	github.com/fluxcd/pkg/apis/acl v0.12.0 // indirect
+	github.com/fluxcd/pkg/apis/kustomize v1.23.0 // indirect
 	github.com/fluxcd/pkg/kustomize v1.39.0 // indirect
 	github.com/fluxcd/pkg/tar v1.2.0 // indirect
 	github.com/fsnotify/fsnotify v1.10.1 // indirect
@@ -353,14 +353,14 @@ require (
 	go.uber.org/zap v1.28.0 // indirect
 	go.yaml.in/yaml/v2 v2.4.4 // indirect
 	go.yaml.in/yaml/v3 v3.0.5 // indirect
-	golang.org/x/crypto v0.57.0 // indirect
+	golang.org/x/crypto v0.58.0 // indirect
 	golang.org/x/mod v0.41.0 // indirect
-	golang.org/x/net v0.59.0 // indirect
+	golang.org/x/net v0.61.0 // indirect
 	golang.org/x/oauth2 v0.37.0 // indirect
-	golang.org/x/sync v0.23.0 // indirect
-	golang.org/x/sys v0.48.0 // indirect
-	golang.org/x/term v0.46.0 // indirect
-	golang.org/x/text v0.42.0 // indirect
+	golang.org/x/sync v0.24.0 // indirect
+	golang.org/x/sys v0.49.0 // indirect
+	golang.org/x/term v0.47.0 // indirect
+	golang.org/x/text v0.43.0 // indirect
 	golang.org/x/time v0.16.0 // indirect
 	gomodules.xyz/jsonpatch/v2 v2.5.0 // indirect
 	google.golang.org/api v0.290.0 // indirect
@@ -379,7 +379,7 @@ require (
 	k8s.io/component-base v0.37.1 // indirect
 	k8s.io/klog/v2 v2.140.0 // indirect
 	k8s.io/kube-openapi v0.0.0-20260821135717-be32def86098 // indirect
-	k8s.io/kubectl v0.37.0 // indirect
+	k8s.io/kubectl v0.37.1 // indirect
 	k8s.io/streaming v0.37.1 // indirect
 	k8s.io/utils v0.0.0-20260707023825-cf1189d6abe3 // indirect
 	oras.land/oras-go/v2 v2.6.2 // indirect
