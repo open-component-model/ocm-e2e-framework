@@ -26,7 +26,7 @@ require (
 	github.com/fluxcd/pkg/version v0.20.0
 	github.com/fluxcd/source-controller/api v1.10.1
 	github.com/open-component-model/git-controller v0.12.1
-	github.com/open-component-model/ocm-controller v0.35.0
+	github.com/open-component-model/ocm-controller v0.36.0
 	github.com/open-component-model/replication-controller v0.13.1
 	github.com/stretchr/testify v1.12.1
 	k8s.io/api v0.37.2
