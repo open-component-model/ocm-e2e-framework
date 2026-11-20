@@ -172,8 +172,15 @@ Then, this feature can be executed together with others.
 
 ## Release Process
 
-To release a new version of this library, simply make sure everything is pushed that you would like to release, than
-push a new tag. The release job should take care of the rest.
+Release tags are created by the release bot from a gated workflow, not pushed by hand:
+
+1. Merge the release notes for the new version to `main` as `docs/release_notes/vX.Y.Z.md`.
+2. Run the [Release tag](https://github.com/open-component-model/ocm-e2e-framework/actions/workflows/release-tag.yaml)
+   workflow from `main` with the version, for example `v0.18.0`.
+3. After the tests pass, a reviewer approves the `release-automation` deployment. The bot then tags the commit, and
+   the tag starts the [Create release](https://github.com/open-component-model/ocm-e2e-framework/actions/workflows/release.yaml)
+   workflow, which publishes the GitHub release.
+
 ## Contributing
 
 This project is open to feature requests/suggestions, bug reports etc. via [GitHub issues](https://github.com/open-component-model/ocm-e2e-framework/issues). Contribution and feedback are encouraged and always welcome. For more information about how to contribute, see our [Contributing Guide](https://ocm.software/community/contributing/).

@@ -1,0 +1,105 @@
+# Creates a release tag (vX.Y.Z) on the main commit the run was started from,
+# after the unit tests pass on it. The tag push starts "Create release"
+# (release.yaml), which publishes the GitHub release.
+#
+# The release bot (ocm-bot-release) creates the tag. The job runs in the
+# "release-automation" environment, which holds the bot's credentials, is
+# limited to main and needs an approval, so every release tag is reviewed
+# before it is created.
+name: Release tag
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: Version to release, for example v0.18.0
+        required: true
+        type: string
+
+permissions: {}
+
+concurrency:
+  group: release-tag
+  cancel-in-progress: false
+
+jobs:
+  # The Go module proxy caches every version it sees, so a wrong tag is
+  # permanent: accept only vX.Y.Z from main. The module path has no /vN
+  # suffix, so only v0 and v1 are valid Go versions for it; moving to v2
+  # means changing the module path first. release.yaml publishes
+  # docs/release_notes/<version>.md, so that file must exist on the commit.
+  check-inputs:
+    name: Check inputs
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Check inputs
+        env:
+          VERSION: ${{ inputs.version }}
+        run: |
+          set -euo pipefail
+          if [[ "$GITHUB_REF" != refs/heads/main ]]; then
+            echo "::error::run this workflow from main, not $GITHUB_REF"
+            exit 1
+          fi
+          if [[ ! "$VERSION" =~ ^v[01]\.[0-9]+\.[0-9]+$ ]]; then
+            echo "::error::version must look like v1.2.3 with major version 0 or 1, got: $VERSION"
+            exit 1
+          fi
+          if [[ ! -f "docs/release_notes/$VERSION.md" ]]; then
+            echo "::error::docs/release_notes/$VERSION.md is missing; merge the release notes to main first"
+            exit 1
+          fi
+
+  # Test the commit that will be tagged. This runs before the approval is
+  # requested, so approvers only see runs that passed.
+  test:
+    name: Test
+    needs: check-inputs
+    permissions:
+      contents: read
+    # The $/ self-repository syntax is not used yet because actionlint
+    # (v1.7.12) rejects it.
+    uses: ./.github/workflows/test.yml # zizmor: ignore[self-repository]
+
+  tag:
+    name: Create release tag
+    needs: test
+    runs-on: ubuntu-latest
+    environment:
+      name: release-automation
+      deployment: false
+    permissions: {}
+    steps:
+      # A tag pushed with GITHUB_TOKEN would not start release.yaml.
+      - name: Generate app token
+        id: get_token
+        uses: actions/create-github-app-token@64ab729a6294000f5aa4a4bc0b73d1f32bc45510 # v3.3.0
+        with:
+          client-id: ${{ secrets.RELEASE_BOT_CLIENT_ID }}
+          private-key: ${{ secrets.RELEASE_BOT_PRIVATE_KEY }}
+          repositories: ${{ github.event.repository.name }}
+          permission-contents: write
+
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ github.sha }}
+          token: ${{ steps.get_token.outputs.token }}
+          # Kept so that `git push` below authenticates with the app token.
+          # This job uploads no artifacts, so the token cannot leak that way.
+          persist-credentials: true # zizmor: ignore[artipacked]
+
+      - name: Create and push tag
+        env:
+          TAG: ${{ inputs.version }}
+        run: |
+          set -euo pipefail
+          git tag "$TAG" "$GITHUB_SHA"
+          git push origin "refs/tags/$TAG"
